@@ -1,0 +1,1274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<title>English Games</title>
+
+<!--
+  ============================================================================
+  ENGLISH GAMES  —  one file, no server, no accounts.
+
+  HOW TO ADD YOUR OWN CONTENT (when you're ready):
+    1. Make a Google Sheet with three tabs: Vocabulary, Quiz, IrregularVerbs
+    2. File > Share > Publish to web > choose the tab > Comma-separated values (.csv)
+    3. Paste each link into SHEET_CSV below.
+  Leave them empty and the site simply uses the sample content built into this
+  file, which is what it is doing right now.
+  ============================================================================
+-->
+
+<style>
+:root{
+  --bg:#f6f7fb; --card:#ffffff; --ink:#12141c; --muted:#6b7180;
+  --line:#e6e8f0; --accent:#4f46e5; --accent-soft:#eef0ff;
+  --good:#0f9d6e; --good-soft:#e6f7f1; --bad:#dc2743; --bad-soft:#fdeaed;
+  --shadow:0 1px 2px rgba(16,20,40,.05), 0 8px 24px rgba(16,20,40,.06);
+  --r:18px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0e1016; --card:#171a23; --ink:#eceef5; --muted:#9aa1b4;
+    --line:#262b38; --accent:#8b87ff; --accent-soft:#20213a;
+    --good:#3ddc9b; --good-soft:#12291f; --bad:#ff7089; --bad-soft:#2b151b;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:620px;margin:0 auto;padding:18px 16px 64px}
+h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.02em}
+h1{font-size:26px;font-weight:750}
+h2{font-size:19px;font-weight:700}
+p{margin:0}
+.muted{color:var(--muted)}
+.small{font-size:13.5px}
+.tiny{font-size:12.5px}
+.hide{display:none !important}
+
+/* ---------- top bar ---------- */
+.top{display:flex;align-items:center;gap:12px;min-height:44px;margin-bottom:18px}
+.back{
+  border:1px solid var(--line);background:var(--card);color:var(--ink);
+  width:40px;height:40px;border-radius:12px;font-size:19px;cursor:pointer;
+  display:grid;place-items:center;flex:none;box-shadow:var(--shadow)
+}
+.back:active{transform:scale(.94)}
+.crumb{font-size:13px;color:var(--muted);font-weight:600}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px;box-shadow:var(--shadow)
+}
+.stack{display:flex;flex-direction:column;gap:12px}
+.stack-sm{display:flex;flex-direction:column;gap:8px}
+
+/* ---------- big tappable rows ---------- */
+.row{
+  display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:16px;cursor:pointer;color:var(--ink);font:inherit;
+  box-shadow:var(--shadow);transition:transform .12s ease, border-color .12s ease
+}
+.row:hover{border-color:var(--accent)}
+.row:active{transform:scale(.985)}
+.row .grow{flex:1;min-width:0}
+.row .chev{color:var(--muted);font-size:20px;flex:none}
+.row-title{font-weight:650;font-size:16.5px}
+.badge{
+  flex:none;min-width:46px;height:46px;padding:0 10px;border-radius:14px;
+  background:var(--accent-soft);color:var(--accent);
+  display:grid;place-items:center;font-weight:750;font-size:15px
+}
+.emoji{flex:none;font-size:26px;width:46px;height:46px;display:grid;place-items:center;
+  background:var(--accent-soft);border-radius:14px}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:14px;padding:13px 16px;font:inherit;font-weight:650;
+  cursor:pointer;box-shadow:var(--shadow)
+}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(79,70,229,.28)}
+.btn.wide{width:100%}
+.btn.ghost{background:transparent;box-shadow:none}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn-row>.btn{flex:1;min-width:130px}
+
+/* ---------- progress strip ---------- */
+.strip{display:flex;gap:10px}
+.stat{
+  flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:12px;text-align:center;box-shadow:var(--shadow)
+}
+.stat b{display:block;font-size:22px;font-weight:750;letter-spacing:-.03em}
+.stat span{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:650}
+
+/* ---------- segmented control ---------- */
+.seg{display:flex;background:var(--accent-soft);border-radius:14px;padding:4px;gap:4px}
+.seg button{
+  flex:1;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:650;
+  padding:9px;border-radius:11px;cursor:pointer
+}
+.seg button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+
+/* ---------- game chrome ---------- */
+.hud{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.bar{flex:1;height:9px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s ease;width:0}
+.score{font-weight:750;font-size:14px;font-variant-numeric:tabular-nums}
+
+/* ---------- quiz ---------- */
+.question{font-size:22px;font-weight:650;line-height:1.4;letter-spacing:-.02em;margin:8px 0 20px}
+.blank{
+  display:inline-block;min-width:74px;border-bottom:3px solid var(--accent);
+  vertical-align:baseline;margin:0 3px
+}
+.blank.filled{border-bottom-color:var(--muted);color:var(--accent);font-weight:750}
+.opt{
+  width:100%;text-align:left;background:var(--card);border:1.5px solid var(--line);
+  border-radius:15px;padding:15px 16px;font:inherit;font-weight:600;font-size:16.5px;
+  color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:12px;
+  box-shadow:var(--shadow);transition:transform .1s ease
+}
+.opt:active{transform:scale(.985)}
+.opt .key{
+  flex:none;width:26px;height:26px;border-radius:8px;background:var(--accent-soft);
+  color:var(--accent);display:grid;place-items:center;font-size:12.5px;font-weight:750
+}
+.opt.correct{border-color:var(--good);background:var(--good-soft)}
+.opt.correct .key{background:var(--good);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .key{background:var(--bad);color:#fff}
+.opt[disabled]{cursor:default}
+.opt.dim{opacity:.5}
+
+.feedback{border-radius:15px;padding:14px 16px;margin-top:6px;border:1px solid var(--line)}
+.feedback.good{background:var(--good-soft);border-color:var(--good)}
+.feedback.bad{background:var(--bad-soft);border-color:var(--bad)}
+.feedback .fb-title{font-weight:750;margin-bottom:3px}
+
+/* ---------- match ---------- */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{
+  min-height:82px;border:1.5px solid var(--line);background:var(--card);border-radius:15px;
+  padding:12px 10px;font:inherit;font-weight:600;font-size:15.5px;color:var(--ink);
+  cursor:pointer;display:grid;place-items:center;text-align:center;line-height:1.3;
+  box-shadow:var(--shadow);transition:transform .12s ease, opacity .25s ease
+}
+.tile:active{transform:scale(.96)}
+.tile.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.tile.hit{border-color:var(--good);background:var(--good-soft);color:var(--good)}
+.tile.miss{border-color:var(--bad);background:var(--bad-soft);color:var(--bad);animation:shake .35s}
+.tile.done{opacity:.25;pointer-events:none}
+.tile img{max-width:100%;max-height:58px;border-radius:9px;display:block}
+@keyframes shake{
+  0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)}
+}
+
+/* ---------- verbs ---------- */
+.verb-prompt{font-size:30px;font-weight:750;letter-spacing:-.03em;text-align:center;margin:10px 0 4px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.field input{
+  border:1.5px solid var(--line);background:var(--bg);color:var(--ink);
+  border-radius:13px;padding:14px;font:inherit;font-size:17px;font-weight:600;width:100%
+}
+.field input:focus{outline:none;border-color:var(--accent)}
+.field input.correct{border-color:var(--good);background:var(--good-soft)}
+.field input.wrong{border-color:var(--bad);background:var(--bad-soft)}
+table.study{width:100%;border-collapse:collapse;font-size:14.5px}
+table.study th{
+  text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--muted);padding:8px 6px;border-bottom:1px solid var(--line)
+}
+table.study td{padding:10px 6px;border-bottom:1px solid var(--line)}
+table.study tr:last-child td{border-bottom:0}
+
+/* ---------- finish ---------- */
+.big-score{font-size:56px;font-weight:800;letter-spacing:-.045em;line-height:1}
+.review{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.review .q{font-weight:600;font-size:14.5px}
+.review .a{font-size:14px;color:var(--good);font-weight:650}
+.review .yours{font-size:13.5px;color:var(--bad)}
+
+/* ---------- misc ---------- */
+.chipbar{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  border:1px solid var(--line);background:var(--card);color:var(--muted);
+  border-radius:99px;padding:7px 13px;font-size:13px;font-weight:650;cursor:pointer
+}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(80px);
+  background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:99px;
+  font-size:14px;font-weight:650;box-shadow:0 10px 30px rgba(0,0,0,.25);
+  opacity:0;transition:all .28s cubic-bezier(.2,.8,.2,1);pointer-events:none;z-index:50
+}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+dialog{
+  border:0;border-radius:20px;padding:0;background:transparent;max-width:400px;width:calc(100% - 32px)
+}
+dialog::backdrop{background:rgba(10,12,20,.55);backdrop-filter:blur(3px)}
+.spinner{
+  width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .7s linear infinite;margin:0 auto
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div id="app">
+    <div class="card" style="text-align:center;padding:40px">
+      <div class="spinner"></div>
+      <p class="muted small" style="margin-top:14px">Loading…</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+/* ==========================================================================
+   1. CONFIGURATION
+   ========================================================================== */
+
+const SITE_NAME = "English Games";
+
+// Paste your published-to-web CSV links here when the Google Sheet is ready.
+// Empty string = use the sample content built into this file.
+const SHEET_CSV = {
+  vocabulary: "",
+  quiz:       "",
+  irregular:  ""
+};
+
+const LEVELS = [
+  { code:"A1", name:"Beginner" },
+  { code:"A2", name:"Elementary" },
+  { code:"B1", name:"Intermediate" },
+  { code:"B2", name:"Upper-Intermediate" },
+  { code:"C1", name:"Advanced" }
+];
+
+const ROUND_LENGTH = 10;   // questions per round
+const MATCH_PAIRS  = 6;    // pairs per matching round
+
+const TOPIC_EMOJI = {
+  "Food":"🍎", "Family":"👨‍👩‍👧", "Travel":"✈️", "Work":"💼", "House":"🏠",
+  "Animals":"🐘", "Clothes":"👕", "Weather":"🌤️", "Health":"🩺", "Shopping":"🛒",
+  "Job interviews":"🤝", "Free time":"🎧", "Technology":"💻", "Feelings":"💛"
+};
+
+/* ==========================================================================
+   2. SAMPLE CONTENT  (replaced by your Google Sheet when you add the links)
+   ========================================================================== */
+
+const SAMPLE = {
+vocabulary: [
+  {level:"A1",topic:"Food",english:"bread",meaning:"food made from flour, baked in an oven"},
+  {level:"A1",topic:"Food",english:"apple",meaning:"a round red or green fruit"},
+  {level:"A1",topic:"Food",english:"cheese",meaning:"a food made from milk"},
+  {level:"A1",topic:"Food",english:"breakfast",meaning:"the first meal of the day"},
+  {level:"A1",topic:"Food",english:"hungry",meaning:"when you want to eat"},
+  {level:"A1",topic:"Food",english:"delicious",meaning:"tasting very good"},
+  {level:"A1",topic:"Food",english:"vegetables",meaning:"plants you eat, like carrots and peas"},
+  {level:"A1",topic:"Food",english:"thirsty",meaning:"when you want to drink"},
+
+  {level:"A1",topic:"Family",english:"brother",meaning:"your parents' son"},
+  {level:"A1",topic:"Family",english:"aunt",meaning:"your mother's or father's sister"},
+  {level:"A1",topic:"Family",english:"grandparents",meaning:"the parents of your parents"},
+  {level:"A1",topic:"Family",english:"cousin",meaning:"the child of your aunt or uncle"},
+  {level:"A1",topic:"Family",english:"married",meaning:"having a husband or a wife"},
+  {level:"A1",topic:"Family",english:"twins",meaning:"two children born on the same day to one mother"},
+
+  {level:"A2",topic:"Travel",english:"luggage",meaning:"the bags you take on a journey"},
+  {level:"A2",topic:"Travel",english:"departure",meaning:"the moment a plane or train leaves"},
+  {level:"A2",topic:"Travel",english:"delayed",meaning:"later than the planned time"},
+  {level:"A2",topic:"Travel",english:"boarding pass",meaning:"the card that lets you get on the plane"},
+  {level:"A2",topic:"Travel",english:"abroad",meaning:"in or to a foreign country"},
+  {level:"A2",topic:"Travel",english:"book (a room)",meaning:"to arrange something in advance"},
+  {level:"A2",topic:"Travel",english:"crowded",meaning:"full of people"},
+  {level:"A2",topic:"Travel",english:"souvenir",meaning:"a small thing you buy to remember a trip"},
+
+  {level:"A2",topic:"Weather",english:"forecast",meaning:"what the weather will probably be"},
+  {level:"A2",topic:"Weather",english:"freezing",meaning:"extremely cold"},
+  {level:"A2",topic:"Weather",english:"shower",meaning:"a short period of rain"},
+  {level:"A2",topic:"Weather",english:"humid",meaning:"hot with a lot of water in the air"},
+  {level:"A2",topic:"Weather",english:"breeze",meaning:"a light, pleasant wind"},
+  {level:"A2",topic:"Weather",english:"foggy",meaning:"hard to see because of thick cloud near the ground"},
+
+  {level:"B1",topic:"Work",english:"deadline",meaning:"the day something must be finished"},
+  {level:"B1",topic:"Work",english:"colleague",meaning:"a person you work with"},
+  {level:"B1",topic:"Work",english:"promotion",meaning:"a move to a more important job"},
+  {level:"B1",topic:"Work",english:"overtime",meaning:"extra hours worked beyond the normal day"},
+  {level:"B1",topic:"Work",english:"redundant",meaning:"no longer needed and losing your job"},
+  {level:"B1",topic:"Work",english:"shift",meaning:"a fixed period of working time"},
+  {level:"B1",topic:"Work",english:"apply for",meaning:"to formally ask for a job"},
+  {level:"B1",topic:"Work",english:"workload",meaning:"the amount of work you have to do"},
+
+  {level:"B1",topic:"Job interviews",english:"strengths",meaning:"the things you are good at"},
+  {level:"B1",topic:"Job interviews",english:"CV",meaning:"a document listing your education and experience"},
+  {level:"B1",topic:"Job interviews",english:"candidate",meaning:"a person applying for a job"},
+  {level:"B1",topic:"Job interviews",english:"salary expectations",meaning:"how much money you hope to earn"},
+  {level:"B1",topic:"Job interviews",english:"notice period",meaning:"the time you must work before leaving a job"},
+  {level:"B1",topic:"Job interviews",english:"references",meaning:"people who can describe your work to an employer"},
+
+  {level:"B2",topic:"Technology",english:"glitch",meaning:"a small, temporary fault in a system"},
+  {level:"B2",topic:"Technology",english:"obsolete",meaning:"no longer used because something better exists"},
+  {level:"B2",topic:"Technology",english:"user-friendly",meaning:"easy to use, even for beginners"},
+  {level:"B2",topic:"Technology",english:"back up",meaning:"to make a spare copy of your files"},
+  {level:"B2",topic:"Technology",english:"cutting-edge",meaning:"the most modern and advanced"},
+  {level:"B2",topic:"Technology",english:"privacy settings",meaning:"controls over who can see your information"}
+],
+
+quiz: [
+  // ---- A1 Present Simple ----
+  {level:"A1",grammar:"Present Simple",question:"She ___ to school every day.",correct:"goes",wrong:["go","going","is go"],explanation:"After he / she / it we add -s to the verb: she goes."},
+  {level:"A1",grammar:"Present Simple",question:"They ___ in a small flat.",correct:"live",wrong:["lives","living","is living"],explanation:"They is plural, so the verb has no -s: they live."},
+  {level:"A1",grammar:"Present Simple",question:"___ you speak English?",correct:"Do",wrong:["Does","Are","Is"],explanation:"Questions with I / you / we / they use Do."},
+  {level:"A1",grammar:"Present Simple",question:"My brother ___ like coffee.",correct:"doesn't",wrong:["don't","isn't","not"],explanation:"He / she / it takes doesn't, and the main verb stays in its basic form."},
+  {level:"A1",grammar:"Present Simple",question:"Water ___ at 100 degrees.",correct:"boils",wrong:["boil","is boiling","boiled"],explanation:"We use Present Simple for facts that are always true."},
+  {level:"A1",grammar:"Present Simple",question:"We ___ TV in the evening.",correct:"watch",wrong:["watches","watching","are watch"],explanation:"We is plural, so no -s: we watch."},
+  {level:"A1",grammar:"Present Simple",question:"He ___ up at seven o'clock.",correct:"gets",wrong:["get","getting","is get"],explanation:"He + verb + s: he gets up."},
+  {level:"A1",grammar:"Present Simple",question:"I ___ football on Sundays.",correct:"play",wrong:["plays","playing","am play"],explanation:"After I the verb has no -s: I play."},
+
+  // ---- A1 Articles ----
+  {level:"A1",grammar:"Articles",question:"I would like ___ apple, please.",correct:"an",wrong:["a","the","—"],explanation:"We use an before a vowel sound: an apple."},
+  {level:"A1",grammar:"Articles",question:"She is ___ teacher.",correct:"a",wrong:["an","the","—"],explanation:"We use a before a consonant sound, and a / an with jobs."},
+  {level:"A1",grammar:"Articles",question:"Can you close ___ door, please?",correct:"the",wrong:["a","an","—"],explanation:"The is used when both people know which one we mean."},
+  {level:"A1",grammar:"Articles",question:"I love ___ music.",correct:"—",wrong:["a","an","the"],explanation:"No article before uncountable nouns talked about in general."},
+  {level:"A1",grammar:"Articles",question:"He lives in ___ old house.",correct:"an",wrong:["a","the","—"],explanation:"Old begins with a vowel sound, so we use an."},
+  {level:"A1",grammar:"Articles",question:"___ sun is very bright today.",correct:"The",wrong:["A","An","—"],explanation:"We use the with unique things: the sun, the moon."},
+
+  // ---- A2 Past Simple ----
+  {level:"A2",grammar:"Past Simple",question:"We ___ to Italy last summer.",correct:"went",wrong:["go","goed","have gone"],explanation:"Go is irregular: go — went — gone. Last summer is a finished time."},
+  {level:"A2",grammar:"Past Simple",question:"She ___ her keys yesterday.",correct:"lost",wrong:["lose","losed","has lost"],explanation:"Lose — lost — lost. Yesterday means the action is finished."},
+  {level:"A2",grammar:"Past Simple",question:"___ you see the film last night?",correct:"Did",wrong:["Do","Have","Was"],explanation:"Past Simple questions use did + the basic verb."},
+  {level:"A2",grammar:"Past Simple",question:"They ___ come to the party.",correct:"didn't",wrong:["don't","haven't","wasn't"],explanation:"The negative is didn't + basic verb: didn't come."},
+  {level:"A2",grammar:"Past Simple",question:"I ___ a great book last week.",correct:"read",wrong:["readed","have read","reading"],explanation:"Read is irregular — the spelling doesn't change, but we say /red/."},
+  {level:"A2",grammar:"Past Simple",question:"He ___ football when he was young.",correct:"played",wrong:["play","plaid","has played"],explanation:"Regular verbs add -ed: played."},
+  {level:"A2",grammar:"Past Simple",question:"The train ___ twenty minutes late.",correct:"was",wrong:["were","is","did"],explanation:"The train is singular, so we use was."},
+  {level:"A2",grammar:"Past Simple",question:"We ___ at home all weekend.",correct:"stayed",wrong:["stay","staied","have stayed"],explanation:"Stay + -ed = stayed. The y stays because there is a vowel before it."},
+
+  // ---- A2 Comparatives ----
+  {level:"A2",grammar:"Comparatives",question:"This bag is ___ than mine.",correct:"bigger",wrong:["big","biggest","more big"],explanation:"Short adjectives add -er, and we double the final consonant: bigger."},
+  {level:"A2",grammar:"Comparatives",question:"She is the ___ student in the class.",correct:"best",wrong:["better","goodest","most good"],explanation:"Good — better — best. The + best for the top of a group."},
+  {level:"A2",grammar:"Comparatives",question:"Today is ___ interesting than yesterday.",correct:"more",wrong:["most","much","many"],explanation:"Long adjectives use more, not -er: more interesting."},
+  {level:"A2",grammar:"Comparatives",question:"My phone is ___ expensive as yours.",correct:"as",wrong:["so","more","than"],explanation:"To say two things are equal: as + adjective + as."},
+  {level:"A2",grammar:"Comparatives",question:"This is the ___ film I've ever seen.",correct:"worst",wrong:["worse","baddest","most bad"],explanation:"Bad — worse — worst."},
+
+  // ---- B1 Present Perfect ----
+  {level:"B1",grammar:"Present Perfect",question:"I ___ never been to Japan.",correct:"have",wrong:["has","am","did"],explanation:"After I we use have. Present Perfect = have / has + past participle."},
+  {level:"B1",grammar:"Present Perfect",question:"She ___ just finished her homework.",correct:"has",wrong:["have","is","did"],explanation:"After she we use has. Just shows it happened a moment ago."},
+  {level:"B1",grammar:"Present Perfect",question:"We've lived here ___ 2019.",correct:"since",wrong:["for","from","ago"],explanation:"Since + a point in time (2019). For + a length of time (five years)."},
+  {level:"B1",grammar:"Present Perfect",question:"They've known each other ___ ten years.",correct:"for",wrong:["since","from","during"],explanation:"For + a period of time: for ten years."},
+  {level:"B1",grammar:"Present Perfect",question:"___ you ever tried sushi?",correct:"Have",wrong:["Did","Do","Are"],explanation:"Ever with Present Perfect asks about your whole life up to now."},
+  {level:"B1",grammar:"Present Perfect",question:"He hasn't called me ___.",correct:"yet",wrong:["still","already","ago"],explanation:"Yet goes at the end of negatives and questions."},
+  {level:"B1",grammar:"Present Perfect",question:"I've ___ seen that film — twice, actually.",correct:"already",wrong:["yet","still","ever"],explanation:"Already means it happened sooner than expected."},
+
+  // ---- B1 Modals ----
+  {level:"B1",grammar:"Modal verbs",question:"You ___ wear a seatbelt. It's the law.",correct:"must",wrong:["should","could","might"],explanation:"Must is for strong obligation, especially rules and laws."},
+  {level:"B1",grammar:"Modal verbs",question:"You ___ see a doctor about that cough.",correct:"should",wrong:["must","can","would"],explanation:"Should gives advice — a suggestion, not an order."},
+  {level:"B1",grammar:"Modal verbs",question:"We ___ to leave early yesterday.",correct:"had",wrong:["must","should","can"],explanation:"Must has no past form; we use had to for past obligation."},
+  {level:"B1",grammar:"Modal verbs",question:"It ___ rain later — take an umbrella.",correct:"might",wrong:["must","should","can"],explanation:"Might shows something is possible but not certain."},
+  {level:"B1",grammar:"Modal verbs",question:"You ___ pay — the museum is free.",correct:"don't have to",wrong:["mustn't","shouldn't","couldn't"],explanation:"Don't have to = it isn't necessary. Mustn't = it's forbidden."},
+
+  // ---- B2 Conditionals ----
+  {level:"B2",grammar:"Conditionals",question:"If I ___ more time, I would travel more.",correct:"had",wrong:["have","will have","would have"],explanation:"Second conditional: if + past simple, would + basic verb."},
+  {level:"B2",grammar:"Conditionals",question:"If it rains tomorrow, we ___ at home.",correct:"will stay",wrong:["would stay","stayed","had stayed"],explanation:"First conditional: if + present simple, will + basic verb."},
+  {level:"B2",grammar:"Conditionals",question:"If she had studied, she ___ the exam.",correct:"would have passed",wrong:["would pass","passed","will pass"],explanation:"Third conditional talks about an imagined past: would have + past participle."},
+  {level:"B2",grammar:"Conditionals",question:"I wouldn't do that if I ___ you.",correct:"were",wrong:["am","was being","would be"],explanation:"In second conditionals we say if I were you — a fixed expression for advice."},
+  {level:"B2",grammar:"Conditionals",question:"Water freezes if the temperature ___ below zero.",correct:"falls",wrong:["will fall","would fall","fell"],explanation:"Zero conditional for facts: both parts in present simple."},
+
+  // ---- Vocabulary-based questions (no grammar label) ----
+  {level:"A1",topic:"Food",question:"I'm very ___. Let's have lunch.",correct:"hungry",wrong:["thirsty","delicious","tired"],explanation:"Hungry = you want to eat. Thirsty = you want to drink."},
+  {level:"A1",topic:"Food",question:"This soup is ___! Can I have more?",correct:"delicious",wrong:["hungry","expensive","quiet"],explanation:"Delicious describes food that tastes very good."},
+  {level:"A1",topic:"Family",question:"My mother's sister is my ___.",correct:"aunt",wrong:["cousin","niece","grandmother"],explanation:"Aunt = your parent's sister. Her children are your cousins."},
+  {level:"A2",topic:"Travel",question:"Our flight was ___ by two hours because of the snow.",correct:"delayed",wrong:["cancelled","crowded","booked"],explanation:"Delayed = later than planned. Cancelled = it doesn't happen at all."},
+  {level:"A2",topic:"Travel",question:"Please show your passport and ___ at the gate.",correct:"boarding pass",wrong:["luggage","souvenir","departure"],explanation:"The boarding pass is the card that allows you onto the plane."},
+  {level:"B1",topic:"Work",question:"I can't come out tonight — I have a ___ tomorrow morning.",correct:"deadline",wrong:["colleague","promotion","shift"],explanation:"A deadline is the time by which work must be finished."},
+  {level:"B1",topic:"Job interviews",question:"Tell me about your ___ and weaknesses.",correct:"strengths",wrong:["references","candidates","salaries"],explanation:"A classic interview question: strengths = what you do well."}
+],
+
+irregular: [
+  {infinitive:"be",past:"was/were",participle:"been",level:"A1",meaning:"to exist"},
+  {infinitive:"go",past:"went",participle:"gone",level:"A1",meaning:"to move somewhere"},
+  {infinitive:"have",past:"had",participle:"had",level:"A1",meaning:"to own or possess"},
+  {infinitive:"do",past:"did",participle:"done",level:"A1",meaning:"to perform an action"},
+  {infinitive:"see",past:"saw",participle:"seen",level:"A1",meaning:"to notice with your eyes"},
+  {infinitive:"eat",past:"ate",participle:"eaten",level:"A1",meaning:"to take food"},
+  {infinitive:"come",past:"came",participle:"come",level:"A1",meaning:"to move towards"},
+  {infinitive:"make",past:"made",participle:"made",level:"A1",meaning:"to create"},
+  {infinitive:"take",past:"took",participle:"taken",level:"A2",meaning:"to get hold of"},
+  {infinitive:"write",past:"wrote",participle:"written",level:"A2",meaning:"to put words on paper"},
+  {infinitive:"speak",past:"spoke",participle:"spoken",level:"A2",meaning:"to talk"},
+  {infinitive:"buy",past:"bought",participle:"bought",level:"A2",meaning:"to get something for money"},
+  {infinitive:"bring",past:"brought",participle:"brought",level:"A2",meaning:"to carry something to a place"},
+  {infinitive:"drive",past:"drove",participle:"driven",level:"A2",meaning:"to control a car"},
+  {infinitive:"choose",past:"chose",participle:"chosen",level:"B1",meaning:"to pick one thing"},
+  {infinitive:"catch",past:"caught",participle:"caught",level:"B1",meaning:"to take hold of something moving"},
+  {infinitive:"teach",past:"taught",participle:"taught",level:"B1",meaning:"to help someone learn"},
+  {infinitive:"rise",past:"rose",participle:"risen",level:"B1",meaning:"to go up"},
+  {infinitive:"lie",past:"lay",participle:"lain",level:"B2",meaning:"to rest flat"},
+  {infinitive:"forgive",past:"forgave",participle:"forgiven",level:"B2",meaning:"to stop being angry with someone"}
+]
+};
+
+/* ==========================================================================
+   3. SMALL HELPERS
+   ========================================================================== */
+
+const $ = (sel, root) => (root || document).querySelector(sel);
+const app = $("#app");
+
+function esc(s){
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function uniq(arr){ return Array.from(new Set(arr)); }
+
+function toast(msg){
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.classList.remove("on"), 2200);
+}
+
+function levelName(code){
+  const l = LEVELS.find(l => l.code === code);
+  return l ? l.code + " — " + l.name : code;
+}
+function topicIcon(name){ return TOPIC_EMOJI[name] || "📘"; }
+function plural(n, one, many){ return n + " " + (n === 1 ? one : many); }
+
+/* ---- progress stored on this device only ---- */
+const STORE = "eg_progress_v1";
+let P = { name:"", lastLevel:"", best:{}, streakDays:0, lastPlayed:"", rounds:0 };
+
+function loadProgress(){
+  try{
+    const raw = localStorage.getItem(STORE);
+    if(raw) P = Object.assign(P, JSON.parse(raw));
+  }catch(e){ /* private mode — just carry on with defaults */ }
+}
+function saveProgress(){
+  try{ localStorage.setItem(STORE, JSON.stringify(P)); }catch(e){}
+}
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+
+function noteRoundPlayed(){
+  const today = todayKey();
+  if(P.lastPlayed !== today){
+    const yest = new Date(Date.now() - 864e5).toISOString().slice(0,10);
+    P.streakDays = (P.lastPlayed === yest) ? (P.streakDays || 0) + 1 : 1;
+    P.lastPlayed = today;
+  }
+  P.rounds = (P.rounds || 0) + 1;
+  saveProgress();
+}
+function recordBest(key, pct){
+  if(!P.best[key] || pct > P.best[key]) P.best[key] = pct;
+  saveProgress();
+}
+
+/* ==========================================================================
+   4. LOADING CONTENT  (live sheet first, then samples)
+   ========================================================================== */
+
+let DATA = { vocabulary:[], quiz:[], irregular:[] };
+let SOURCE = "sample";
+
+// A CSV parser that copes with quoted fields containing commas and newlines.
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = "", inQuotes = false;
+  text = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    if(inQuotes){
+      if(c === '"'){
+        if(text[i+1] === '"'){ field += '"'; i++; }
+        else inQuotes = false;
+      } else field += c;
+    } else {
+      if(c === '"') inQuotes = true;
+      else if(c === ","){ row.push(field); field = ""; }
+      else if(c === "\n"){ row.push(field); rows.push(row); row = []; field = ""; }
+      else field += c;
+    }
+  }
+  row.push(field);
+  if(row.length > 1 || row[0] !== "") rows.push(row);
+  return rows;
+}
+
+function csvToObjects(text){
+  const rows = parseCSV(text);
+  if(!rows.length) return [];
+  const head = rows[0].map(h => h.trim().toLowerCase().replace(/\s+/g, ""));
+  return rows.slice(1).map(r => {
+    const o = {};
+    head.forEach((h, i) => { o[h] = (r[i] || "").trim(); });
+    return o;
+  }).filter(o => Object.values(o).some(v => v !== ""));
+}
+
+function mapVocabRow(o){
+  if(!o.english || !o.meaning) return null;
+  return {
+    level:(o.level || "A1").toUpperCase(), topic:o.topic || "General",
+    english:o.english, meaning:o.meaning, image:o.imageurl || ""
+  };
+}
+function mapQuizRow(o){
+  if(!o.question || !o.correct) return null;
+  return {
+    level:(o.level || "A1").toUpperCase(), topic:o.topic || "",
+    grammar:o.grammar || "", question:o.question, correct:o.correct,
+    wrong:[o.wrong1, o.wrong2, o.wrong3].filter(w => w && w.trim()),
+    explanation:o.explanation || ""
+  };
+}
+function mapVerbRow(o){
+  if(!o.infinitive || !o.pastsimple) return null;
+  return {
+    infinitive:o.infinitive, past:o.pastsimple, participle:o.pastparticiple || "",
+    level:(o.level || "A1").toUpperCase(), meaning:o.meaning || ""
+  };
+}
+
+async function fetchTab(url, mapper){
+  const res = await fetch(url, { cache:"no-store" });
+  if(!res.ok) throw new Error("HTTP " + res.status);
+  const rows = csvToObjects(await res.text()).map(mapper).filter(Boolean);
+  if(!rows.length) throw new Error("empty");
+  return rows;
+}
+
+async function loadData(){
+  const wanted = Object.values(SHEET_CSV).some(u => u);
+
+  if(wanted){
+    try{
+      const [v, q, i] = await Promise.all([
+        SHEET_CSV.vocabulary ? fetchTab(SHEET_CSV.vocabulary, mapVocabRow) : Promise.resolve(SAMPLE.vocabulary),
+        SHEET_CSV.quiz       ? fetchTab(SHEET_CSV.quiz, mapQuizRow)        : Promise.resolve(SAMPLE.quiz),
+        SHEET_CSV.irregular  ? fetchTab(SHEET_CSV.irregular, mapVerbRow)   : Promise.resolve(SAMPLE.irregular)
+      ]);
+      DATA = { vocabulary:v, quiz:q, irregular:i };
+      SOURCE = "live";
+      try{ localStorage.setItem("eg_cache_v1", JSON.stringify(DATA)); }catch(e){}
+      return;
+    }catch(e){
+      // live failed — try the last good copy this device saw
+      try{
+        const cached = localStorage.getItem("eg_cache_v1");
+        if(cached){ DATA = JSON.parse(cached); SOURCE = "cache"; return; }
+      }catch(e2){}
+    }
+  }
+  DATA = JSON.parse(JSON.stringify(SAMPLE));
+  SOURCE = "sample";
+}
+
+/* ---- questions carry their answers already normalised ---- */
+function quizFor(filter){
+  return DATA.quiz.filter(q => {
+    if(filter.level && q.level !== filter.level) return false;
+    if(filter.grammar && q.grammar !== filter.grammar) return false;
+    if(filter.topic && q.topic !== filter.topic) return false;
+    return q.wrong && q.wrong.length > 0;
+  });
+}
+function vocabFor(filter){
+  return DATA.vocabulary.filter(v =>
+    (!filter.level || v.level === filter.level) &&
+    (!filter.topic || v.topic === filter.topic));
+}
+function topicsIn(level){
+  return uniq(vocabFor({ level }).map(v => v.topic)).sort();
+}
+function grammarIn(level){
+  return uniq(DATA.quiz.filter(q => q.level === level && q.grammar).map(q => q.grammar)).sort();
+}
+function levelsWithContent(){
+  return LEVELS.filter(l =>
+    vocabFor({ level:l.code }).length || quizFor({ level:l.code }).length);
+}
+
+/* ==========================================================================
+   5. SCREENS
+   ========================================================================== */
+
+let nav = [];  // breadcrumb of screen functions, for the back button
+
+function go(fn, replace){
+  if(replace) nav[nav.length - 1] = fn; else nav.push(fn);
+  window.scrollTo(0, 0);
+  fn();
+}
+function back(){
+  nav.pop();
+  const prev = nav[nav.length - 1] || screenHome;
+  window.scrollTo(0, 0);
+  prev();
+}
+function topBar(crumb){
+  return nav.length > 1
+    ? '<div class="top"><button class="back" data-back aria-label="Go back">←</button>' +
+      '<div class="crumb">' + esc(crumb || "") + '</div></div>'
+    : "";
+}
+
+/* ---------- HOME ---------- */
+function screenHome(){
+  const levels = levelsWithContent();
+  const hour = new Date().getHours();
+  const hello = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+  const who = P.name ? hello + ", " + esc(P.name) : SITE_NAME;
+
+  app.innerHTML =
+    '<div class="stack">' +
+      '<div>' +
+        '<h1>' + who + '</h1>' +
+        '<p class="muted small" style="margin-top:4px">Pick your level and practise for a few minutes.</p>' +
+      '</div>' +
+
+      (P.rounds ?
+        '<div class="strip">' +
+          '<div class="stat"><b>' + P.rounds + '</b><span>rounds</span></div>' +
+          '<div class="stat"><b>' + (P.streakDays || 0) + '</b><span>day streak</span></div>' +
+          '<div class="stat"><b>' + Object.keys(P.best).length + '</b><span>sets tried</span></div>' +
+        '</div>' : "") +
+
+      '<h2 style="margin-top:6px">Choose a level</h2>' +
+      '<div class="stack-sm">' +
+        levels.map(l =>
+          '<button class="row" data-level="' + l.code + '">' +
+            '<span class="badge">' + l.code + '</span>' +
+            '<span class="grow"><span class="row-title">' + l.name + '</span><br>' +
+            '<span class="muted small">' + plural(topicsIn(l.code).length, "topic", "topics") + ' · ' +
+            plural(grammarIn(l.code).length, "grammar point", "grammar points") + '</span></span>' +
+            '<span class="chev">›</span>' +
+          '</button>').join("") +
+      '</div>' +
+
+      '<h2 style="margin-top:6px">Quick practice</h2>' +
+      '<button class="row" data-verbs>' +
+        '<span class="emoji">🔁</span>' +
+        '<span class="grow"><span class="row-title">Irregular verbs</span><br>' +
+        '<span class="muted small">' + DATA.irregular.length + ' verbs · drill or study list</span></span>' +
+        '<span class="chev">›</span>' +
+      '</button>' +
+
+      '<div class="card" style="margin-top:14px">' +
+        '<h2 style="font-size:15px">For the teacher</h2>' +
+        '<p class="muted small" style="margin:6px 0 12px">Open any exercise, then copy its link to send as homework.</p>' +
+        '<div class="btn-row">' +
+          '<button class="btn ghost small" data-setname>' + (P.name ? "Change name" : "Set name") + '</button>' +
+          '<button class="btn ghost small" data-reset>Reset progress</button>' +
+        '</div>' +
+        '<p class="tiny muted" style="margin-top:12px">Content: ' +
+          (SOURCE === "live" ? "live Google Sheet" : SOURCE === "cache" ? "saved copy (offline)" : "built-in sample") +
+        '</p>' +
+      '</div>' +
+    '</div>';
+
+  app.querySelectorAll("[data-level]").forEach(b =>
+    b.onclick = () => { P.lastLevel = b.dataset.level; saveProgress(); go(() => screenLevel(b.dataset.level)); });
+  $("[data-verbs]").onclick = () => go(screenVerbsMenu);
+  $("[data-setname]").onclick = askName;
+  $("[data-reset]").onclick = () => {
+    if(confirm("Clear your scores and streak on this device?")){
+      P = { name:P.name, lastLevel:"", best:{}, streakDays:0, lastPlayed:"", rounds:0 };
+      saveProgress(); screenHome(); toast("Progress cleared");
+    }
+  };
+}
+
+/* ---------- LEVEL: topics or grammar ---------- */
+let levelTab = "topics";
+
+function screenLevel(level){
+  const topics = topicsIn(level);
+  const grammar = grammarIn(level);
+  if(!topics.length) levelTab = "grammar";
+  if(!grammar.length) levelTab = "topics";
+
+  const list = levelTab === "topics"
+    ? topics.map(t => {
+        const n = vocabFor({ level, topic:t }).length;
+        return '<button class="row" data-topic="' + esc(t) + '">' +
+          '<span class="emoji">' + topicIcon(t) + '</span>' +
+          '<span class="grow"><span class="row-title">' + esc(t) + '</span><br>' +
+          '<span class="muted small">' + plural(n, "word", "words") + bestLabel(level + "|" + t) + '</span></span>' +
+          '<span class="chev">›</span></button>';
+      }).join("")
+    : grammar.map(g => {
+        const n = quizFor({ level, grammar:g }).length;
+        return '<button class="row" data-grammar="' + esc(g) + '">' +
+          '<span class="emoji">✏️</span>' +
+          '<span class="grow"><span class="row-title">' + esc(g) + '</span><br>' +
+          '<span class="muted small">' + plural(n, "question", "questions") + bestLabel(level + "|" + g) + '</span></span>' +
+          '<span class="chev">›</span></button>';
+      }).join("");
+
+  app.innerHTML =
+    topBar(levelName(level)) +
+    '<div class="stack">' +
+      '<h1>' + levelName(level) + '</h1>' +
+      ((topics.length && grammar.length) ?
+        '<div class="seg">' +
+          '<button data-tab="topics" aria-selected="' + (levelTab === "topics") + '">Vocabulary</button>' +
+          '<button data-tab="grammar" aria-selected="' + (levelTab === "grammar") + '">Grammar</button>' +
+        '</div>' : "") +
+      '<div class="stack-sm">' + (list || '<div class="card muted">Nothing here yet.</div>') + '</div>' +
+    '</div>';
+
+  wireBack();
+  app.querySelectorAll("[data-tab]").forEach(b =>
+    b.onclick = () => { levelTab = b.dataset.tab; screenLevel(level); });
+  app.querySelectorAll("[data-topic]").forEach(b =>
+    b.onclick = () => go(() => screenGamePick({ level, topic:b.dataset.topic })));
+  app.querySelectorAll("[data-grammar]").forEach(b =>
+    b.onclick = () => go(() => startQuiz({ level, grammar:b.dataset.grammar })));
+}
+
+function bestLabel(key){
+  return P.best[key] ? ' · best ' + P.best[key] + '%' : "";
+}
+
+/* ---------- GAME PICKER (for a vocabulary topic) ---------- */
+function screenGamePick(f){
+  const words = vocabFor(f).length;
+  const qs = quizFor(f).length;
+  const label = f.topic + " · " + f.level;
+
+  app.innerHTML =
+    topBar(label) +
+    '<div class="stack">' +
+      '<h1>' + topicIcon(f.topic) + " " + esc(f.topic) + '</h1>' +
+      '<p class="muted small">' + levelName(f.level) + '</p>' +
+      '<div class="stack-sm" style="margin-top:6px">' +
+        (words >= 4 ?
+          '<button class="row" data-g="match"><span class="emoji">🃏</span>' +
+          '<span class="grow"><span class="row-title">Match the pairs</span><br>' +
+          '<span class="muted small">Tap a word, tap its meaning</span></span>' +
+          '<span class="chev">›</span></button>' : "") +
+        (qs ?
+          '<button class="row" data-g="quiz"><span class="emoji">📝</span>' +
+          '<span class="grow"><span class="row-title">Fill in the blank</span><br>' +
+          '<span class="muted small">' + qs + ' questions</span></span>' +
+          '<span class="chev">›</span></button>' : "") +
+        (words >= 4 ?
+          '<button class="row" data-g="study"><span class="emoji">📖</span>' +
+          '<span class="grow"><span class="row-title">Study the words first</span><br>' +
+          '<span class="muted small">Word list with meanings</span></span>' +
+          '<span class="chev">›</span></button>' : "") +
+      '</div>' +
+      homeworkCard(f) +
+    '</div>';
+
+  wireBack(); wireHomework(f);
+  const pick = { match:() => startMatch(f), quiz:() => startQuiz(f), study:() => screenStudyWords(f) };
+  app.querySelectorAll("[data-g]").forEach(b => b.onclick = () => go(pick[b.dataset.g]));
+}
+
+function screenStudyWords(f){
+  const words = vocabFor(f);
+  app.innerHTML =
+    topBar("Word list") +
+    '<div class="stack">' +
+      '<h1>' + esc(f.topic) + ' words</h1>' +
+      '<div class="card"><table class="study"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>' +
+        words.map(w => '<tr><td><b>' + esc(w.english) + '</b></td><td class="muted">' + esc(w.meaning) + '</td></tr>').join("") +
+      '</tbody></table></div>' +
+      '<button class="btn primary wide" data-play>Play the matching game</button>' +
+    '</div>';
+  wireBack();
+  $("[data-play]").onclick = () => go(() => startMatch(f), true);
+}
+
+/* ---------- HOMEWORK LINK ---------- */
+function buildLink(f, game){
+  const u = new URL(location.href.split("?")[0].split("#")[0]);
+  if(f.level) u.searchParams.set("level", f.level);
+  if(f.topic) u.searchParams.set("topic", f.topic);
+  if(f.grammar) u.searchParams.set("grammar", f.grammar);
+  if(game) u.searchParams.set("game", game);
+  return u.toString();
+}
+function homeworkCard(f, game){
+  return '<div class="card" style="margin-top:8px">' +
+    '<h2 style="font-size:15px">Homework link</h2>' +
+    '<p class="muted small" style="margin:6px 0 12px">Send this to a student — it opens straight into this exercise.</p>' +
+    '<button class="btn wide" data-copylink>🔗 Copy homework link</button></div>';
+}
+function wireHomework(f, game){
+  const b = $("[data-copylink]");
+  if(b) b.onclick = () => copyText(buildLink(f, game), "Homework link copied");
+}
+async function copyText(text, msg){
+  try{
+    await navigator.clipboard.writeText(text);
+    toast(msg || "Copied");
+  }catch(e){
+    prompt("Copy this:", text);
+  }
+}
+
+/* ==========================================================================
+   6. GAME: QUIZ / GRAMMAR
+   ========================================================================== */
+
+let G = null;   // the round in progress
+
+function startQuiz(f){
+  const pool = shuffle(quizFor(f)).slice(0, ROUND_LENGTH);
+  if(!pool.length){ toast("No questions here yet"); back(); return; }
+  G = {
+    kind:"quiz", filter:f, items:pool, i:0, right:0, missed:[],
+    label:(f.grammar || f.topic || "Practice") + " · " + f.level,
+    key:f.level + "|" + (f.grammar || f.topic)
+  };
+  renderQuiz();
+}
+
+function renderQuiz(){
+  const q = G.items[G.i];
+  const opts = shuffle([q.correct].concat(q.wrong));
+  const keys = ["1","2","3","4"];
+
+  app.innerHTML =
+    topBar(G.label) +
+    '<div class="stack">' +
+      '<div class="hud">' +
+        '<div class="bar"><i style="width:' + (G.i / G.items.length * 100) + '%"></i></div>' +
+        '<div class="score">' + (G.i + 1) + '/' + G.items.length + '</div>' +
+      '</div>' +
+      '<p class="question">' + renderBlank(q.question) + '</p>' +
+      '<div class="stack-sm" id="opts">' +
+        opts.map((o, n) =>
+          '<button class="opt" data-opt="' + esc(o) + '">' +
+            '<span class="key">' + keys[n] + '</span><span>' + esc(o) + '</span>' +
+          '</button>').join("") +
+      '</div>' +
+      '<div id="fb"></div>' +
+    '</div>';
+
+  wireBack();
+  app.querySelectorAll(".opt").forEach(b => b.onclick = () => answerQuiz(b, q));
+  G.keyHandler = e => {
+    const n = keys.indexOf(e.key);
+    const buttons = app.querySelectorAll(".opt:not([disabled])");
+    if(n > -1 && buttons[n]) buttons[n].click();
+    else if(e.key === "Enter"){ const nx = $("[data-next]"); if(nx) nx.click(); }
+  };
+  document.addEventListener("keydown", G.keyHandler);
+}
+
+function renderBlank(text){
+  const parts = esc(text).split("___");
+  return parts.length > 1 ? parts.join('<span class="blank"></span>') : parts[0];
+}
+
+function answerQuiz(btn, q){
+  const chosen = btn.dataset.opt;
+  const ok = chosen === q.correct;
+  if(ok) G.right++;
+  else G.missed.push({ q:q.question, correct:q.correct, yours:chosen, why:q.explanation });
+
+  app.querySelectorAll(".opt").forEach(b => {
+    b.disabled = true;
+    if(b.dataset.opt === q.correct) b.classList.add("correct");
+    else if(b === btn) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+
+  // show the answer inside the sentence
+  const blank = $(".blank");
+  if(blank){ blank.textContent = " " + q.correct + " "; blank.classList.add("filled"); }
+
+  const last = G.i === G.items.length - 1;
+  $("#fb").innerHTML =
+    '<div class="feedback ' + (ok ? "good" : "bad") + '">' +
+      '<div class="fb-title">' + (ok ? "Correct" : "Not quite") + '</div>' +
+      (q.explanation ? '<div class="small">' + esc(q.explanation) + '</div>' : "") +
+    '</div>' +
+    '<button class="btn primary wide" data-next style="margin-top:12px">' +
+      (last ? "See my result" : "Next question") + ' →</button>';
+
+  $("[data-next]").onclick = () => {
+    G.i++;
+    if(G.i >= G.items.length){ finishRound(); }
+    else { document.removeEventListener("keydown", G.keyHandler); renderQuiz(); }
+  };
+  $("[data-next]").focus();
+}
+
+/* ==========================================================================
+   7. GAME: MATCH THE PAIRS
+   ========================================================================== */
+
+function startMatch(f){
+  const words = shuffle(vocabFor(f)).slice(0, MATCH_PAIRS);
+  if(words.length < 2){ toast("Not enough words yet"); back(); return; }
+  const cards = [];
+  words.forEach((w, i) => {
+    cards.push({ id:i, side:"a", text:w.english, image:w.image });
+    cards.push({ id:i, side:"b", text:w.meaning });
+  });
+  G = {
+    kind:"match", filter:f, words, cards:shuffle(cards),
+    sel:null, done:0, tries:0, wrongTries:0,
+    label:f.topic + " · " + f.level, key:f.level + "|" + f.topic
+  };
+  renderMatch();
+}
+
+function renderMatch(){
+  app.innerHTML =
+    topBar(G.label) +
+    '<div class="stack">' +
+      '<div class="hud">' +
+        '<div class="bar"><i style="width:' + (G.done / G.words.length * 100) + '%"></i></div>' +
+        '<div class="score">' + G.done + '/' + G.words.length + '</div>' +
+      '</div>' +
+      '<p class="muted small">Tap a word, then tap its meaning.</p>' +
+      '<div class="grid" id="grid">' +
+        G.cards.map((c, n) =>
+          '<button class="tile" data-n="' + n + '">' +
+            (c.image ? '<img src="' + esc(c.image) + '" alt="">' : esc(c.text)) +
+          '</button>').join("") +
+      '</div>' +
+    '</div>';
+
+  wireBack();
+  app.querySelectorAll(".tile").forEach(t => t.onclick = () => tapTile(t));
+}
+
+function tapTile(tile){
+  if(tile.classList.contains("done")) return;
+  const n = +tile.dataset.n;
+  const card = G.cards[n];
+
+  if(G.sel === null){
+    G.sel = n; tile.classList.add("sel"); return;
+  }
+  if(G.sel === n){ G.sel = null; tile.classList.remove("sel"); return; }
+
+  const first = app.querySelector('.tile[data-n="' + G.sel + '"]');
+  const firstCard = G.cards[G.sel];
+  G.tries++;
+
+  if(firstCard.id === card.id && firstCard.side !== card.side){
+    [first, tile].forEach(t => { t.classList.remove("sel"); t.classList.add("hit"); });
+    G.done++;
+    setTimeout(() => {
+      [first, tile].forEach(t => { t.classList.remove("hit"); t.classList.add("done"); });
+      const bar = $(".bar > i"); if(bar) bar.style.width = (G.done / G.words.length * 100) + "%";
+      const sc = $(".score"); if(sc) sc.textContent = G.done + "/" + G.words.length;
+      if(G.done === G.words.length) finishRound();
+    }, 420);
+  } else {
+    G.wrongTries++;
+    first.classList.remove("sel");
+    [first, tile].forEach(t => t.classList.add("miss"));
+    setTimeout(() => [first, tile].forEach(t => t.classList.remove("miss")), 400);
+  }
+  G.sel = null;
+}
+
+/* ==========================================================================
+   8. GAME: IRREGULAR VERBS
+   ========================================================================== */
+
+function screenVerbsMenu(){
+  const levels = uniq(DATA.irregular.map(v => v.level)).sort();
+  app.innerHTML =
+    topBar("Irregular verbs") +
+    '<div class="stack">' +
+      '<h1>🔁 Irregular verbs</h1>' +
+      '<p class="muted small">Type the past simple and the past participle.</p>' +
+      '<h2 style="margin-top:6px">Drill by level</h2>' +
+      '<div class="stack-sm">' +
+        levels.map(l =>
+          '<button class="row" data-vl="' + l + '"><span class="badge">' + l + '</span>' +
+          '<span class="grow"><span class="row-title">' + levelName(l).split(" — ")[1] + '</span><br>' +
+          '<span class="muted small">' + DATA.irregular.filter(v => v.level === l).length + ' verbs</span></span>' +
+          '<span class="chev">›</span></button>').join("") +
+        '<button class="row" data-vl="all"><span class="emoji">🎲</span>' +
+        '<span class="grow"><span class="row-title">Mixed — all levels</span><br>' +
+        '<span class="muted small">' + DATA.irregular.length + ' verbs</span></span>' +
+        '<span class="chev">›</span></button>' +
+      '</div>' +
+      '<button class="row" data-study><span class="emoji">📖</span>' +
+      '<span class="grow"><span class="row-title">Study list</span><br>' +
+      '<span class="muted small">See the whole table</span></span>' +
+      '<span class="chev">›</span></button>' +
+    '</div>';
+
+  wireBack();
+  app.querySelectorAll("[data-vl]").forEach(b =>
+    b.onclick = () => go(() => startVerbs(b.dataset.vl)));
+  $("[data-study]").onclick = () => go(screenVerbStudy);
+}
+
+function screenVerbStudy(){
+  app.innerHTML =
+    topBar("Study list") +
+    '<div class="stack">' +
+      '<h1>Irregular verbs</h1>' +
+      '<div class="card" style="overflow-x:auto"><table class="study">' +
+        '<thead><tr><th>Infinitive</th><th>Past</th><th>Participle</th></tr></thead><tbody>' +
+        DATA.irregular.map(v =>
+          '<tr><td><b>' + esc(v.infinitive) + '</b></td><td>' + esc(v.past) +
+          '</td><td>' + esc(v.participle) + '</td></tr>').join("") +
+      '</tbody></table></div>' +
+    '</div>';
+  wireBack();
+}
+
+function startVerbs(level){
+  const pool = shuffle(DATA.irregular.filter(v => level === "all" || v.level === level))
+                 .slice(0, ROUND_LENGTH);
+  if(!pool.length){ toast("No verbs here yet"); back(); return; }
+  G = {
+    kind:"verbs", items:pool, i:0, right:0, missed:[],
+    label:"Irregular verbs" + (level === "all" ? "" : " · " + level),
+    key:"verbs|" + level, filter:{ level:level === "all" ? "" : level }
+  };
+  renderVerb();
+}
+
+function accepts(input, answer){
+  const clean = s => s.toLowerCase().trim().replace(/\s+/g, " ");
+  return answer.split("/").map(clean).includes(clean(input));
+}
+
+function renderVerb(){
+  const v = G.items[G.i];
+  app.innerHTML =
+    topBar(G.label) +
+    '<div class="stack">' +
+      '<div class="hud">' +
+        '<div class="bar"><i style="width:' + (G.i / G.items.length * 100) + '%"></i></div>' +
+        '<div class="score">' + (G.i + 1) + '/' + G.items.length + '</div>' +
+      '</div>' +
+      '<div class="card">' +
+        '<p class="verb-prompt">' + esc(v.infinitive) + '</p>' +
+        (v.meaning ? '<p class="muted small" style="text-align:center;margin-bottom:16px">' + esc(v.meaning) + '</p>' : "") +
+        '<div class="stack">' +
+          '<div class="field"><label for="p1">Past simple</label>' +
+          '<input id="p1" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="next"></div>' +
+          '<div class="field"><label for="p2">Past participle</label>' +
+          '<input id="p2" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done"></div>' +
+        '</div>' +
+      '</div>' +
+      '<button class="btn primary wide" data-check>Check</button>' +
+      '<div id="fb"></div>' +
+    '</div>';
+
+  wireBack();
+  const p1 = $("#p1"), p2 = $("#p2");
+  p1.focus();
+  p1.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); p2.focus(); } };
+  p2.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); $("[data-check]").click(); } };
+  $("[data-check]").onclick = () => checkVerb(v);
+}
+
+function checkVerb(v){
+  const p1 = $("#p1"), p2 = $("#p2");
+  const ok1 = accepts(p1.value, v.past);
+  const ok2 = !v.participle || accepts(p2.value, v.participle);
+  const ok = ok1 && ok2;
+
+  p1.classList.add(ok1 ? "correct" : "wrong");
+  p2.classList.add(ok2 ? "correct" : "wrong");
+  p1.disabled = p2.disabled = true;
+
+  if(ok) G.right++;
+  else G.missed.push({
+    q:v.infinitive,
+    correct:v.past + " / " + v.participle,
+    yours:(p1.value || "—") + " / " + (p2.value || "—"),
+    why:""
+  });
+
+  const last = G.i === G.items.length - 1;
+  $("[data-check]").classList.add("hide");
+  $("#fb").innerHTML =
+    '<div class="feedback ' + (ok ? "good" : "bad") + '">' +
+      '<div class="fb-title">' + (ok ? "Correct" : v.infinitive + " — " + v.past + " — " + v.participle) + '</div>' +
+    '</div>' +
+    '<button class="btn primary wide" data-next style="margin-top:12px">' +
+      (last ? "See my result" : "Next verb") + ' →</button>';
+
+  $("[data-next]").onclick = () => {
+    G.i++;
+    if(G.i >= G.items.length) finishRound(); else renderVerb();
+  };
+  $("[data-next]").focus();
+}
+
+/* ==========================================================================
+   9. FINISH SCREEN + SHARING
+   ========================================================================== */
+
+function finishRound(){
+  if(G.keyHandler) document.removeEventListener("keydown", G.keyHandler);
+  noteRoundPlayed();
+
+  let pct, headline;
+  if(G.kind === "match"){
+    const perfect = G.words.length;
+    pct = Math.max(0, Math.round(perfect / Math.max(G.tries, perfect) * 100));
+    headline = perfect + " pairs";
+  } else {
+    pct = Math.round(G.right / G.items.length * 100);
+    headline = G.right + " / " + G.items.length;
+  }
+  recordBest(G.key, pct);
+
+  const praise = pct >= 90 ? "Excellent!" : pct >= 70 ? "Well done!" :
+                 pct >= 50 ? "Good effort — keep going." : "Keep practising, you'll get there.";
+
+  app.innerHTML =
+    '<div class="stack">' +
+      '<div class="card" style="text-align:center;padding:28px 18px">' +
+        '<p class="muted small" style="margin-bottom:10px">' + esc(G.label) + '</p>' +
+        '<div class="big-score">' + esc(headline) + '</div>' +
+        '<p style="margin-top:10px;font-weight:650">' + praise + '</p>' +
+        (P.best[G.key] === pct && pct > 0 ? '<p class="tiny muted" style="margin-top:6px">New personal best</p>' : "") +
+      '</div>' +
+
+      (G.missed && G.missed.length ?
+        '<div class="card"><h2 style="font-size:16px">Worth reviewing</h2>' +
+          G.missed.map(m =>
+            '<div class="review">' +
+              '<div class="q">' + esc(m.q.replace(/___/g, "____")) + '</div>' +
+              '<div class="a">✓ ' + esc(m.correct) + '</div>' +
+              '<div class="yours">✗ you said: ' + esc(m.yours) + '</div>' +
+              (m.why ? '<div class="tiny muted" style="margin-top:4px">' + esc(m.why) + '</div>' : "") +
+            '</div>').join("") +
+        '</div>' : "") +
+
+      '<div class="card">' +
+        '<h2 style="font-size:15px">Send your result to your teacher</h2>' +
+        '<p class="muted small" style="margin:6px 0 12px">Nothing is sent automatically — you choose.</p>' +
+        '<div class="btn-row">' +
+          '<button class="btn primary" data-share>Share</button>' +
+          '<button class="btn" data-tg>Telegram</button>' +
+          '<button class="btn" data-wa>WhatsApp</button>' +
+          '<button class="btn" data-copy>Copy</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="btn-row">' +
+        '<button class="btn primary" data-again>Play again</button>' +
+        '<button class="btn" data-home>Back to menu</button>' +
+      '</div>' +
+    '</div>';
+
+  const text = resultText(headline, pct);
+  $("[data-share]").onclick = async () => {
+    if(navigator.share){ try{ await navigator.share({ text }); }catch(e){} }
+    else copyText(text, "Result copied — paste it to your teacher");
+  };
+  $("[data-tg]").onclick = () => open("https://t.me/share/url?url=" +
+      encodeURIComponent(location.origin + location.pathname) + "&text=" + encodeURIComponent(text), "_blank");
+  $("[data-wa]").onclick = () => open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
+  $("[data-copy]").onclick = () => copyText(text, "Result copied");
+
+  $("[data-again]").onclick = () => {
+    if(G.kind === "match") startMatch(G.filter);
+    else if(G.kind === "verbs") startVerbs(G.filter.level || "all");
+    else startQuiz(G.filter);
+  };
+  $("[data-home]").onclick = () => { nav = [screenHome]; screenHome(); };
+
+  if(!P.name) setTimeout(askName, 700);
+}
+
+function resultText(headline, pct){
+  const when = new Date().toLocaleDateString("en-GB", { day:"numeric", month:"short" });
+  return (P.name ? P.name + " — " : "") + G.label + " — " + headline +
+         " (" + pct + "%) — " + when + " · " + SITE_NAME;
+}
+
+function askName(){
+  const n = prompt("What's your first name? (It's only used in the message you send your teacher.)", P.name || "");
+  if(n !== null){
+    P.name = n.trim().slice(0, 24);
+    saveProgress();
+    toast(P.name ? "Hi, " + P.name + "!" : "Name cleared");
+  }
+}
+
+/* ==========================================================================
+   10. START UP  (including homework links)
+   ========================================================================== */
+
+function wireBack(){
+  const b = $("[data-back]");
+  if(b) b.onclick = back;
+}
+
+function openFromURL(){
+  const p = new URLSearchParams(location.search);
+  const level = (p.get("level") || "").toUpperCase();
+  const topic = p.get("topic") || "";
+  const grammar = p.get("grammar") || "";
+  const game = (p.get("game") || "").toLowerCase();
+  if(!level && !game) return false;
+
+  nav = [screenHome];   // so Back always leads somewhere sensible
+
+  if(game === "verbs"){ nav.push(() => startVerbs(level || "all")); startVerbs(level || "all"); return true; }
+  if(grammar){ const f = { level, grammar }; nav.push(() => startQuiz(f)); startQuiz(f); return true; }
+  if(topic){
+    const f = { level, topic };
+    if(game === "match"){ nav.push(() => startMatch(f)); startMatch(f); return true; }
+    if(game === "quiz"){ nav.push(() => startQuiz(f)); startQuiz(f); return true; }
+    nav.push(() => screenGamePick(f)); screenGamePick(f); return true;
+  }
+  if(level){ nav.push(() => screenLevel(level)); screenLevel(level); return true; }
+  return false;
+}
+
+(async function init(){
+  loadProgress();
+  await loadData();
+  nav = [screenHome];
+  if(!openFromURL()) screenHome();
+})();
+</script>
+</body>
+</html>
