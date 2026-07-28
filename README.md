@@ -3,8 +3,7 @@
 Short interactive English exercises for my students — vocabulary, grammar and
 irregular verbs. Works on a phone, no login, nothing to install.
 
-**Not published yet** — running locally only. When it goes on GitHub Pages the
-address will be `https://yerevent.github.io/english-games/`.
+**Live site:** https://yerevent.github.io/english-games/
 
 ## What's in it
 
@@ -22,9 +21,9 @@ that actually have content appear.
 Open any exercise and tap **Copy homework link**, or build one by hand:
 
 ```
-index.html?level=A2&grammar=Past%20Simple
-index.html?level=A1&topic=Food&game=match
-index.html?game=verbs&level=A2
+https://yerevent.github.io/english-games/?level=A2&grammar=Past%20Simple
+https://yerevent.github.io/english-games/?level=A1&topic=Food&game=match
+https://yerevent.github.io/english-games/?game=verbs&level=A2
 ```
 
 The link opens straight into that exercise — no menus.
