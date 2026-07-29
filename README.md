@@ -1,56 +1,93 @@
 # English Games
 
-Short interactive English exercises for my students — vocabulary, grammar and
-irregular verbs. Works on a phone, no login, nothing to install.
+Interactive English practice for my students — an A1 course with grammar, vocabulary,
+speaking and writing. Works on a phone, no login, nothing to install.
 
 **Live site:** https://yerevent.github.io/english-games/
 
-## What's in it
+## The A1 course
 
-- **Match the pairs** — tap a word, tap its meaning
-- **Fill in the blank** — multiple choice, with an explanation after every answer
-- **Grammar practice** — Present Simple, Past Simple, Present Perfect, Articles,
-  Comparatives, Modal verbs, Conditionals
-- **Irregular verbs** — type the past simple and past participle, plus a study list
+Ten modules, following the syllabus:
 
-Levels are shown as `A1 — Beginner` through `C1 — Advanced`. Only levels and topics
-that actually have content appear.
+| # | Module | Grammar | Writing task |
+|---|--------|---------|--------------|
+| 1 | Hello! | Subject pronouns, To be, Questions with To be | Introduce yourself |
+| 2 | My Family | Possessive adjectives, Possessive 's, Demonstratives, Plurals | Describe your family · My best friend |
+| 3 | My Home | There is/are, Articles, Some/Any, Prepositions of place | Describe your bedroom |
+| 4 | Everyday Life | Present Simple, Adverbs of frequency, Telling the time | My daily routine |
+| 5 | Free Time | Can/Can't, Like + verb-ing, Object pronouns | My hobby |
+| 6 | Food | Countable & uncountable, Some/Any, Would like | My favourite food |
+| 7 | Around Town | Imperatives, Prepositions of movement, Can for requests | My town |
+| 8 | Clothes & Shopping | Demonstratives, Adjectives & simple comparisons | My favourite outfit |
+| 9 | Weather & Seasons | Present Continuous, Present Simple vs Continuous | Today's weather |
+| 10 | Health | Have got, Imperatives for advice | Healthy habits |
+
+Every module also has six speaking activities: role-play, picture description,
+question cards (on a spinning wheel), find someone who…, information gap, and
+discussion questions.
+
+## Libraries
+
+- **Grammar Library** — 25 topics, each with a rules table, examples, a "watch out"
+  tip and its own practice games.
+- **Vocabulary Library** — 16 themed sets with meanings and example sentences.
+- **Irregular verbs** — typed drill plus a study list.
+
+## The games
+
+| Game | Where it works | What the student does |
+|------|----------------|----------------------|
+| Multiple Choice | grammar | Picks the right answer, gets an explanation |
+| Fill in the Blanks | grammar | Types the missing word |
+| Drag & Drop | grammar | Taps a word from the bank into the gap |
+| Sentence Builder | grammar | Taps the words into the correct order |
+| Error Correction | grammar | Taps the one wrong word in a sentence |
+| Timed Challenge | grammar | Same questions, 15 seconds each |
+| Memory Match | vocabulary | Matches word to meaning |
+| Hidden Pairs | vocabulary | Turns cards over to find pairs |
+| Flashcards | vocabulary | Flips through words and meanings |
+| Unscramble | vocabulary | Puts the letters in order |
+| Speaking Wheel | speaking | Spins for a question to answer out loud |
 
 ## Homework links
 
-Open any exercise and tap **Copy homework link**, or build one by hand:
+Open any topic and tap **Copy homework link**, or build one by hand:
 
 ```
-https://yerevent.github.io/english-games/?level=A2&grammar=Past%20Simple
-https://yerevent.github.io/english-games/?level=A1&topic=Food&game=match
-https://yerevent.github.io/english-games/?game=verbs&level=A2
+https://yerevent.github.io/english-games/?g=present-simple
+https://yerevent.github.io/english-games/?g=present-simple&game=build
+https://yerevent.github.io/english-games/?v=family&game=memory
+https://yerevent.github.io/english-games/?m=4
 ```
 
-The link opens straight into that exercise — no menus.
+`g=` a grammar topic · `v=` a vocabulary set · `m=` a module number ·
+`game=` mcq, gap, drag, build, fix, timed, match, memory, cards, unscramble
 
 ## Sending results
 
-There are no accounts. At the end of a round the student sees their score and can
-send it to me with the Share / Telegram / WhatsApp / Copy buttons. Nothing is sent
-automatically. Scores and streaks are stored only in the student's own browser.
+No accounts. At the end of a round the student sees their score and can send it with
+the Share / Telegram / WhatsApp / Copy buttons. Writing tasks have a "Send to teacher"
+button too. Nothing is sent automatically. Scores, streaks and saved writing stay in
+the student's own browser.
 
-## Adding content
+## Adding or changing content
 
-Right now the content lives inside `index.html`, in the `SAMPLE` section.
+Open these files in Notepad — each one explains its format at the top, and adding
+something means copying a line and changing the words.
 
-To switch to a Google Sheet instead:
+- `content/a1-vocab.js` — vocabulary sets
+- `content/a1-grammar-1.js` — grammar topics 1–13
+- `content/a1-grammar-2.js` — grammar topics 14–25
+- `content/a1-modules.js` — modules, speaking tasks, writing tasks
 
-1. Make a sheet with three tabs — `Vocabulary`, `Quiz`, `IrregularVerbs`:
-   - **Vocabulary:** Level, Topic, English, Meaning, ImageURL
-   - **Quiz:** Level, Topic, Grammar, Question, Correct, Wrong1, Wrong2, Wrong3, Explanation
-   - **IrregularVerbs:** Infinitive, PastSimple, PastParticiple, Level, Meaning
-2. **File → Share → Publish to web**, pick a tab, choose **Comma-separated values (.csv)**.
-3. Paste each link into `SHEET_CSV` near the top of `index.html`.
+Grammar exercises use four formats: `mcq` (multiple choice), `gap` (fill the blank,
+also used by Drag & Drop), `build` (just write the correct sentence — the game
+scrambles it), and `fix` (a wrong sentence and its correction).
 
-Use `___` to mark the gap in a Quiz question, e.g. `She ___ to school every day.`
-The site loads the live sheet first, falls back to the last saved copy if it can't
-reach it, and falls back to the built-in samples after that.
+The older A2/B1/B2 material can also come from a Google Sheet — publish the tabs as
+CSV and paste the links into `SHEET_CSV` near the top of `index.html`.
 
 ## Files
 
-- `index.html` — the whole site: layout, styles and games in one file
+- `index.html` — the app: layout, styles and all game engines
+- `content/` — all the teaching content
