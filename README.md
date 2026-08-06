@@ -26,6 +26,32 @@ Every module also has six speaking activities: role-play, picture description,
 question cards (on a spinning wheel), find someone who…, information gap, and
 discussion questions.
 
+## ABC & 123 — for young learners
+
+A separate, bigger and brighter page for children who are still learning the
+alphabet and numbers: **https://yerevent.github.io/english-games/abc.html**
+
+| Screen | What the child does |
+|--------|--------------------|
+| Learn the alphabet | Steps through A–Z: big letter, small letter, a drawing and the word |
+| Big & small letters | Matches **A** with **a** |
+| Letters and pictures | Matches **A** with the apple — the word appears once it is right |
+| Learn numbers | Steps through 1–20: the numeral, the word and that many things to count |
+| Number & word | Matches **3** with **three** |
+| Count and match | Counts the balls and matches them to the numeral |
+
+Before every game the child (or you) chooses the range — **A–E**, **A–H**, **A–M**,
+**A–Z**, or any two letters with the *from* and *to* boxes. Only those letters go into
+the game, so it grows with what has been taught. Numbers work the same way, 1–20.
+
+One round is 5–6 pairs picked at random from that range, so the same setting gives a
+different game every time. There is no timer and no way to lose — a wrong pair just
+shakes and can be tried again. Stars at the end reflect how many tries it took.
+
+The 26 pictures are drawn in code, so there are no image files to lose and the page
+works offline once opened. The letter and word are also read out loud using the
+phone's own voice; the 🔊 button in the corner turns all sound off.
+
 ## Libraries
 
 - **Grammar Library** — 25 topics, each with a rules table, examples, a "watch out"
@@ -90,4 +116,9 @@ CSV and paste the links into `SHEET_CSV` near the top of `index.html`.
 ## Files
 
 - `index.html` — the app: layout, styles and all game engines
+- `abc.html` — the ABC & 123 page for young learners (its own file, nothing shared)
 - `content/` — all the teaching content
+
+To change a word in ABC & 123, open `abc.html` in Notepad and find `THE ALPHABET`
+near the top of the script — each letter is one line. The drawings live just below it
+under `THE DRAWINGS`, so a new word usually needs a new drawing to go with it.

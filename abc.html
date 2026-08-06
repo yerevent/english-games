@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffd93d">
+<title>ABC &amp; 123 — English Games</title>
+
+<!--
+  ============================================================================
+  ABC & 123 — letters and numbers for young learners.
+  No server, no login, nothing to install. One file.
+
+  WHAT IS INSIDE
+    Learn the alphabet      big letter + picture + the word
+    Big & small letters     matching game (A with a)
+    Letter and picture      matching game (A with the apple)
+    Learn numbers           numeral + the word + things to count
+    Number and word         matching game (3 with three)
+    Count and match         matching game (3 with three balloons)
+
+  CHANGING A WORD
+    Scroll down to "THE ALPHABET". Each line looks like this:
+        { l:"A", word:"apple", art:"apple" },
+    You may change  word:"apple"  to another word starting with A.
+    But "art" is the name of the drawing, and only the drawings listed in
+    "THE DRAWINGS" exist. So if you change the word you will normally want to
+    keep the old picture, or ask for a new drawing to be added.
+
+  HOW MANY PAIRS IN ONE ROUND
+    Look for  PAIRS_TEXT = 6  and  PAIRS_PICTURE = 5  below.
+  ============================================================================
+-->
+
+<style>
+:root{
+  color-scheme: light;
+  --sky:#eaf4ff;
+  --ink:#2a2f45;
+  --muted:#6b7391;
+  --card:#ffffff;
+  --line:#dfe6f5;
+  --shadow:0 4px 0 rgba(42,47,69,.10), 0 10px 24px rgba(42,47,69,.10);
+  --r:22px;
+
+  --c1:#ff6b6b; --c2:#ffa63d; --c3:#ffd93d; --c4:#4ecb71;
+  --c5:#3ec5e0; --c6:#5b8cff; --c7:#a878ff; --c8:#ff7ac0;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--sky);
+  background-image:
+    radial-gradient(circle at 12% 8%, #fff3c4 0 22%, transparent 55%),
+    radial-gradient(circle at 88% 4%, #ffe0ec 0 20%, transparent 55%),
+    radial-gradient(circle at 50% 100%, #d9f7e6 0 30%, transparent 60%);
+  background-attachment:fixed;
+  color:var(--ink);
+  font-family:"Comic Sans MS","Chalkboard SE","Segoe UI Rounded","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  font-size:17px; line-height:1.45; font-weight:700;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.wrap{max-width:620px;margin:0 auto;padding:14px 14px 40px}
+h1{font-size:28px;margin:0;line-height:1.2}
+h2{font-size:20px;margin:0}
+p{margin:0}
+.muted{color:var(--muted);font-weight:700}
+.small{font-size:14px}
+.center{text-align:center}
+.hide{display:none !important}
+.stack{display:flex;flex-direction:column;gap:14px}
+.stack-sm{display:flex;flex-direction:column;gap:10px}
+
+/* ---------- top bar ---------- */
+.top{display:flex;align-items:center;gap:10px;min-height:52px;margin-bottom:10px}
+.iconbtn{
+  border:3px solid var(--line);background:var(--card);color:var(--ink);
+  width:48px;height:48px;border-radius:16px;font-size:22px;cursor:pointer;
+  display:grid;place-items:center;flex:none;box-shadow:0 3px 0 rgba(42,47,69,.10);
+  font-family:inherit;
+}
+.iconbtn:active{transform:translateY(2px);box-shadow:none}
+.top .grow{flex:1;min-width:0;text-align:center;font-size:17px;font-weight:800}
+
+/* ---------- home tiles ---------- */
+.tile{
+  display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  border:0;border-radius:var(--r);padding:16px 18px;cursor:pointer;
+  font-family:inherit;font-size:19px;font-weight:800;color:#26304a;
+  box-shadow:0 5px 0 rgba(42,47,69,.16), 0 10px 22px rgba(42,47,69,.12);
+}
+.tile:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(42,47,69,.16)}
+.tile .emoji{font-size:34px;line-height:1;flex:none}
+.tile .sub{display:block;font-size:13.5px;font-weight:700;opacity:.75;margin-top:2px}
+.t1{background:linear-gradient(135deg,#ffe08a,#ffc93d)}
+.t2{background:linear-gradient(135deg,#a8e6a1,#5ecf7d)}
+.t3{background:linear-gradient(135deg,#a9d9ff,#6fb4ff)}
+.t4{background:linear-gradient(135deg,#ffc0d4,#ff8fb4)}
+.t5{background:linear-gradient(135deg,#d9c2ff,#b18cff)}
+.t6{background:linear-gradient(135deg,#ffd0a8,#ffab6b)}
+
+.section-label{font-size:15px;font-weight:800;color:var(--muted);margin:8px 2px 0}
+
+/* ---------- generic card ---------- */
+.card{background:var(--card);border:3px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+
+/* ---------- buttons ---------- */
+.btn{
+  border:0;border-radius:18px;padding:14px 22px;font-family:inherit;
+  font-size:19px;font-weight:800;cursor:pointer;color:#fff;
+  background:linear-gradient(135deg,#5b8cff,#3f6fe0);
+  box-shadow:0 5px 0 rgba(42,47,69,.20);
+}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(42,47,69,.20)}
+.btn.go{background:linear-gradient(135deg,#5ed67f,#33b45f)}
+.btn.ghost{background:var(--card);color:var(--ink);border:3px solid var(--line);box-shadow:0 4px 0 rgba(42,47,69,.10)}
+.btn.big{width:100%;font-size:22px;padding:18px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+/* ---------- range picker ---------- */
+.pickrow{display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap}
+select{
+  font-family:inherit;font-size:26px;font-weight:800;color:var(--ink);
+  border:3px solid var(--line);border-radius:16px;background:var(--card);
+  padding:8px 10px;min-width:88px;text-align:center;box-shadow:0 3px 0 rgba(42,47,69,.08);
+}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.chip{
+  border:3px solid var(--line);background:var(--card);border-radius:999px;
+  padding:8px 14px;font-family:inherit;font-size:15px;font-weight:800;color:var(--ink);cursor:pointer;
+}
+.chip:active{transform:translateY(2px)}
+.chip.on{background:#ffd93d;border-color:#f0bf1d}
+.preview{
+  display:flex;gap:6px;flex-wrap:wrap;justify-content:center;
+  font-size:20px;font-weight:800;color:#3f4a6b
+}
+.preview span{background:#fff;border:2px solid var(--line);border-radius:10px;padding:2px 8px}
+
+/* ---------- learn card ---------- */
+.learn{
+  background:var(--card);border:4px solid var(--line);border-radius:28px;
+  padding:18px 16px;box-shadow:var(--shadow);text-align:center;position:relative;overflow:hidden
+}
+.learn::before{
+  content:"";position:absolute;inset:0 0 auto;height:10px;
+  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c5),var(--c6),var(--c7),var(--c8))
+}
+.bigletters{font-size:96px;line-height:1.05;font-weight:800;letter-spacing:2px;margin:10px 0 2px}
+.bignum{font-size:112px;line-height:1;font-weight:800;margin:8px 0 0}
+.art{width:180px;height:180px;margin:6px auto 0}
+.art svg{width:100%;height:100%;display:block}
+.wordline{font-size:30px;font-weight:800;margin-top:4px}
+.navrow{display:flex;align-items:center;gap:12px;margin-top:14px}
+.navbtn{
+  flex:1;border:0;border-radius:18px;padding:16px;font-family:inherit;font-size:24px;font-weight:800;
+  background:linear-gradient(135deg,#a9d9ff,#6fb4ff);color:#123;cursor:pointer;box-shadow:0 5px 0 rgba(42,47,69,.18)
+}
+.navbtn:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(42,47,69,.18)}
+.navbtn.say{flex:0 0 84px;background:linear-gradient(135deg,#ffe08a,#ffc93d)}
+.jump{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-top:14px}
+.jump.nums{grid-template-columns:repeat(5,1fr)}
+.jump button{
+  border:3px solid var(--line);background:var(--card);border-radius:14px;padding:9px 0;
+  font-family:inherit;font-size:18px;font-weight:800;color:var(--ink);cursor:pointer
+}
+.jump button.on{background:#ffd93d;border-color:#f0bf1d}
+
+/* ---------- matching game ---------- */
+.gamehead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.dots{display:flex;gap:6px;flex-wrap:wrap}
+.dot{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--line)}
+.dot.on{background:#4ecb71;border-color:#2fa557}
+.board{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
+.mcard{
+  position:relative;border:4px solid var(--line);background:var(--card);border-radius:20px;
+  min-height:74px;display:grid;place-items:center;cursor:pointer;font-family:inherit;
+  box-shadow:0 4px 0 rgba(42,47,69,.12);padding:8px;color:var(--ink);
+  transition:transform .1s ease, background .15s ease, border-color .15s ease;
+}
+.mcard .face{font-size:42px;font-weight:800;line-height:1}
+.mcard .face.word{font-size:26px}
+.mcard .pic{width:100%;max-width:104px;aspect-ratio:1/1}
+.mcard .pic svg{width:100%;height:100%;display:block}
+.mcard .lab{display:block;font-size:17px;font-weight:800;height:0;opacity:0;transition:.25s ease}
+.mcard.good .lab,.mcard.done .lab{height:auto;opacity:1;margin-top:4px}
+.mcard:active{transform:translateY(2px)}
+.mcard.pick{border-color:#5b8cff;background:#eaf1ff;transform:translateY(-2px) scale(1.03)}
+.mcard.good{border-color:#2fa557;background:#e3f9ea;animation:pop .32s ease}
+.mcard.bad{border-color:#e05252;background:#ffecec;animation:shake .34s ease}
+.mcard.done{opacity:.72;pointer-events:none;box-shadow:none;border-color:#bfe8cd;background:#f2fbf5}
+.mcard .tick{position:absolute;top:-10px;right:-8px;font-size:24px;opacity:0;transform:scale(.4)}
+.mcard.good .tick,.mcard.done .tick{opacity:1;transform:scale(1);transition:.25s ease}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+/* ---------- win screen ---------- */
+.win{text-align:center;padding:10px 4px}
+.stars{font-size:52px;letter-spacing:6px;margin:6px 0}
+.winword{font-size:32px;font-weight:800;margin:6px 0}
+
+/* ---------- confetti ---------- */
+#confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:60}
+.conf{position:absolute;top:-40px;font-size:26px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.9}}
+
+/* ---------- toast ---------- */
+#toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);
+  background:#2a2f45;color:#fff;padding:12px 18px;border-radius:16px;font-size:16px;
+  opacity:0;transition:.2s ease;pointer-events:none;z-index:70
+}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:380px){
+  .bigletters{font-size:82px}
+  .mcard .face{font-size:36px}
+  .art{width:150px;height:150px}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="app"></div>
+<div id="confetti"></div>
+<div id="toast"></div>
+
+<script>
+"use strict";
+
+/* ==========================================================================
+   THE ALPHABET — the letter, the word and the name of its drawing
+   ========================================================================== */
+
+const LETTERS = [
+  { l:"A", word:"apple",      art:"apple" },
+  { l:"B", word:"ball",       art:"ball" },
+  { l:"C", word:"cat",        art:"cat" },
+  { l:"D", word:"dog",        art:"dog" },
+  { l:"E", word:"egg",        art:"egg" },
+  { l:"F", word:"fish",       art:"fish" },
+  { l:"G", word:"grapes",     art:"grapes" },
+  { l:"H", word:"hat",        art:"hat" },
+  { l:"I", word:"ice cream",  art:"icecream" },
+  { l:"J", word:"jam",        art:"jam" },
+  { l:"K", word:"kite",       art:"kite" },
+  { l:"L", word:"leaf",       art:"leaf" },
+  { l:"M", word:"moon",       art:"moon" },
+  { l:"N", word:"nest",       art:"nest" },
+  { l:"O", word:"orange",     art:"orange" },
+  { l:"P", word:"pig",        art:"pig" },
+  { l:"Q", word:"queen",      art:"queen" },
+  { l:"R", word:"rabbit",     art:"rabbit" },
+  { l:"S", word:"sun",        art:"sun" },
+  { l:"T", word:"tree",       art:"tree" },
+  { l:"U", word:"umbrella",   art:"umbrella" },
+  { l:"V", word:"van",        art:"van" },
+  { l:"W", word:"whale",      art:"whale" },
+  { l:"X", word:"xylophone",  art:"xylophone" },
+  { l:"Y", word:"yo-yo",      art:"yoyo" },
+  { l:"Z", word:"zebra",      art:"zebra" }
+];
+
+const NUMBER_WORDS = ["zero","one","two","three","four","five","six","seven","eight","nine","ten",
+  "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"];
+const MAX_NUMBER = 20;
+
+/* how many pairs are dealt in one round */
+const PAIRS_TEXT = 6;      /* letter/word games  */
+const PAIRS_PICTURE = 5;   /* games with drawings */
+
+/* ==========================================================================
+   THE DRAWINGS — simple pictures, drawn with code (no image files needed)
+   ========================================================================== */
+
+const ART = {
+apple:`<svg viewBox="0 0 100 100"><circle cx="37" cy="60" r="27" fill="#e5384f"/><circle cx="63" cy="60" r="27" fill="#ef4a60"/><rect x="47" y="20" width="6" height="18" rx="3" fill="#8a5524"/><ellipse cx="66" cy="26" rx="13" ry="7.5" fill="#43bf63" transform="rotate(-22 66 26)"/><ellipse cx="32" cy="52" rx="6" ry="9" fill="#ff8b96" opacity=".55" transform="rotate(-25 32 52)"/></svg>`,
+
+ball:`<svg viewBox="0 0 100 100"><circle cx="50" cy="55" r="32" fill="#ff8a3d"/><path d="M18 55h64M50 23v64" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M28 33q22 22 0 44M72 33q-22 22 0 44" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+
+cat:`<svg viewBox="0 0 100 100"><path d="M22 42 26 18l20 12z" fill="#f7b23b"/><path d="M78 42 74 18 54 30z" fill="#f7b23b"/><circle cx="50" cy="57" r="29" fill="#ffc857"/><circle cx="39" cy="52" r="4.5" fill="#2a2f45"/><circle cx="61" cy="52" r="4.5" fill="#2a2f45"/><path d="M50 62 45 67h10z" fill="#ff7ac0"/><path d="M50 67v5M50 72q-5 5-10 3M50 72q5 5 10 3" stroke="#2a2f45" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M16 58h14M16 66h14M70 58h14M70 66h14" stroke="#2a2f45" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+
+dog:`<svg viewBox="0 0 100 100"><ellipse cx="22" cy="52" rx="10" ry="20" fill="#a06a34"/><ellipse cx="78" cy="52" rx="10" ry="20" fill="#a06a34"/><circle cx="50" cy="52" r="28" fill="#c98a4b"/><ellipse cx="50" cy="70" rx="17" ry="13" fill="#f0d3ac"/><circle cx="50" cy="63" r="6" fill="#3a2a1c"/><circle cx="39" cy="46" r="4.5" fill="#2a2f45"/><circle cx="61" cy="46" r="4.5" fill="#2a2f45"/><path d="M50 70v5M50 75q-5 4-9 1M50 75q5 4 9 1" stroke="#3a2a1c" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+
+egg:`<svg viewBox="0 0 100 100"><path d="M50 14c16 0 27 24 27 40 0 18-12 30-27 30S23 72 23 54c0-16 11-40 27-40z" fill="#fffaf0" stroke="#e0d2b4" stroke-width="3"/><ellipse cx="39" cy="45" rx="7" ry="11" fill="#fff" opacity=".9" transform="rotate(-20 39 45)"/></svg>`,
+
+fish:`<svg viewBox="0 0 100 100"><path d="M84 50 66 33v34z" fill="#1a97c4"/><ellipse cx="45" cy="50" rx="30" ry="21" fill="#35b6e8"/><path d="M45 29q10 6 10 12t-10 8" fill="#7fd6f5" opacity=".8"/><circle cx="27" cy="45" r="4.5" fill="#fff"/><circle cx="26" cy="45" r="2.4" fill="#2a2f45"/><path d="M40 62q12 8 24 4" stroke="#1a97c4" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+
+grapes:`<svg viewBox="0 0 100 100"><rect x="48" y="14" width="5" height="16" rx="2.5" fill="#7a5230"/><ellipse cx="64" cy="20" rx="12" ry="7" fill="#43bf63" transform="rotate(-20 64 20)"/><g fill="#a05ad6"><circle cx="38" cy="42" r="10"/><circle cx="58" cy="42" r="10"/><circle cx="48" cy="56" r="10"/><circle cx="30" cy="58" r="10"/><circle cx="66" cy="58" r="10"/><circle cx="40" cy="72" r="10"/><circle cx="58" cy="72" r="10"/><circle cx="49" cy="86" r="9"/></g><circle cx="35" cy="39" r="3" fill="#d0a8f0"/><circle cx="55" cy="39" r="3" fill="#d0a8f0"/></svg>`,
+
+hat:`<svg viewBox="0 0 100 100"><path d="M32 62V38a18 14 0 0 1 36 0v24z" fill="#5b8cff"/><ellipse cx="50" cy="64" rx="38" ry="12" fill="#3f6fe0"/><rect x="32" y="52" width="36" height="11" fill="#ffd93d"/><circle cx="66" cy="57" r="5" fill="#ff6b6b"/></svg>`,
+
+icecream:`<svg viewBox="0 0 100 100"><path d="M32 52h36L50 92z" fill="#e0a45e"/><path d="M36 58 44 84M50 54 50 90M64 58 56 84" stroke="#c2823c" stroke-width="2.5"/><circle cx="38" cy="44" r="15" fill="#ff9ec4"/><circle cx="62" cy="44" r="15" fill="#8fe3c0"/><circle cx="50" cy="30" r="15" fill="#ffe08a"/><circle cx="50" cy="16" r="5" fill="#e5384f"/></svg>`,
+
+jam:`<svg viewBox="0 0 100 100"><rect x="34" y="14" width="32" height="10" rx="4" fill="#5b8cff"/><path d="M30 28h40v52a8 8 0 0 1-8 8H38a8 8 0 0 1-8-8z" fill="#fff" stroke="#dfe6f5" stroke-width="3"/><path d="M32 46h36v34a8 8 0 0 1-8 8H40a8 8 0 0 1-8-8z" fill="#e5384f"/><rect x="36" y="54" width="28" height="18" rx="4" fill="#fff8e7"/><path d="M42 63h16" stroke="#e5384f" stroke-width="3" stroke-linecap="round"/></svg>`,
+
+kite:`<svg viewBox="0 0 100 100"><path d="M50 8 78 40 50 62 22 40z" fill="#ff6b6b"/><path d="M50 8 78 40 50 62z" fill="#ffd93d"/><path d="M50 8v54M22 40h56" stroke="#fff" stroke-width="2.5"/><path d="M50 62q-8 12 0 20t-4 12" stroke="#5b8cff" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M44 74l8 4M42 86l8 4" stroke="#4ecb71" stroke-width="4" stroke-linecap="round"/></svg>`,
+
+leaf:`<svg viewBox="0 0 100 100"><path d="M78 18C42 18 22 40 22 66c0 8 3 14 3 14s34 4 50-14c14-16 3-48 3-48z" fill="#4ecb71"/><path d="M78 18 26 82" stroke="#2f9b53" stroke-width="3.5" stroke-linecap="round"/><path d="M62 30 56 46M70 42 60 56M52 40 46 54" stroke="#2f9b53" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+
+moon:`<svg viewBox="0 0 100 100"><path d="M64 16a36 36 0 1 0 0 68 44 44 0 1 1 0-68z" fill="#ffd93d"/><circle cx="38" cy="36" r="4" fill="#f0bf1d" opacity=".55"/><circle cx="32" cy="58" r="6" fill="#f0bf1d" opacity=".45"/><path d="M82 22l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#ffe08a"/><path d="M80 62l1.6 5 5 1.6-5 1.6-1.6 5-1.6-5-5-1.6 5-1.6z" fill="#ffe08a"/></svg>`,
+
+nest:`<svg viewBox="0 0 100 100"><ellipse cx="50" cy="58" rx="34" ry="12" fill="#9a6b3a"/><path d="M16 58a34 22 0 0 0 68 0z" fill="#b07d45"/><ellipse cx="38" cy="54" rx="10" ry="12" fill="#fffaf0"/><ellipse cx="60" cy="54" rx="10" ry="12" fill="#fffaf0"/><ellipse cx="49" cy="48" rx="10" ry="12" fill="#f5eddc"/><path d="M16 60q18 8 34 8t34-8" stroke="#7d5228" stroke-width="3" fill="none"/><path d="M22 68q14 6 28 6t28-6" stroke="#7d5228" stroke-width="3" fill="none"/></svg>`,
+
+orange:`<svg viewBox="0 0 100 100"><rect x="47" y="16" width="6" height="14" rx="3" fill="#7a5230"/><ellipse cx="66" cy="22" rx="12" ry="7" fill="#43bf63" transform="rotate(-20 66 22)"/><circle cx="50" cy="60" r="30" fill="#ff9f1a"/><path d="M50 30v60M20 60h60M29 39l42 42M71 39 29 81" stroke="#f28a00" stroke-width="2" opacity=".55"/><circle cx="38" cy="48" r="6" fill="#ffc46b" opacity=".7"/></svg>`,
+
+pig:`<svg viewBox="0 0 100 100"><path d="M24 34 20 16l20 8z" fill="#f58fb4"/><path d="M76 34 80 16 60 24z" fill="#f58fb4"/><circle cx="50" cy="56" r="29" fill="#ffb3ce"/><ellipse cx="50" cy="66" rx="16" ry="12" fill="#f58fb4"/><ellipse cx="44" cy="66" rx="3.5" ry="5" fill="#c95f8a"/><ellipse cx="56" cy="66" rx="3.5" ry="5" fill="#c95f8a"/><circle cx="38" cy="46" r="4.5" fill="#2a2f45"/><circle cx="62" cy="46" r="4.5" fill="#2a2f45"/></svg>`,
+
+queen:`<svg viewBox="0 0 100 100"><path d="M26 34 32 12l10 12 8-14 8 14 10-12 6 22z" fill="#ffd93d"/><rect x="26" y="34" width="48" height="8" rx="3" fill="#f0bf1d"/><circle cx="38" cy="24" r="3.5" fill="#ff6b6b"/><circle cx="50" cy="20" r="3.5" fill="#5b8cff"/><circle cx="62" cy="24" r="3.5" fill="#4ecb71"/><circle cx="50" cy="64" r="24" fill="#ffdcbe"/><circle cx="41" cy="60" r="3.5" fill="#2a2f45"/><circle cx="59" cy="60" r="3.5" fill="#2a2f45"/><path d="M42 72q8 7 16 0" stroke="#c95f8a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+
+rabbit:`<svg viewBox="0 0 100 100"><ellipse cx="36" cy="28" rx="8" ry="22" fill="#f3f0ea" stroke="#ded9d0" stroke-width="2"/><ellipse cx="64" cy="28" rx="8" ry="22" fill="#f3f0ea" stroke="#ded9d0" stroke-width="2"/><ellipse cx="36" cy="28" rx="4" ry="15" fill="#ffb3ce"/><ellipse cx="64" cy="28" rx="4" ry="15" fill="#ffb3ce"/><circle cx="50" cy="64" r="25" fill="#f8f6f2" stroke="#e6e1d8" stroke-width="2"/><circle cx="40" cy="60" r="4.5" fill="#2a2f45"/><circle cx="60" cy="60" r="4.5" fill="#2a2f45"/><path d="M50 68 46 72h8z" fill="#ff7ac0"/><path d="M50 72v4M50 76q-5 4-9 2M50 76q5 4 9 2" stroke="#8d8478" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+
+sun:`<svg viewBox="0 0 100 100"><g stroke="#ffb800" stroke-width="6" stroke-linecap="round"><path d="M50 6v14M50 80v14M6 50h14M80 50h14M19 19l10 10M71 71l10 10M81 19 71 29M29 71 19 81"/></g><circle cx="50" cy="50" r="24" fill="#ffd93d"/><circle cx="42" cy="45" r="3.5" fill="#2a2f45"/><circle cx="58" cy="45" r="3.5" fill="#2a2f45"/><path d="M40 56q10 9 20 0" stroke="#e08a00" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>`,
+
+tree:`<svg viewBox="0 0 100 100"><rect x="44" y="58" width="12" height="30" rx="4" fill="#8a5524"/><circle cx="50" cy="34" r="20" fill="#4ecb71"/><circle cx="32" cy="48" r="16" fill="#43bf63"/><circle cx="68" cy="48" r="16" fill="#43bf63"/><circle cx="50" cy="50" r="16" fill="#5ed67f"/><circle cx="38" cy="40" r="4" fill="#ff6b6b"/><circle cx="62" cy="52" r="4" fill="#ff6b6b"/></svg>`,
+
+umbrella:`<svg viewBox="0 0 100 100"><path d="M50 14c22 0 36 16 36 32H14c0-16 14-32 36-32z" fill="#ff6b6b"/><path d="M14 46c0-16 8-32 18-32s10 16 10 32zM58 46c0-16 0-32 10-32s18 16 18 32z" fill="#ffd93d"/><path d="M14 46q9 10 18 0 9 10 18 0 9 10 18 0 9 10 18 0" fill="none" stroke="#e05252" stroke-width="3"/><path d="M50 46v32a10 10 0 0 1-20 0" stroke="#7a5230" stroke-width="5" fill="none" stroke-linecap="round"/></svg>`,
+
+van:`<svg viewBox="0 0 100 100"><path d="M10 44h44l16 14h20v14H10z" fill="#5b8cff"/><path d="M14 46h20v12H14zM40 46h12v12H40z" fill="#cfe4ff"/><path d="M56 46h8l12 12H56z" fill="#cfe4ff"/><rect x="8" y="70" width="84" height="6" rx="3" fill="#3f6fe0"/><circle cx="28" cy="76" r="10" fill="#2a2f45"/><circle cx="72" cy="76" r="10" fill="#2a2f45"/><circle cx="28" cy="76" r="4" fill="#cfd6e8"/><circle cx="72" cy="76" r="4" fill="#cfd6e8"/></svg>`,
+
+whale:`<svg viewBox="0 0 100 100"><path d="M20 58c0-14 14-22 30-22s34 6 34 22-16 20-32 20S20 72 20 58z" fill="#3ec5e0"/><path d="M84 46 96 32v34z" fill="#2a9fc0"/><path d="M24 66q22 10 46 2" stroke="#a8ecf7" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="40" cy="52" r="4" fill="#2a2f45"/><path d="M52 36q-2-14 6-18M52 36q4-12 14-12" stroke="#7fd6f5" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+
+xylophone:`<svg viewBox="0 0 100 100"><rect x="18" y="24" width="64" height="9" rx="4.5" fill="#ff6b6b"/><rect x="20" y="37" width="60" height="9" rx="4.5" fill="#ffa63d"/><rect x="22" y="50" width="56" height="9" rx="4.5" fill="#ffd93d"/><rect x="24" y="63" width="52" height="9" rx="4.5" fill="#4ecb71"/><rect x="26" y="76" width="48" height="9" rx="4.5" fill="#5b8cff"/><path d="M84 20 70 62" stroke="#8a5524" stroke-width="4" stroke-linecap="round"/><circle cx="70" cy="64" r="6" fill="#8a5524"/></svg>`,
+
+yoyo:`<svg viewBox="0 0 100 100"><path d="M50 6v34" stroke="#8d8478" stroke-width="3"/><circle cx="50" cy="62" r="28" fill="#ff7ac0"/><circle cx="50" cy="62" r="18" fill="#ffd93d"/><circle cx="50" cy="62" r="8" fill="#5b8cff"/><path d="M50 40q6 8 0 14" stroke="#8d8478" stroke-width="3" fill="none"/></svg>`,
+
+zebra:`<svg viewBox="0 0 100 100"><path d="M30 30 28 14l14 8z" fill="#f5f3ee"/><path d="M70 30 72 14 58 22z" fill="#f5f3ee"/><ellipse cx="50" cy="52" rx="26" ry="24" fill="#f8f6f2" stroke="#ded9d0" stroke-width="2"/><path d="M50 28v14M36 32l6 12M64 32l-6 12M26 48h12M74 48H62M28 60h10M72 60H62" stroke="#2a2f45" stroke-width="5" stroke-linecap="round"/><ellipse cx="50" cy="74" rx="14" ry="12" fill="#d9d3c8"/><circle cx="45" cy="74" r="2.6" fill="#2a2f45"/><circle cx="55" cy="74" r="2.6" fill="#2a2f45"/><circle cx="40" cy="50" r="4" fill="#2a2f45"/><circle cx="60" cy="50" r="4" fill="#2a2f45"/></svg>`
+};
+
+/* things to count, for the number games */
+const COUNT_COLORS = ["#ff6b6b","#ffa63d","#ffd93d","#4ecb71","#3ec5e0","#5b8cff","#a878ff","#ff7ac0"];
+
+/* how many things go in one row, so the group looks tidy (index = the number) */
+const PER_ROW = [0, 1,2,3,2,3, 3,4,4,3,5, 4,4,5,5,5, 4,5,5,5,5];
+
+function countArt(n){
+  const per = PER_ROW[n] || 5;
+  const rows = Math.ceil(n/per);
+  const pitchX = 92/per, pitchY = 92/rows;
+  const size = Math.min(pitchX, pitchY) * 0.40;
+  let out = `<svg viewBox="0 0 100 100">`;
+  for(let r = 0, i = 0; r < rows; r++){
+    const inRow = Math.min(per, n - r*per);
+    for(let c = 0; c < inRow; c++, i++){
+      const x = 50 + (c - (inRow-1)/2) * pitchX;
+      const y = 50 + (r - (rows-1)/2) * pitchY;
+      const col = COUNT_COLORS[i % COUNT_COLORS.length];
+      out += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${size.toFixed(1)}" fill="${col}"/>`
+           + `<circle cx="${(x-size*0.3).toFixed(1)}" cy="${(y-size*0.35).toFixed(1)}" r="${(size*0.28).toFixed(1)}" fill="#fff" opacity=".55"/>`;
+    }
+  }
+  return out + `</svg>`;
+}
+
+/* ==========================================================================
+   SMALL HELPERS
+   ========================================================================== */
+
+const app = document.getElementById("app");
+const $ = s => app.querySelector(s);
+const $$ = s => Array.from(app.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { const b = a.slice(); for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; };
+const clamp = (v,lo,hi) => Math.max(lo, Math.min(hi, v));
+/* shows the first letter of a word in colour: apple */
+const firstLetterBold = w => `<span style="color:#e5384f">${esc(w[0])}</span>${esc(w.slice(1))}`;
+
+/* settings kept in this browser only */
+const DEFAULTS = { sound:true, speak:true, from:0, to:7, nFrom:1, nTo:10 };
+let S = Object.assign({}, DEFAULTS);
+try{ Object.assign(S, JSON.parse(localStorage.getItem("abc123") || "{}")); }catch(e){}
+function save(){ try{ localStorage.setItem("abc123", JSON.stringify(S)); }catch(e){} }
+
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("on");
+  clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("on"), 1600);
+}
+
+/* ---------- sounds made by the browser, no files needed ---------- */
+let actx = null;
+function tone(freqs, dur, type){
+  if(!S.sound) return;
+  try{
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if(actx.state === "suspended") actx.resume();
+    freqs.forEach((f, i) => {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.type = type || "sine"; o.frequency.value = f;
+      const t0 = actx.currentTime + i*dur*0.8;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(0.22, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g); g.connect(actx.destination);
+      o.start(t0); o.stop(t0 + dur + 0.02);
+    });
+  }catch(e){}
+}
+const soundGood  = () => tone([660, 880], 0.16);
+const soundWrong = () => tone([200], 0.18, "triangle");
+const soundWin   = () => tone([523, 659, 784, 1047], 0.2);
+
+/* ---------- the voice ---------- */
+function speak(text){
+  if(!S.speak || !("speechSynthesis" in window)) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-GB"; u.rate = 0.85; u.pitch = 1.1;
+    const v = speechSynthesis.getVoices().find(v => /en[-_](GB|US|AU)/i.test(v.lang));
+    if(v) u.voice = v;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+if("speechSynthesis" in window) speechSynthesis.getVoices();
+
+function confetti(){
+  const box = document.getElementById("confetti");
+  const bits = ["⭐","🎉","🌟","🎈","✨","🏆"];
+  for(let i = 0; i < 34; i++){
+    const d = document.createElement("div");
+    d.className = "conf";
+    d.textContent = bits[Math.floor(Math.random()*bits.length)];
+    d.style.left = Math.random()*100 + "vw";
+    d.style.animationDuration = (1.6 + Math.random()*1.4) + "s";
+    d.style.animationDelay = (Math.random()*0.5) + "s";
+    box.appendChild(d);
+    setTimeout(() => d.remove(), 3600);
+  }
+}
+
+/* ---------- moving between screens ---------- */
+let stack = [];
+function go(fn){ stack.push(fn); window.scrollTo(0,0); fn(); }
+function back(){
+  if(stack.length > 1){ stack.pop(); window.scrollTo(0,0); stack[stack.length-1](); }
+  else home();
+}
+function home(){ stack = [screenHome]; window.scrollTo(0,0); screenHome(); }
+
+function topBar(title){
+  return `<div class="top">
+    <button class="iconbtn" data-back aria-label="Back">←</button>
+    <span class="grow">${esc(title)}</span>
+    <button class="iconbtn" data-sound aria-label="Sound">${S.sound || S.speak ? "🔊" : "🔇"}</button>
+  </div>`;
+}
+function wireTop(){
+  const b = $("[data-back]"); if(b) b.onclick = back;
+  const s = $("[data-sound]");
+  if(s) s.onclick = () => {
+    const on = !(S.sound || S.speak);
+    S.sound = on; S.speak = on; save();
+    s.textContent = on ? "🔊" : "🔇";
+    toast(on ? "Sound on" : "Sound off");
+  };
+}
+
+/* ==========================================================================
+   HOME
+   ========================================================================== */
+
+function screenHome(){
+  app.innerHTML = `
+  <div class="stack">
+    <div class="center" style="margin-top:6px">
+      <h1>🔤 ABC &amp; 123</h1>
+      <p class="muted small" style="margin-top:4px">Letters and numbers — learn them, then play!</p>
+    </div>
+
+    <p class="section-label">LETTERS</p>
+    <div class="stack-sm">
+      <button class="tile t1" data-go="learnLetters"><span class="emoji">📖</span>
+        <span>Learn the alphabet<span class="sub">Big letter, small letter, a picture and the word</span></span></button>
+      <button class="tile t2" data-go="gameCase"><span class="emoji">🅰️</span>
+        <span>Big &amp; small letters<span class="sub">Match A with a</span></span></button>
+      <button class="tile t3" data-go="gamePic"><span class="emoji">🍎</span>
+        <span>Letters and pictures<span class="sub">Match A with the apple</span></span></button>
+    </div>
+
+    <p class="section-label">NUMBERS</p>
+    <div class="stack-sm">
+      <button class="tile t4" data-go="learnNumbers"><span class="emoji">🔢</span>
+        <span>Learn numbers<span class="sub">The number, the word and things to count</span></span></button>
+      <button class="tile t5" data-go="gameNumWord"><span class="emoji">3️⃣</span>
+        <span>Number &amp; word<span class="sub">Match 3 with three</span></span></button>
+      <button class="tile t6" data-go="gameNumCount"><span class="emoji">🎈</span>
+        <span>Count and match<span class="sub">Match 3 with three balloons</span></span></button>
+    </div>
+
+    <div class="card center small" style="margin-top:6px">
+      <p class="muted">Choose which letters or numbers to play with before every game — start with just the ones you have learned.</p>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="chip ${S.sound || S.speak ? "on" : ""}" data-toggle>${S.sound || S.speak ? "🔊 Sound is on" : "🔇 Sound is off"}</button>
+        <a class="chip" href="index.html" style="text-decoration:none;display:inline-block">🎓 Big kids' games</a>
+      </div>
+    </div>
+  </div>`;
+
+  $$("[data-go]").forEach(b => b.onclick = () => {
+    const map = {
+      learnLetters, learnNumbers,
+      gameCase: () => setupScreen("case"),
+      gamePic: () => setupScreen("pic"),
+      gameNumWord: () => setupScreen("numword"),
+      gameNumCount: () => setupScreen("numcount")
+    };
+    go(map[b.dataset.go]);
+  });
+  $("[data-toggle]").onclick = () => {
+    const on = !(S.sound || S.speak);
+    S.sound = on; S.speak = on; save(); screenHome();
+    if(on) soundGood();
+  };
+}
+
+/* ==========================================================================
+   LEARN — THE ALPHABET
+   ========================================================================== */
+
+let learnIdx = 0;
+
+function learnLetters(){
+  const L = LETTERS[learnIdx];
+  app.innerHTML = topBar("Learn the alphabet") + `
+  <div class="stack">
+    <div class="learn">
+      <div class="bigletters">${L.l}${L.l.toLowerCase()}</div>
+      <div class="muted small">big letter &amp; small letter</div>
+      <div class="art">${ART[L.art] || ""}</div>
+      <div class="wordline">${firstLetterBold(L.word)}</div>
+      <div class="navrow">
+        <button class="navbtn" data-prev aria-label="Previous letter">◀</button>
+        <button class="navbtn say" data-say aria-label="Say it">🔊</button>
+        <button class="navbtn" data-next aria-label="Next letter">▶</button>
+      </div>
+    </div>
+    <div class="card">
+      <p class="muted small center" style="margin-bottom:8px">Tap any letter</p>
+      <div class="jump">
+        ${LETTERS.map((x,i) => `<button data-i="${i}" class="${i===learnIdx?"on":""}">${x.l}</button>`).join("")}
+      </div>
+    </div>
+  </div>`;
+  wireTop();
+  $("[data-prev]").onclick = () => { learnIdx = (learnIdx + LETTERS.length - 1) % LETTERS.length; learnLetters(); sayLetter(); };
+  $("[data-next]").onclick = () => { learnIdx = (learnIdx + 1) % LETTERS.length; learnLetters(); sayLetter(); };
+  $("[data-say]").onclick = sayLetter;
+  $$("[data-i]").forEach(b => b.onclick = () => { learnIdx = +b.dataset.i; learnLetters(); sayLetter(); });
+}
+function sayLetter(){
+  const L = LETTERS[learnIdx];
+  speak(L.l + ". " + L.word);
+  tone([700], 0.08);
+}
+
+/* ==========================================================================
+   LEARN — NUMBERS
+   ========================================================================== */
+
+let numIdx = 1;
+
+function learnNumbers(){
+  const n = numIdx;
+  app.innerHTML = topBar("Learn numbers") + `
+  <div class="stack">
+    <div class="learn">
+      <div class="bignum">${n}</div>
+      <div class="wordline">${NUMBER_WORDS[n]}</div>
+      <div class="art" style="width:200px;height:150px">${countArt(n)}</div>
+      <div class="navrow">
+        <button class="navbtn" data-prev aria-label="Previous number">◀</button>
+        <button class="navbtn say" data-say aria-label="Say it">🔊</button>
+        <button class="navbtn" data-next aria-label="Next number">▶</button>
+      </div>
+    </div>
+    <div class="card">
+      <p class="muted small center" style="margin-bottom:8px">Tap any number</p>
+      <div class="jump nums">
+        ${Array.from({length:MAX_NUMBER}, (_,i) => i+1).map(x =>
+          `<button data-n="${x}" class="${x===numIdx?"on":""}">${x}</button>`).join("")}
+      </div>
+    </div>
+  </div>`;
+  wireTop();
+  $("[data-prev]").onclick = () => { numIdx = numIdx <= 1 ? MAX_NUMBER : numIdx - 1; learnNumbers(); sayNumber(); };
+  $("[data-next]").onclick = () => { numIdx = numIdx >= MAX_NUMBER ? 1 : numIdx + 1; learnNumbers(); sayNumber(); };
+  $("[data-say]").onclick = sayNumber;
+  $$("[data-n]").forEach(b => b.onclick = () => { numIdx = +b.dataset.n; learnNumbers(); sayNumber(); });
+}
+function sayNumber(){
+  speak(NUMBER_WORDS[numIdx]);
+  tone([700], 0.08);
+}
+
+/* ==========================================================================
+   THE GAMES — what each one matches
+   ========================================================================== */
+
+const GAMES = {
+  case: {
+    title:"Big & small letters",
+    what:"Which letters?",
+    kind:"letters", pairs:PAIRS_TEXT,
+    left:  it => ({ html:`<span class="face">${it.l}</span>`, say:it.l }),
+    right: it => ({ html:`<span class="face">${it.l.toLowerCase()}</span>`, say:it.l }),
+    cheer: it => it.l + " " + it.l.toLowerCase()
+  },
+  pic: {
+    title:"Letters and pictures",
+    what:"Which letters?",
+    kind:"letters", pairs:PAIRS_PICTURE,
+    left:  it => ({ html:`<span class="face">${it.l}${it.l.toLowerCase()}</span>`, say:it.l }),
+    right: it => ({ html:`<span class="pic">${ART[it.art]||""}</span><span class="lab">${firstLetterBold(it.word)}</span>`, say:it.word }),
+    cheer: it => it.l + " — " + it.word
+  },
+  numword: {
+    title:"Number & word",
+    what:"Which numbers?",
+    kind:"numbers", pairs:PAIRS_TEXT,
+    left:  it => ({ html:`<span class="face">${it.n}</span>`, say:NUMBER_WORDS[it.n] }),
+    right: it => ({ html:`<span class="face word">${NUMBER_WORDS[it.n]}</span>`, say:NUMBER_WORDS[it.n] }),
+    cheer: it => it.n + " — " + NUMBER_WORDS[it.n]
+  },
+  numcount: {
+    title:"Count and match",
+    what:"Which numbers?",
+    kind:"numbers", pairs:PAIRS_PICTURE,
+    left:  it => ({ html:`<span class="face">${it.n}</span>`, say:NUMBER_WORDS[it.n] }),
+    right: it => ({ html:`<span class="pic">${countArt(it.n)}</span><span class="lab">${NUMBER_WORDS[it.n]}</span>`, say:NUMBER_WORDS[it.n] }),
+    cheer: it => it.n + " — " + NUMBER_WORDS[it.n]
+  }
+};
+
+/* ==========================================================================
+   CHOOSING THE LETTERS OR NUMBERS
+   ========================================================================== */
+
+function poolFor(kind){
+  if(kind === "letters"){
+    const a = clamp(S.from, 0, 25), b = clamp(S.to, 0, 25);
+    return LETTERS.slice(Math.min(a,b), Math.max(a,b)+1);
+  }
+  const a = clamp(S.nFrom, 1, MAX_NUMBER), b = clamp(S.nTo, 1, MAX_NUMBER);
+  const out = [];
+  for(let n = Math.min(a,b); n <= Math.max(a,b); n++) out.push({ n });
+  return out;
+}
+
+function setupScreen(gameId){
+  const G = GAMES[gameId];
+  const letters = G.kind === "letters";
+  const opts = letters
+    ? LETTERS.map((x,i) => ({ v:i, label:x.l }))
+    : Array.from({length:MAX_NUMBER}, (_,i) => ({ v:i+1, label:String(i+1) }));
+  const from = letters ? S.from : S.nFrom;
+  const to   = letters ? S.to   : S.nTo;
+  const presets = letters
+    ? [["A – E",0,4],["A – H",0,7],["A – M",0,12],["A – Z",0,25]]
+    : [["1 – 5",1,5],["1 – 10",1,10],["1 – 12",1,12],["1 – 20",1,20]];
+
+  app.innerHTML = topBar(G.title) + `
+  <div class="stack">
+    <div class="card center">
+      <h2>${G.what}</h2>
+      <p class="muted small" style="margin:6px 0 14px">Only the ones you choose will be in the game.</p>
+      <div class="chips" style="margin-bottom:14px">
+        ${presets.map(([lab,a,b]) =>
+          `<button class="chip ${from===a&&to===b?"on":""}" data-preset="${a},${b}">${lab}</button>`).join("")}
+      </div>
+      <div class="pickrow">
+        <span class="muted">from</span>
+        <select data-from>${opts.map(o => `<option value="${o.v}" ${o.v===from?"selected":""}>${o.label}</option>`).join("")}</select>
+        <span class="muted">to</span>
+        <select data-to>${opts.map(o => `<option value="${o.v}" ${o.v===to?"selected":""}>${o.label}</option>`).join("")}</select>
+      </div>
+      <div class="preview" id="prev" style="margin-top:14px"></div>
+    </div>
+    <button class="btn go big" data-start>▶ Start playing</button>
+  </div>`;
+  wireTop();
+
+  const drawPreview = () => {
+    const pool = poolFor(G.kind);
+    $("#prev").innerHTML = pool.map(it =>
+      `<span>${letters ? it.l + it.l.toLowerCase() : it.n}</span>`).join("");
+  };
+  const setRange = (a, b) => {
+    if(letters){ S.from = a; S.to = b; } else { S.nFrom = a; S.nTo = b; }
+    save();
+  };
+
+  $$("[data-preset]").forEach(b => b.onclick = () => {
+    const [a,c] = b.dataset.preset.split(",").map(Number);
+    setRange(a, c); setupScreen(gameId);
+  });
+  $("[data-from]").onchange = e => { setRange(+e.target.value, to); setupScreen(gameId); };
+  $("[data-to]").onchange   = e => { setRange(from, +e.target.value); setupScreen(gameId); };
+  $("[data-start]").onclick = () => go(() => playRound(gameId));
+  drawPreview();
+}
+
+/* ==========================================================================
+   THE MATCHING GAME
+   ========================================================================== */
+
+function playRound(gameId){
+  const G = GAMES[gameId];
+  const pool = poolFor(G.kind);
+  const size = Math.min(G.pairs, pool.length);
+  const round = shuffle(pool).slice(0, size);
+
+  const key = it => G.kind === "letters" ? it.l : String(it.n);
+  const leftCards  = shuffle(round).map(it => ({ id:key(it), it, side:"L", ...G.left(it) }));
+  const rightCards = shuffle(round).map(it => ({ id:key(it), it, side:"R", ...G.right(it) }));
+
+  let matched = 0, mistakes = 0, pickL = null, pickR = null, busy = false;
+
+  const cardHtml = (c, i) =>
+    `<button class="mcard" data-side="${c.side}" data-i="${i}" data-id="${esc(c.id)}">
+       ${c.html}<span class="tick">⭐</span>
+     </button>`;
+
+  app.innerHTML = topBar(G.title) + `
+  <div class="stack">
+    <div class="gamehead">
+      <div class="dots" id="dots">${round.map(() => `<span class="dot"></span>`).join("")}</div>
+      <span class="muted small" id="count">0 / ${size}</span>
+    </div>
+    <div class="board">
+      ${round.map((_, i) => cardHtml(leftCards[i], i) + cardHtml(rightCards[i], i)).join("")}
+    </div>
+    <div class="center"><button class="btn ghost small" data-again>🔀 New cards</button></div>
+  </div>`;
+  wireTop();
+  $("[data-again]").onclick = () => playRound(gameId);
+
+  const cardsEl = $$(".mcard");
+  const elOf = (side, i) => cardsEl.find(e => e.dataset.side === side && +e.dataset.i === i);
+
+  function clearPick(){
+    if(pickL !== null) elOf("L", pickL).classList.remove("pick");
+    if(pickR !== null) elOf("R", pickR).classList.remove("pick");
+    pickL = pickR = null;
+  }
+
+  function check(){
+    if(pickL === null || pickR === null) return;
+    const a = elOf("L", pickL), b = elOf("R", pickR);
+    busy = true;
+    if(a.dataset.id === b.dataset.id){
+      const item = leftCards[pickL].it;
+      a.classList.remove("pick"); b.classList.remove("pick");
+      a.classList.add("good"); b.classList.add("good");
+      soundGood(); speak(G.cheer(item));
+      matched++;
+      const dots = $$("#dots .dot");
+      if(dots[matched-1]) dots[matched-1].classList.add("on");
+      $("#count").textContent = matched + " / " + size;
+      pickL = pickR = null;
+      setTimeout(() => {
+        a.classList.remove("good"); b.classList.remove("good");
+        a.classList.add("done");   b.classList.add("done");
+        busy = false;
+        if(matched === size) setTimeout(() => winScreen(gameId, mistakes, size), 420);
+      }, 520);
+    }else{
+      mistakes++;
+      a.classList.add("bad"); b.classList.add("bad");
+      soundWrong();
+      setTimeout(() => {
+        a.classList.remove("bad","pick"); b.classList.remove("bad","pick");
+        pickL = pickR = null; busy = false;
+      }, 460);
+    }
+  }
+
+  cardsEl.forEach(el => el.onclick = () => {
+    if(busy || el.classList.contains("done")) return;
+    const side = el.dataset.side, i = +el.dataset.i;
+    if(side === "L"){
+      if(pickL === i){ el.classList.remove("pick"); pickL = null; return; }
+      if(pickL !== null) elOf("L", pickL).classList.remove("pick");
+      pickL = i;
+    }else{
+      if(pickR === i){ el.classList.remove("pick"); pickR = null; return; }
+      if(pickR !== null) elOf("R", pickR).classList.remove("pick");
+      pickR = i;
+    }
+    el.classList.add("pick");
+    tone([520], 0.06);
+    const c = (side === "L" ? leftCards : rightCards)[i];
+    if(pickL === null || pickR === null) speak(c.say);
+    check();
+  });
+}
+
+/* ==========================================================================
+   WELL DONE!
+   ========================================================================== */
+
+function winScreen(gameId, mistakes, size){
+  const stars = mistakes === 0 ? 3 : mistakes <= 2 ? 2 : 1;
+  const words = ["Well done!","Great job!","Super!","Brilliant!","Fantastic!","You did it!"];
+  const cheer = words[Math.floor(Math.random()*words.length)];
+  confetti(); soundWin(); speak(cheer);
+
+  app.innerHTML = topBar(GAMES[gameId].title) + `
+  <div class="card win">
+    <div style="font-size:64px;line-height:1">🎉</div>
+    <div class="winword">${cheer}</div>
+    <div class="stars">${"⭐".repeat(stars)}${"☆".repeat(3-stars)}</div>
+    <p class="muted small">${size} pairs matched${mistakes ? " · " + mistakes + (mistakes===1 ? " try again" : " tries again") : " · no mistakes!"}</p>
+    <div class="stack-sm" style="margin-top:18px">
+      <button class="btn go big" data-again>▶ Play again</button>
+      <button class="btn ghost big" data-change>✏️ Change the letters</button>
+      <button class="btn ghost big" data-home>🏠 Home</button>
+    </div>
+  </div>`;
+  wireTop();
+  if(GAMES[gameId].kind === "numbers") $("[data-change]").innerHTML = "✏️ Change the numbers";
+  $("[data-again]").onclick  = () => playRound(gameId);
+  $("[data-change]").onclick = () => { stack.pop(); setupScreen(gameId); };
+  $("[data-home]").onclick   = home;
+}
+
+/* ==========================================================================
+   START
+   ========================================================================== */
+
+home();
+</script>
+</body>
+</html>

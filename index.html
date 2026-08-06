@@ -642,6 +642,13 @@ function screenHome(){
         <span class="muted small">${DATA.irregular.length} verbs · drill or study list</span></span><span class="chev">›</span></button>
     </div>
 
+    <h2 style="margin-top:6px">For young learners</h2>
+    <div class="stack-sm">
+      <a class="row" href="abc.html" style="text-decoration:none"><span class="emoji">🔤</span>
+        <span class="grow"><span class="row-title">ABC &amp; 123</span><br>
+        <span class="muted small">The alphabet and numbers — learn them, then play matching games</span></span><span class="chev">›</span></a>
+    </div>
+
     ${legacyLevels().length ? `<h2 style="margin-top:6px">Other levels</h2>
     <div class="stack-sm">${legacyLevels().map(l => `
       <button class="row" data-level="${l.code}"><span class="badge">${l.code}</span>
