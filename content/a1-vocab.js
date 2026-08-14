@@ -1,79 +1,101 @@
 /* A1 Vocabulary Library — themed sets.
-   Each word: en (the English word), meaning (simple A1 definition), ex (example sentence).
-   Add a word by copying a line. Keep meanings short and in simple English. */
+
+   Each word:  en (English), meaning (simple English definition), ex (example sentence)
+   Module 1 sets are adapted for Russian speakers and for younger learners:
+       ru    = Russian translation, shown INSTEAD of the English definition
+       pic   = a picture (emoji or a big character)
+   A set with  mode:"ru"  uses the Russian translation in all its games.
+   A set with  kid:true   turns on the bigger, brighter, more colourful layout.
+   color = the colour used for that set's cards.
+
+   To add a word, copy a line and change the words. */
 
 window.A1_VOCAB = [
 
-{id:"greetings", title:"Greetings", emoji:"👋", module:1, words:[
-  {en:"hello", meaning:"a friendly word you say when you meet someone", ex:"Hello! Nice to meet you."},
-  {en:"good morning", meaning:"a greeting before 12 o'clock", ex:"Good morning, Mr Petrosyan."},
-  {en:"good afternoon", meaning:"a greeting between 12 and 6 o'clock", ex:"Good afternoon, everyone."},
-  {en:"good evening", meaning:"a greeting after 6 o'clock", ex:"Good evening! Come in, please."},
-  {en:"goodbye", meaning:"what you say when you leave", ex:"Goodbye! See you tomorrow."},
-  {en:"nice to meet you", meaning:"what you say when you meet a person the first time", ex:"I'm Anna. Nice to meet you."},
-  {en:"how are you?", meaning:"a question about someone's health or feelings", ex:"Hi Sara! How are you?"},
-  {en:"see you later", meaning:"an informal goodbye", ex:"I'm going home. See you later!"},
-  {en:"please", meaning:"a polite word when you ask for something", ex:"Can I have some water, please?"},
-  {en:"thank you", meaning:"a polite word when someone helps you", ex:"Thank you for your help."}
+/* ===================== MODULE 1 — Russian + pictures + kid mode ===================== */
+
+{id:"greetings", title:"Greetings", ru:"Приветствия", emoji:"👋", module:1,
+ mode:"ru", kid:true, color:"#ff6b9d", words:[
+  {en:"hello", ru:"привет / здравствуйте", pic:"👋", meaning:"a friendly word you say when you meet someone", ex:"Hello! Nice to meet you."},
+  {en:"good morning", ru:"доброе утро", pic:"🌅", meaning:"a greeting before 12 o'clock", ex:"Good morning, Mr Petrosyan."},
+  {en:"good afternoon", ru:"добрый день", pic:"☀️", meaning:"a greeting between 12 and 6 o'clock", ex:"Good afternoon, everyone."},
+  {en:"good evening", ru:"добрый вечер", pic:"🌆", meaning:"a greeting after 6 o'clock", ex:"Good evening! Come in, please."},
+  {en:"goodbye", ru:"до свидания", pic:"🚶", meaning:"what you say when you leave", ex:"Goodbye! See you tomorrow."},
+  {en:"nice to meet you", ru:"приятно познакомиться", pic:"🤝", meaning:"what you say when you meet a person for the first time", ex:"I'm Anna. Nice to meet you."},
+  {en:"how are you?", ru:"как дела?", pic:"🙂", meaning:"a question about someone's health or feelings", ex:"Hi Sara! How are you?"},
+  {en:"see you later", ru:"до скорого / увидимся", pic:"👀", meaning:"an informal goodbye", ex:"I'm going home. See you later!"},
+  {en:"please", ru:"пожалуйста", pic:"🙏", meaning:"a polite word when you ask for something", ex:"Can I have some water, please?"},
+  {en:"thank you", ru:"спасибо", pic:"💐", meaning:"a polite word when someone helps you", ex:"Thank you for your help."}
 ]},
 
-{id:"countries", title:"Countries & Nationalities", emoji:"🌍", module:1, words:[
-  {en:"Armenia — Armenian", meaning:"the country, then the people and language", ex:"I'm from Armenia. I'm Armenian."},
-  {en:"Britain — British", meaning:"the country, then the people", ex:"Tom is British. He lives in London."},
-  {en:"France — French", meaning:"the country, then the people and language", ex:"She is French. She speaks French."},
-  {en:"Spain — Spanish", meaning:"the country, then the people and language", ex:"They are Spanish."},
-  {en:"Italy — Italian", meaning:"the country, then the people and language", ex:"Marco is Italian."},
-  {en:"Germany — German", meaning:"the country, then the people and language", ex:"Hans is German."},
-  {en:"Russia — Russian", meaning:"the country, then the people and language", ex:"My teacher is Russian."},
-  {en:"Japan — Japanese", meaning:"the country, then the people and language", ex:"Yuki is Japanese."},
-  {en:"country", meaning:"a place like Armenia, France or Japan", ex:"What country are you from?"},
-  {en:"nationality", meaning:"the country you belong to", ex:"My nationality is Armenian."}
+{id:"countries", title:"Countries & Nationalities", ru:"Страны и национальности", emoji:"🌍", module:1,
+ mode:"ru", kid:true, color:"#4dabf7", words:[
+  {en:"Armenia — Armenian", ru:"Армения — армянин / армянский", pic:"🇦🇲", meaning:"the country, then the people and language", ex:"I'm from Armenia. I'm Armenian."},
+  {en:"Britain — British", ru:"Великобритания — британец / британский", pic:"🇬🇧", meaning:"the country, then the people", ex:"Tom is British. He lives in London."},
+  {en:"France — French", ru:"Франция — француз / французский", pic:"🇫🇷", meaning:"the country, then the people and language", ex:"She is French. She speaks French."},
+  {en:"Spain — Spanish", ru:"Испания — испанец / испанский", pic:"🇪🇸", meaning:"the country, then the people and language", ex:"They are Spanish."},
+  {en:"Italy — Italian", ru:"Италия — итальянец / итальянский", pic:"🇮🇹", meaning:"the country, then the people and language", ex:"Marco is Italian."},
+  {en:"Germany — German", ru:"Германия — немец / немецкий", pic:"🇩🇪", meaning:"the country, then the people and language", ex:"Hans is German."},
+  {en:"Russia — Russian", ru:"Россия — русский", pic:"🇷🇺", meaning:"the country, then the people and language", ex:"My teacher is Russian."},
+  {en:"Japan — Japanese", ru:"Япония — японец / японский", pic:"🇯🇵", meaning:"the country, then the people and language", ex:"Yuki is Japanese."},
+  {en:"country", ru:"страна", pic:"🗺️", meaning:"a place like Armenia, France or Japan", ex:"What country are you from?"},
+  {en:"nationality", ru:"национальность", pic:"🪪", meaning:"the country you belong to", ex:"My nationality is Armenian."}
 ]},
 
-{id:"jobs", title:"Jobs", emoji:"💼", module:1, words:[
-  {en:"teacher", meaning:"a person who helps students learn", ex:"My mother is a teacher."},
-  {en:"doctor", meaning:"a person who helps sick people", ex:"The doctor is in the hospital."},
-  {en:"engineer", meaning:"a person who designs machines or buildings", ex:"He is an engineer."},
-  {en:"student", meaning:"a person who studies", ex:"I'm a student at the university."},
-  {en:"waiter", meaning:"a person who brings food in a restaurant", ex:"The waiter is very friendly."},
-  {en:"nurse", meaning:"a person who takes care of sick people", ex:"My sister is a nurse."},
-  {en:"driver", meaning:"a person who drives a car or bus", ex:"The bus driver is nice."},
-  {en:"shop assistant", meaning:"a person who helps you in a shop", ex:"Ask the shop assistant for a bigger size."}
+{id:"jobs", title:"Jobs", ru:"Профессии", emoji:"💼", module:1,
+ mode:"ru", kid:true, color:"#ffa94d", words:[
+  {en:"teacher", ru:"учитель", pic:"👩‍🏫", meaning:"a person who helps students learn", ex:"My mother is a teacher."},
+  {en:"doctor", ru:"врач", pic:"👨‍⚕️", meaning:"a person who helps sick people", ex:"The doctor is in the hospital."},
+  {en:"engineer", ru:"инженер", pic:"👷", meaning:"a person who designs machines or buildings", ex:"He is an engineer."},
+  {en:"student", ru:"студент / ученик", pic:"🎒", meaning:"a person who studies", ex:"I'm a student at the university."},
+  {en:"waiter", ru:"официант", pic:"🍽️", meaning:"a person who brings food in a restaurant", ex:"The waiter is very friendly."},
+  {en:"nurse", ru:"медсестра", pic:"👩‍⚕️", meaning:"a person who takes care of sick people", ex:"My sister is a nurse."},
+  {en:"driver", ru:"водитель", pic:"🚕", meaning:"a person who drives a car or bus", ex:"The bus driver is nice."},
+  {en:"shop assistant", ru:"продавец", pic:"🛍️", meaning:"a person who helps you in a shop", ex:"Ask the shop assistant for a bigger size."}
 ]},
 
-{id:"classroom", title:"Classroom Objects", emoji:"✏️", module:1, words:[
-  {en:"book", meaning:"you read it", ex:"Open your book, please."},
-  {en:"notebook", meaning:"you write in it", ex:"My notebook is on the desk."},
-  {en:"pen", meaning:"you write with it, in ink", ex:"Can I borrow a pen?"},
-  {en:"pencil", meaning:"you write with it and you can erase it", ex:"This pencil is broken."},
-  {en:"desk", meaning:"a table you work at", ex:"Put your bag under the desk."},
-  {en:"chair", meaning:"you sit on it", ex:"There are twelve chairs in the room."},
-  {en:"board", meaning:"the teacher writes on it", ex:"Look at the board, please."},
-  {en:"bag", meaning:"you carry your things in it", ex:"My bag is very heavy."}
+{id:"classroom", title:"Classroom Objects", ru:"Школьные предметы", emoji:"✏️", module:1,
+ mode:"ru", kid:true, color:"#69db7c", words:[
+  {en:"book", ru:"книга", pic:"📕", meaning:"you read it", ex:"Open your book, please."},
+  {en:"notebook", ru:"тетрадь", pic:"📓", meaning:"you write in it", ex:"My notebook is on the desk."},
+  {en:"pen", ru:"ручка", pic:"🖊️", meaning:"you write with it, in ink", ex:"Can I borrow a pen?"},
+  {en:"pencil", ru:"карандаш", pic:"✏️", meaning:"you write with it and you can erase it", ex:"This pencil is broken."},
+  {en:"desk", ru:"парта", pic:"🪑", meaning:"a table you work at", ex:"Put your bag under the desk."},
+  {en:"chair", ru:"стул", pic:"💺", meaning:"you sit on it", ex:"There are twelve chairs in the room."},
+  {en:"board", ru:"доска", pic:"📋", meaning:"the teacher writes on it", ex:"Look at the board, please."},
+  {en:"bag", ru:"сумка / рюкзак", pic:"🎒", meaning:"you carry your things in it", ex:"My bag is very heavy."},
+  {en:"ruler", ru:"линейка", pic:"📏", meaning:"you use it to draw straight lines", ex:"Where is my ruler?"},
+  {en:"rubber", ru:"ластик", pic:"🧽", meaning:"you use it to remove pencil marks", ex:"Can I use your rubber?"}
 ]},
 
-{id:"numbers", title:"Numbers 0–100", emoji:"🔢", module:1, words:[
-  {en:"7", meaning:"seven", ex:"There are seven days in a week."},
-  {en:"12", meaning:"twelve", ex:"I have twelve books."},
-  {en:"15", meaning:"fifteen", ex:"She is fifteen years old."},
-  {en:"20", meaning:"twenty", ex:"There are twenty students."},
-  {en:"30", meaning:"thirty", ex:"My father is thirty years old."},
-  {en:"40", meaning:"forty", ex:"Forty people are here."},
-  {en:"50", meaning:"fifty", ex:"This book is fifty pages."},
-  {en:"70", meaning:"seventy", ex:"My grandmother is seventy."},
-  {en:"90", meaning:"ninety", ex:"Ninety percent is a good result."},
-  {en:"100", meaning:"a hundred", ex:"I can count to a hundred."}
+{id:"numbers", title:"Numbers 0–100", ru:"Числа 0–100", emoji:"🔢", module:1,
+ mode:"ru", kid:true, color:"#9775fa", words:[
+  {en:"three", ru:"три", pic:"3", meaning:"the number 3", ex:"I have three books."},
+  {en:"five", ru:"пять", pic:"5", meaning:"the number 5", ex:"There are five chairs."},
+  {en:"seven", ru:"семь", pic:"7", meaning:"the number 7", ex:"There are seven days in a week."},
+  {en:"ten", ru:"десять", pic:"10", meaning:"the number 10", ex:"My brother is ten years old."},
+  {en:"twelve", ru:"двенадцать", pic:"12", meaning:"the number 12", ex:"There are twelve months in a year."},
+  {en:"fifteen", ru:"пятнадцать", pic:"15", meaning:"the number 15", ex:"She is fifteen years old."},
+  {en:"twenty", ru:"двадцать", pic:"20", meaning:"the number 20", ex:"There are twenty students."},
+  {en:"thirty", ru:"тридцать", pic:"30", meaning:"the number 30", ex:"My father is thirty years old."},
+  {en:"fifty", ru:"пятьдесят", pic:"50", meaning:"the number 50", ex:"This book has fifty pages."},
+  {en:"seventy", ru:"семьдесят", pic:"70", meaning:"the number 70", ex:"My grandmother is seventy."},
+  {en:"ninety", ru:"девяносто", pic:"90", meaning:"the number 90", ex:"Ninety percent is a good result."},
+  {en:"a hundred", ru:"сто", pic:"100", meaning:"the number 100", ex:"I can count to a hundred."}
 ]},
 
-{id:"personal-info", title:"Personal Information", emoji:"🪪", module:1, words:[
-  {en:"name", meaning:"what people call you", ex:"My name is Ani."},
-  {en:"surname", meaning:"your family name", ex:"My surname is Petrosyan."},
-  {en:"age", meaning:"how old you are", ex:"What is your age?"},
-  {en:"address", meaning:"where you live", ex:"My address is 12 Abovyan Street."},
-  {en:"phone number", meaning:"the numbers people call you on", ex:"What's your phone number?"},
-  {en:"email", meaning:"your address on the internet", ex:"Send me your email, please."},
-  {en:"nationality", meaning:"the country you belong to", ex:"Her nationality is French."}
+{id:"personal-info", title:"Personal Information", ru:"Личные данные", emoji:"🪪", module:1,
+ mode:"ru", kid:true, color:"#22b8cf", words:[
+  {en:"name", ru:"имя", pic:"🏷️", meaning:"what people call you", ex:"My name is Ani."},
+  {en:"surname", ru:"фамилия", pic:"👨‍👩‍👦", meaning:"your family name", ex:"My surname is Petrosyan."},
+  {en:"age", ru:"возраст", pic:"🎂", meaning:"how old you are", ex:"What is your age?"},
+  {en:"address", ru:"адрес", pic:"🏠", meaning:"where you live", ex:"My address is 12 Abovyan Street."},
+  {en:"phone number", ru:"номер телефона", pic:"📱", meaning:"the numbers people call you on", ex:"What's your phone number?"},
+  {en:"email", ru:"электронная почта", pic:"📧", meaning:"your address on the internet", ex:"Send me your email, please."},
+  {en:"nationality", ru:"национальность", pic:"🌍", meaning:"the country you belong to", ex:"Her nationality is French."}
 ]},
+
+/* ===================== MODULES 2–10 — English definitions ===================== */
 
 {id:"family", title:"Family", emoji:"👨‍👩‍👧", module:2, words:[
   {en:"mother", meaning:"your female parent", ex:"My mother is a doctor."},

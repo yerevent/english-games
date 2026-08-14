@@ -202,6 +202,30 @@ p{margin:0}
 /* unscramble */
 .scramble{font-size:34px;font-weight:800;letter-spacing:.14em;text-align:center;margin:12px 0;color:var(--accent)}
 
+/* pictures */
+.tile .pic{display:block;font-size:32px;line-height:1.1;margin-bottom:5px}
+.flashcard .fc-pic{font-size:70px;line-height:1;margin-bottom:10px}
+.pic-cell{font-size:28px;text-align:center;width:44px}
+.big-pic{font-size:58px;text-align:center;line-height:1;margin-bottom:4px}
+.ru{color:var(--accent);font-weight:650}
+.ru-big{font-size:19px;color:var(--accent);font-weight:650}
+
+/* kid-friendly mode — Module 1 */
+body.kids{--accent:#e8590c;--accent-soft:#fff0e6;--r:22px}
+@media (prefers-color-scheme:dark){body.kids{--accent:#ffa94d;--accent-soft:#33241a}}
+body.kids h1{font-size:30px}
+body.kids .row{padding:18px;border-radius:22px}
+body.kids .row-title{font-size:18px}
+body.kids .emoji{font-size:32px;width:58px;height:58px;border-radius:20px}
+body.kids .badge{min-width:52px;height:52px;border-radius:18px;font-size:16px}
+body.kids .tile{min-height:112px;font-size:17px;border-radius:22px}
+body.kids .question{font-size:25px}
+body.kids .opt{font-size:18.5px;border-radius:20px;padding:17px}
+body.kids .chip-w{font-size:18px;padding:13px 16px}
+body.kids .btn{border-radius:18px}
+body.kids .flashcard{border-radius:26px}
+body.kids table.study td{padding:13px 6px}
+
 /* verbs + typing */
 .verb-prompt{font-size:30px;font-weight:750;letter-spacing:-.03em;text-align:center;margin:10px 0 4px}
 .field{display:flex;flex-direction:column;gap:6px}
@@ -450,6 +474,13 @@ function normalise(s){
     .replace(/[.,!?;:]/g, "").replace(/[''`]/g, "'").replace(/\s+/g, " ");
 }
 
+/* Module 1 is adapted for Russian speakers and younger learners:
+   the definition column becomes a Russian translation, and the page gets
+   bigger type, brighter colours and pictures. */
+function setKids(on){ document.body.classList.toggle("kids", !!on); }
+function defOf(w, set){ return (set && set.mode === "ru" && w.ru) ? w.ru : w.meaning; }
+function isRuSet(set){ return !!(set && set.mode === "ru"); }
+
 const grammarById = id => GRAMMAR.find(g => g.id === id);
 const vocabById   = id => VOCAB.find(v => v.id === id);
 const moduleByN   = n  => MODULES.find(m => m.n === +n);
@@ -604,6 +635,7 @@ function goHome(){ nav = [screenHome]; window.scrollTo(0,0); screenHome(); }
    ========================================================================== */
 
 function screenHome(){
+  setKids(false);
   const hour = new Date().getHours();
   const hello = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   const modsDone = MODULES.filter(m => moduleDone(m).done > 0).length;
@@ -684,6 +716,7 @@ function screenHome(){
 }
 
 function screenCourse(){
+  setKids(false);
   app.innerHTML = topBar("A1 course") + `
   <div class="stack">
     <h1>A1 — Beginner</h1>
@@ -708,7 +741,8 @@ let moduleTab = "grammar";
 function screenModule(n){
   const m = moduleByN(n);
   if(!m){ goHome(); return; }
-  const tabs = [["grammar","Grammar"],["vocab","Vocabulary"],["speaking","Speaking"],["writing","Writing"]];
+  setKids(!!m.kid);
+  const tabs =[["grammar","Grammar"],["vocab","Vocabulary"],["speaking","Speaking"],["writing","Writing"]];
   let body = "";
 
   if(moduleTab === "grammar"){
@@ -717,6 +751,7 @@ function screenModule(n){
       if(!g) return "";
       return `<button class="row" data-g="${g.id}"><span class="badge">${g.n}</span>
         <span class="grow"><span class="row-title">${esc(g.title)}</span><br>
+        ${g.ru ? `<span class="ru small">${esc(g.ru.title)}</span><br>` : ""}
         <span class="muted small">${esc(g.summary)}${bestLabel("g|"+g.id+"|mcq")}</span></span>
         <span class="chev">›</span></button>`;
     }).join("");
@@ -724,8 +759,10 @@ function screenModule(n){
     body = m.vocab.map(id => {
       const v = vocabById(id);
       if(!v) return "";
-      return `<button class="row" data-v="${v.id}"><span class="emoji">${v.emoji}</span>
+      return `<button class="row" data-v="${v.id}">
+        <span class="emoji" ${v.color ? `style="background:${v.color}22;color:${v.color}"` : ""}>${v.emoji}</span>
         <span class="grow"><span class="row-title">${esc(v.title)}</span><br>
+        ${v.ru ? `<span class="ru small">${esc(v.ru)}</span> · ` : ""}
         <span class="muted small">${plural(v.words.length,"word","words")}${bestLabel("v|"+v.id+"|match")}</span></span>
         <span class="chev">›</span></button>`;
     }).join("");
@@ -760,8 +797,9 @@ function screenModule(n){
 
   app.innerHTML = topBar("Module " + m.n) + `
   <div class="stack">
-    <h1>${m.emoji} ${esc(m.title)}</h1>
+    <h1>${m.emoji} ${esc(m.title)}${m.ru ? ` <span class="ru">${esc(m.ru)}</span>` : ""}</h1>
     <p class="muted small">${esc(m.goal)}</p>
+    ${m.goalRu ? `<p class="ru small">${esc(m.goalRu)}</p>` : ""}
     <div class="seg">${tabs.map(([k,l]) =>
       `<button data-tab="${k}" aria-selected="${moduleTab === k}">${l}</button>`).join("")}</div>
     <div class="stack-sm">${body}</div>
@@ -781,6 +819,7 @@ function screenModule(n){
    ========================================================================== */
 
 function screenGrammarLibrary(){
+  setKids(false);
   app.innerHTML = topBar("Grammar Library") + `
   <div class="stack">
     <h1>📚 Grammar Library</h1>
@@ -795,23 +834,31 @@ function screenGrammarLibrary(){
   app.querySelectorAll("[data-g]").forEach(b => b.onclick = () => go(() => screenGrammar(b.dataset.g)));
 }
 
+let grammarRu = false;
 function screenGrammar(id){
   const g = grammarById(id);
   if(!g){ goHome(); return; }
+  setKids(!!g.kid);
   const avail = ["mcq","gap","drag","build","fix","timed"].filter(k => (g[GAMES[k].src] || []).length);
+  const ru = g.ru && grammarRu ? g.ru : null;
 
   app.innerHTML = topBar(g.title) + `
   <div class="stack">
     <h1>${esc(g.title)}</h1>
-    <p class="muted small">A1 · Module ${g.module}</p>
+    <p class="muted small">A1 · Module ${g.module}${g.ru ? " · " + esc(g.ru.title) : ""}</p>
+    ${g.ru ? `<div class="seg">
+      <button data-lang="en" aria-selected="${!grammarRu}">English</button>
+      <button data-lang="ru" aria-selected="${grammarRu}">Русский</button></div>` : ""}
     <div class="card stack">
-      <p style="font-weight:600">${esc(g.summary)}</p>
+      <p style="font-weight:600">${esc(ru ? ru.summary : g.summary)}</p>
       ${g.table ? `<table class="study"><tbody>${g.table.map(r =>
         `<tr><td style="font-weight:700;white-space:nowrap">${esc(r[0])}</td><td class="muted">${esc(r[1])}</td></tr>`).join("")}</tbody></table>` : ""}
-      ${g.rules && g.rules.length ? `<div class="rulebox"><ul>${g.rules.map(r => `<li>${esc(r)}</li>`).join("")}</ul></div>` : ""}
-      ${g.examples && g.examples.length ? `<div><h3 class="muted" style="margin-bottom:4px">Examples</h3>
-        ${g.examples.map(e => `<div class="exline">${esc(e)}</div>`).join("")}</div>` : ""}
-      ${g.tip ? `<div class="tipbox"><b>Watch out:</b> ${esc(g.tip)}</div>` : ""}
+      ${(ru ? ru.rules : g.rules) && (ru ? ru.rules : g.rules).length ?
+        `<div class="rulebox"><ul>${(ru ? ru.rules : g.rules).map(r => `<li>${esc(r)}</li>`).join("")}</ul></div>` : ""}
+      ${g.examples && g.examples.length ? `<div><h3 class="muted" style="margin-bottom:4px">${ru ? "Примеры" : "Examples"}</h3>
+        ${g.examples.map((e,i) => `<div class="exline">${esc(e)}${
+          (g.ru && g.ru.examples && g.ru.examples[i]) ? `<br><span class="ru small">${esc(g.ru.examples[i])}</span>` : ""}</div>`).join("")}</div>` : ""}
+      ${(ru ? ru.tip : g.tip) ? `<div class="tipbox"><b>${ru ? "Осторожно:" : "Watch out:"}</b> ${esc(ru ? ru.tip : g.tip)}</div>` : ""}
     </div>
 
     <h2 style="margin-top:6px">Practice</h2>
@@ -829,6 +876,8 @@ function screenGrammar(id){
   </div>`;
 
   wireBack();
+  app.querySelectorAll("[data-lang]").forEach(b =>
+    b.onclick = () => { grammarRu = b.dataset.lang === "ru"; screenGrammar(id); });
   app.querySelectorAll("[data-play]").forEach(b =>
     b.onclick = () => go(() => startGrammarGame(g.id, b.dataset.play)));
   $("[data-copylink]").onclick = () => copyText(buildLink({ g:g.id }), "Homework link copied");
@@ -839,6 +888,7 @@ function screenGrammar(id){
    ========================================================================== */
 
 function screenVocabLibrary(){
+  setKids(false);
   app.innerHTML = topBar("Vocabulary Library") + `
   <div class="stack">
     <h1>🗂️ Vocabulary Library</h1>
@@ -856,17 +906,24 @@ function screenVocabLibrary(){
 function screenVocabSet(id){
   const v = vocabById(id);
   if(!v){ goHome(); return; }
+  setKids(!!v.kid);
   const canScramble = v.words.filter(w => /^[a-zA-Z]{4,}$/.test(w.en)).length >= 3;
+  const hasPics = v.words.some(w => w.pic);
+  const ruMode = isRuSet(v);
 
   app.innerHTML = topBar(v.title) + `
   <div class="stack">
     <h1>${v.emoji} ${esc(v.title)}</h1>
-    <p class="muted small">${plural(v.words.length,"word","words")} · A1 · Module ${v.module}</p>
+    <p class="muted small">${plural(v.words.length,"word","words")} · A1 · Module ${v.module}${
+      v.ru ? ` · <span class="ru">${esc(v.ru)}</span>` : ""}</p>
 
     <div class="card" style="overflow-x:auto">
-      <table class="study"><thead><tr><th>Word</th><th>Meaning</th></tr></thead><tbody>
-      ${v.words.map(w => `<tr><td><b>${esc(w.en)}</b><br><span class="tiny muted" style="font-style:italic">${esc(w.ex)}</span></td>
-        <td class="muted">${esc(w.meaning)}</td></tr>`).join("")}
+      <table class="study"><thead><tr>${hasPics ? "<th></th>" : ""}
+        <th>Word</th><th>${ruMode ? "Перевод" : "Meaning"}</th></tr></thead><tbody>
+      ${v.words.map(w => `<tr>
+        ${hasPics ? `<td class="pic-cell">${esc(w.pic || "")}</td>` : ""}
+        <td><b>${esc(w.en)}</b><br><span class="tiny muted" style="font-style:italic">${esc(w.ex)}</span></td>
+        <td class="${ruMode ? "ru" : "muted"}">${esc(defOf(w, v))}</td></tr>`).join("")}
       </tbody></table>
     </div>
 
@@ -903,6 +960,7 @@ function screenVocabSet(id){
 
 function screenSpeaking(n, kind){
   const m = moduleByN(n), s = m.speaking;
+  setKids(!!m.kid);
   let title = "", body = "";
 
   if(kind === "roleplay"){
@@ -993,6 +1051,7 @@ function startWheel(n){
 
 function screenWriting(n, i){
   const m = moduleByN(n), w = m.writing[i];
+  setKids(!!m.kid);
   const key = "w|" + n + "|" + i;
   let showModel = false;
 
@@ -1065,6 +1124,7 @@ function stopTimer(){ if(timerId){ clearInterval(timerId); timerId = null; } }
 
 function startGrammarGame(id, kind){
   const g = grammarById(id);
+  setKids(!!g.kid);
   const pool = shuffle((g[GAMES[kind].src] || []).slice()).slice(0, ROUND_LENGTH);
   if(!pool.length){ toast("Nothing to practise here yet"); back(); return; }
   G = { kind, topic:g, items:pool, i:0, right:0, missed:[],
@@ -1073,6 +1133,7 @@ function startGrammarGame(id, kind){
 }
 function startVocabGame(id, kind){
   const v = vocabById(id);
+  setKids(!!v.kid);
   G = { kind, set:v, i:0, right:0, missed:[],
         label:v.title + " · " + GAMES[kind].name, key:"v|" + v.id + "|" + kind, link:{ v:v.id, game:kind } };
   if(kind === "match")      return startMatch(v);
@@ -1164,10 +1225,12 @@ function answerMCQ(btn, q, timeout){
   const blank = $(".blank");
   if(blank){ blank.textContent = " " + q.a + " "; blank.classList.add("filled"); }
 
+  const whyRu = G.topic && G.topic.ru && G.topic.ru.why ? G.topic.ru.why[q.q] : "";
   $("#fb").innerHTML = `
     <div class="feedback ${ok ? "good" : "bad"}">
       <div class="fb-title">${ok ? "Correct" : timeout ? "Time's up!" : "Not quite"}</div>
       ${q.why ? `<div class="small">${esc(q.why)}</div>` : ""}
+      ${whyRu ? `<div class="small ru" style="margin-top:4px">${esc(whyRu)}</div>` : ""}
     </div>${nextButton()}`;
   wireNext();
 }
@@ -1337,19 +1400,20 @@ function startMatch(v){
   if(words.length < 2){ toast("Not enough words"); back(); return; }
   const cards = [];
   words.forEach((w,i) => {
-    cards.push({ id:i, side:"a", text:w.en });
-    cards.push({ id:i, side:"b", text:w.meaning });
+    cards.push({ id:i, side:"a", text:w.en, pic:w.pic });
+    cards.push({ id:i, side:"b", text:defOf(w, v) });
   });
   G = Object.assign(G || {}, { kind:"match", words, cards:shuffle(cards), sel:null, done:0, tries:0 });
-  drawMatch();
+  drawMatch(isRuSet(v));
 }
-function drawMatch(){
+function drawMatch(ruMode){
   app.innerHTML = topBar(G.label) + `
   <div class="stack">
     <div class="hud"><div class="bar"><i style="width:${G.done / G.words.length * 100}%"></i></div>
       <div class="score">${G.done}/${G.words.length}</div></div>
-    <p class="muted small">Tap a word, then tap its meaning.</p>
-    <div class="grid">${G.cards.map((c,n) => `<button class="tile" data-n="${n}">${esc(c.text)}</button>`).join("")}</div>
+    <p class="muted small">${ruMode ? "Нажми на слово, потом на перевод." : "Tap a word, then tap its meaning."}</p>
+    <div class="grid">${G.cards.map((c,n) => `<button class="tile" data-n="${n}">${
+      c.pic ? `<span><span class="pic">${esc(c.pic)}</span>${esc(c.text)}</span>` : esc(c.text)}</button>`).join("")}</div>
   </div>`;
   wireBack();
   app.querySelectorAll(".tile").forEach(t => t.onclick = () => tapMatch(t));
@@ -1384,8 +1448,8 @@ function startMemory(v){
   const words = shuffle(v.words).slice(0, MEMORY_PAIRS);
   const cards = [];
   words.forEach((w,i) => {
-    cards.push({ id:i, text:w.en });
-    cards.push({ id:i, text:w.meaning });
+    cards.push({ id:i, text:w.en, pic:w.pic });
+    cards.push({ id:i, text:defOf(w, v) });
   });
   G = Object.assign(G || {}, { kind:"memory", words, cards:shuffle(cards), open:[], done:0, tries:0, busy:false });
   drawMemory();
@@ -1406,7 +1470,9 @@ function tapMemory(tile){
   if(G.busy || tile.classList.contains("done") || !tile.classList.contains("face-down")) return;
   const n = +tile.dataset.n, card = G.cards[n];
   tile.classList.remove("face-down");
-  tile.textContent = card.text;
+  tile.innerHTML = card.pic
+    ? `<span><span class="pic">${esc(card.pic)}</span>${esc(card.text)}</span>`
+    : esc(card.text);
   G.open.push(n);
 
   if(G.open.length === 2){
@@ -1449,9 +1515,12 @@ function startCards(v){
         <div class="score">${i + 1}/${words.length}</div></div>
       <div class="flashcard" id="fc">
         ${flipped
-          ? `<div><div class="fc-mean">${esc(w.meaning)}</div><div class="fc-ex">"${esc(w.ex)}"</div>
-             <div class="fc-hint">Tap to see the word again</div></div>`
-          : `<div><div class="fc-word">${esc(w.en)}</div><div class="fc-hint">Tap to see the meaning</div></div>`}
+          ? `<div><div class="fc-mean ${isRuSet(v) ? "ru-big" : ""}">${esc(defOf(w, v))}</div>
+             <div class="fc-ex">"${esc(w.ex)}"</div>
+             <div class="fc-hint">${isRuSet(v) ? "Нажми, чтобы увидеть слово" : "Tap to see the word again"}</div></div>`
+          : `<div>${w.pic ? `<div class="fc-pic">${esc(w.pic)}</div>` : ""}
+             <div class="fc-word">${esc(w.en)}</div>
+             <div class="fc-hint">${isRuSet(v) ? "Нажми, чтобы увидеть перевод" : "Tap to see the meaning"}</div></div>`}
       </div>
       <div class="btn-row">
         <button class="btn" data-prev ${i === 0 ? "disabled" : ""}>← Back</button>
@@ -1478,17 +1547,19 @@ function startUnscramble(v){
 }
 function drawUnscramble(){
   const w = G.items[G.i];
-  let letters = w.en;
-  while(letters === w.en && w.en.length > 2) letters = shuffle(w.en.split("")).join("");
+  const ruMode = isRuSet(G.set);
+  let letters = w.en, guard = 0;
+  while(letters === w.en && w.en.length > 2 && guard++ < 20) letters = shuffle(w.en.split("")).join("");
 
   app.innerHTML = topBar(G.label) + `
   <div class="stack">
     ${hud()}
     <div class="card">
-      <p class="muted small center">${esc(w.meaning)}</p>
+      ${w.pic ? `<div class="big-pic">${esc(w.pic)}</div>` : ""}
+      <p class="center ${ruMode ? "ru-big" : "muted small"}">${esc(defOf(w, G.set))}</p>
       <p class="scramble">${esc(letters.toUpperCase())}</p>
     </div>
-    <div class="field"><label for="ans">Write the word</label>
+    <div class="field"><label for="ans">${ruMode ? "Напиши слово" : "Write the word"}</label>
       <input id="ans" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done"></div>
     <button class="btn primary wide" data-check>Check</button>
     <div id="fb"></div>
@@ -1499,7 +1570,7 @@ function drawUnscramble(){
   inp.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); $("[data-check]").click(); } };
   $("[data-check]").onclick = () => {
     const ok = normalise(inp.value) === normalise(w.en);
-    if(ok) G.right++; else markWrong(w.meaning, inp.value || "—", w.en, "");
+    if(ok) G.right++; else markWrong(defOf(w, G.set), inp.value || "—", w.en, "");
     inp.disabled = true; inp.classList.add(ok ? "correct" : "wrong");
     $("[data-check]").classList.add("hide");
     $("#fb").innerHTML = `

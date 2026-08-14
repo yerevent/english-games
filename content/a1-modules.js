@@ -5,8 +5,9 @@
 
 window.A1_MODULES = [
 
-{n:1, title:"Hello!", emoji:"👋",
+{n:1, title:"Hello!", emoji:"👋", kid:true, ru:"Привет!",
  goal:"Introduce yourself, say where you are from, and ask someone their name.",
+ goalRu:"Представиться, сказать, откуда ты, и спросить, как зовут другого человека.",
  grammar:["subject-pronouns","to-be","to-be-questions"],
  vocab:["greetings","countries","jobs","classroom","numbers","personal-info"],
  speaking:{
