@@ -1310,7 +1310,7 @@ function renderBuild(){
   app.innerHTML = topBar(G.label) + `
   <div class="stack">
     ${hud()}
-    <p class="muted small">Tap the words in the correct order.</p>
+    <p class="muted small">${q.prompt ? esc(q.prompt) : "Tap the words in the correct order."}</p>
     <div class="answer-area" id="area"><span class="ph">Your sentence appears here</span></div>
     <div class="chips" id="bank">${bank.map(b =>
       `<button class="chip-w" data-i="${b.i}">${esc(b.w)}</button>`).join("")}</div>
