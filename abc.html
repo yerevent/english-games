@@ -22,6 +22,7 @@
   CHANGING A WORD
     Scroll down to "THE ALPHABET". Each line looks like this:
         { l:"A", word:"apple", art:"apple" },
+    The words are the ones Family and Friends 1 uses (Units 1-6 phonics).
     You may change  word:"apple"  to another word starting with A.
     But "art" is the name of the drawing, and only the drawings listed in
     "THE DRAWINGS" exist. So if you change the word you will normally want to
@@ -328,32 +329,32 @@ select{
    ========================================================================== */
 
 const LETTERS = [
-  { l:"A", word:"apple",      art:"apple" },
-  { l:"B", word:"ball",       art:"ball" },
-  { l:"C", word:"cat",        art:"cat" },
-  { l:"D", word:"dog",        art:"dog" },
-  { l:"E", word:"egg",        art:"egg" },
-  { l:"F", word:"fish",       art:"fish" },
-  { l:"G", word:"grapes",     art:"grapes" },
-  { l:"H", word:"hat",        art:"hat" },
-  { l:"I", word:"ice cream",  art:"icecream" },
-  { l:"J", word:"jam",        art:"jam" },
-  { l:"K", word:"kite",       art:"kite" },
-  { l:"L", word:"leaf",       art:"leaf" },
-  { l:"M", word:"moon",       art:"moon" },
-  { l:"N", word:"nest",       art:"nest" },
-  { l:"O", word:"orange",     art:"orange" },
-  { l:"P", word:"pig",        art:"pig" },
-  { l:"Q", word:"queen",      art:"queen" },
-  { l:"R", word:"rabbit",     art:"rabbit" },
-  { l:"S", word:"sun",        art:"sun" },
-  { l:"T", word:"tree",       art:"tree" },
-  { l:"U", word:"umbrella",   art:"umbrella" },
-  { l:"V", word:"van",        art:"van" },
-  { l:"W", word:"whale",      art:"whale" },
-  { l:"X", word:"xylophone",  art:"xylophone" },
-  { l:"Y", word:"yo-yo",      art:"yoyo" },
-  { l:"Z", word:"zebra",      art:"zebra" }
+  { l:"A", word:"apple",    art:"apple" },
+  { l:"B", word:"bird",     art:"bird" },
+  { l:"C", word:"cat",      art:"cat" },
+  { l:"D", word:"dog",      art:"dog" },
+  { l:"E", word:"egg",      art:"egg" },
+  { l:"F", word:"fig",      art:"fig" },
+  { l:"G", word:"goat",     art:"goat" },
+  { l:"H", word:"hat",      art:"hat" },
+  { l:"I", word:"ink",      art:"ink" },
+  { l:"J", word:"jam",      art:"jam" },
+  { l:"K", word:"kite",     art:"kite" },
+  { l:"L", word:"lion",     art:"lion" },
+  { l:"M", word:"mum",      art:"mum" },
+  { l:"N", word:"nurse",    art:"nurse" },
+  { l:"O", word:"orange",   art:"orange" },
+  { l:"P", word:"pen",      art:"pen" },
+  { l:"Q", word:"queen",    art:"queen" },
+  { l:"R", word:"rabbit",   art:"rabbit" },
+  { l:"S", word:"sofa",     art:"sofa" },
+  { l:"T", word:"teddy",    art:"teddy" },
+  { l:"U", word:"umbrella", art:"umbrella" },
+  { l:"V", word:"van",      art:"van" },
+  { l:"W", word:"window",   art:"window" },
+  { l:"X", word:"box",      art:"box" },   /* the book teaches x at the END: box */
+  { l:"Y", word:"yo-yo",    art:"yoyo" },
+  { l:"Z", word:"zebra",    art:"zebra" }
 ];
 
 const NUMBER_WORDS = ["zero","one","two","three","four","five","six","seven","eight","nine","ten",
@@ -368,9 +369,32 @@ const MAX_PAIRS = 10;
    ========================================================================== */
 
 const ART = {
+bird:`<svg viewBox="0 0 100 100"><ellipse cx="48" cy="56" rx="28" ry="23" fill="#5b8cff"/><circle cx="66" cy="38" r="15" fill="#5b8cff"/><path d="M80 36l12 4-12 5z" fill="#ffa63d"/><circle cx="70" cy="34" r="3.5" fill="#2a2f45"/><path d="M30 52q16-6 26 8-18 6-26-8z" fill="#3f6fe0"/><path d="M22 52 6 44l6 14z" fill="#3f6fe0"/><path d="M42 78v12M54 78v12M38 90h8M50 90h8" stroke="#ffa63d" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+
+fig:`<svg viewBox="0 0 100 100"><path d="M50 18c6 10 30 26 30 46a30 26 0 0 1-60 0c0-20 24-36 30-46z" fill="#8e44ad"/><path d="M50 18c4 8 18 20 22 36" stroke="#b07cd0" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7"/><rect x="47" y="8" width="6" height="14" rx="3" fill="#7a5230"/><ellipse cx="62" cy="12" rx="10" ry="5.5" fill="#43bf63" transform="rotate(-25 62 12)"/></svg>`,
+
+goat:`<svg viewBox="0 0 100 100"><path d="M36 30Q24 10 16 18q10 2 14 16zM64 30q12-20 20-12-10 2-14 16z" fill="#c9b79c"/><ellipse cx="22" cy="44" rx="12" ry="6" fill="#e9e4da" transform="rotate(20 22 44)"/><ellipse cx="78" cy="44" rx="12" ry="6" fill="#e9e4da" transform="rotate(-20 78 44)"/><path d="M32 36q18-10 36 0l-4 34q-14 10-28 0z" fill="#f3f0ea" stroke="#ded9d0" stroke-width="2"/><circle cx="41" cy="48" r="4" fill="#2a2f45"/><circle cx="59" cy="48" r="4" fill="#2a2f45"/><ellipse cx="50" cy="66" rx="10" ry="6" fill="#ffc6d6"/><path d="M44 78q6 14 12 0" fill="#d9d3c8"/></svg>`,
+
+ink:`<svg viewBox="0 0 100 100"><rect x="38" y="16" width="24" height="12" rx="3" fill="#2a2f45"/><path d="M30 34q0-6 6-6h28q6 0 6 6v46q0 6-6 6H36q-6 0-6-6z" fill="#cfe4ff" stroke="#9db8e6" stroke-width="3"/><path d="M32 52h36v28q0 4-4 4H36q-4 0-4-4z" fill="#1f3fa8"/><rect x="38" y="40" width="24" height="10" rx="2" fill="#fff"/><path d="M80 52q-6 9 0 14 6-5 0-14z" fill="#1f3fa8"/></svg>`,
+
+lion:`<svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="38" fill="#e08a1e"/><g fill="#c96f0e"><circle cx="18" cy="52" r="9"/><circle cx="82" cy="52" r="9"/><circle cx="50" cy="16" r="9"/><circle cx="26" cy="26" r="9"/><circle cx="74" cy="26" r="9"/><circle cx="26" cy="78" r="9"/><circle cx="74" cy="78" r="9"/><circle cx="50" cy="88" r="8"/></g><circle cx="50" cy="54" r="26" fill="#ffc857"/><circle cx="40" cy="48" r="4" fill="#2a2f45"/><circle cx="60" cy="48" r="4" fill="#2a2f45"/><path d="M45 58h10l-5 6z" fill="#7a4a1c"/><path d="M50 64v4M50 68q-6 5-10 2M50 68q6 5 10 2" stroke="#7a4a1c" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+
+mum:`<svg viewBox="0 0 100 100"><path d="M18 60q-2-46 32-46t32 46q0 20-10 26H28q-10-6-10-26z" fill="#8a5524"/><circle cx="50" cy="52" r="24" fill="#ffdcbe"/><path d="M26 46q8-22 24-22t24 22q-14-10-24-10T26 46z" fill="#8a5524"/><circle cx="41" cy="52" r="3.5" fill="#2a2f45"/><circle cx="59" cy="52" r="3.5" fill="#2a2f45"/><path d="M42 63q8 7 16 0" stroke="#e5384f" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="35" cy="60" r="4" fill="#ffb3b3" opacity=".7"/><circle cx="65" cy="60" r="4" fill="#ffb3b3" opacity=".7"/></svg>`,
+
+nurse:`<svg viewBox="0 0 100 100"><path d="M24 36q0-24 26-24t26 24z" fill="#fff" stroke="#dfe6f5" stroke-width="3"/><rect x="44" y="16" width="12" height="4" fill="#e5384f"/><rect x="48" y="12" width="4" height="12" fill="#e5384f"/><circle cx="50" cy="58" r="24" fill="#ffdcbe"/><path d="M26 50q4-14 24-14t24 14q-8-6-24-6t-24 6z" fill="#3a2a1c"/><circle cx="41" cy="58" r="3.5" fill="#2a2f45"/><circle cx="59" cy="58" r="3.5" fill="#2a2f45"/><path d="M42 68q8 7 16 0" stroke="#c95f8a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+
+pen:`<svg viewBox="0 0 100 100"><g transform="rotate(40 50 50)"><rect x="42" y="8" width="16" height="62" rx="5" fill="#3f6fe0"/><rect x="42" y="8" width="16" height="12" rx="5" fill="#2a4fb8"/><rect x="58" y="14" width="4" height="26" rx="2" fill="#2a4fb8"/><path d="M42 70h16l-8 20z" fill="#e8edf7"/><path d="M48 84h4l-2 8z" fill="#2a2f45"/></g></svg>`,
+
+sofa:`<svg viewBox="0 0 100 100"><rect x="18" y="30" width="64" height="30" rx="8" fill="#e5384f"/><rect x="8" y="46" width="18" height="30" rx="7" fill="#c9283e"/><rect x="74" y="46" width="18" height="30" rx="7" fill="#c9283e"/><rect x="22" y="54" width="56" height="20" rx="5" fill="#ef4a60"/><path d="M50 56v16" stroke="#c9283e" stroke-width="2.5"/><rect x="14" y="76" width="6" height="8" rx="2" fill="#7a5230"/><rect x="80" y="76" width="6" height="8" rx="2" fill="#7a5230"/></svg>`,
+
+teddy:`<svg viewBox="0 0 100 100"><circle cx="26" cy="26" r="13" fill="#a06a34"/><circle cx="74" cy="26" r="13" fill="#a06a34"/><circle cx="26" cy="26" r="6" fill="#e8b98a"/><circle cx="74" cy="26" r="6" fill="#e8b98a"/><circle cx="50" cy="54" r="32" fill="#b97a3e"/><ellipse cx="50" cy="66" rx="15" ry="12" fill="#e8b98a"/><circle cx="38" cy="48" r="4.5" fill="#2a2f45"/><circle cx="62" cy="48" r="4.5" fill="#2a2f45"/><ellipse cx="50" cy="61" rx="6" ry="4.5" fill="#3a2a1c"/><path d="M50 65v5M50 70q-5 4-9 1M50 70q5 4 9 1" stroke="#3a2a1c" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+
+window:`<svg viewBox="0 0 100 100"><rect x="20" y="16" width="60" height="64" rx="4" fill="#a9d9ff"/><circle cx="62" cy="34" r="8" fill="#ffd93d"/><path d="M20 66q14-10 30-2t30 2v14H20z" fill="#5ed67f"/><rect x="20" y="16" width="60" height="64" rx="4" fill="none" stroke="#fff" stroke-width="6"/><path d="M50 16v64M20 48h60" stroke="#fff" stroke-width="5"/><path d="M14 12h72v6H14z" fill="#b07d45"/><path d="M14 18q8 30 0 64M86 18q-8 30 0 64" stroke="#ff7ac0" stroke-width="8" fill="none" opacity=".85"/><rect x="14" y="80" width="72" height="6" rx="2" fill="#b07d45"/></svg>`,
+
+box:`<svg viewBox="0 0 100 100"><path d="M14 38 50 26l36 12v38L50 90 14 76z" fill="#d9a066"/><path d="M50 50v40L14 76V38z" fill="#c48a4f"/><path d="M14 38 50 50l36-12" fill="none" stroke="#a8743f" stroke-width="2.5"/><path d="M14 38 4 26l36-12 10 12zM86 38l10-12-36-12-10 12z" fill="#e6b47e"/><rect x="58" y="58" width="18" height="10" rx="2" fill="#fff" opacity=".8" transform="skewY(-18)"/></svg>`,
+
 apple:`<svg viewBox="0 0 100 100"><circle cx="37" cy="60" r="27" fill="#e5384f"/><circle cx="63" cy="60" r="27" fill="#ef4a60"/><rect x="47" y="20" width="6" height="18" rx="3" fill="#8a5524"/><ellipse cx="66" cy="26" rx="13" ry="7.5" fill="#43bf63" transform="rotate(-22 66 26)"/><ellipse cx="32" cy="52" rx="6" ry="9" fill="#ff8b96" opacity=".55" transform="rotate(-25 32 52)"/></svg>`,
 
-ball:`<svg viewBox="0 0 100 100"><circle cx="50" cy="55" r="32" fill="#ff8a3d"/><path d="M18 55h64M50 23v64" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M28 33q22 22 0 44M72 33q-22 22 0 44" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
 
 cat:`<svg viewBox="0 0 100 100"><path d="M22 42 26 18l20 12z" fill="#f7b23b"/><path d="M78 42 74 18 54 30z" fill="#f7b23b"/><circle cx="50" cy="57" r="29" fill="#ffc857"/><circle cx="39" cy="52" r="4.5" fill="#2a2f45"/><circle cx="61" cy="52" r="4.5" fill="#2a2f45"/><path d="M50 62 45 67h10z" fill="#ff7ac0"/><path d="M50 67v5M50 72q-5 5-10 3M50 72q5 5 10 3" stroke="#2a2f45" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M16 58h14M16 66h14M70 58h14M70 66h14" stroke="#2a2f45" stroke-width="2.5" stroke-linecap="round"/></svg>`,
 
@@ -378,43 +402,32 @@ dog:`<svg viewBox="0 0 100 100"><ellipse cx="22" cy="52" rx="10" ry="20" fill="#
 
 egg:`<svg viewBox="0 0 100 100"><path d="M50 14c16 0 27 24 27 40 0 18-12 30-27 30S23 72 23 54c0-16 11-40 27-40z" fill="#fffaf0" stroke="#e0d2b4" stroke-width="3"/><ellipse cx="39" cy="45" rx="7" ry="11" fill="#fff" opacity=".9" transform="rotate(-20 39 45)"/></svg>`,
 
-fish:`<svg viewBox="0 0 100 100"><path d="M84 50 66 33v34z" fill="#1a97c4"/><ellipse cx="45" cy="50" rx="30" ry="21" fill="#35b6e8"/><path d="M45 29q10 6 10 12t-10 8" fill="#7fd6f5" opacity=".8"/><circle cx="27" cy="45" r="4.5" fill="#fff"/><circle cx="26" cy="45" r="2.4" fill="#2a2f45"/><path d="M40 62q12 8 24 4" stroke="#1a97c4" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
 
-grapes:`<svg viewBox="0 0 100 100"><rect x="48" y="14" width="5" height="16" rx="2.5" fill="#7a5230"/><ellipse cx="64" cy="20" rx="12" ry="7" fill="#43bf63" transform="rotate(-20 64 20)"/><g fill="#a05ad6"><circle cx="38" cy="42" r="10"/><circle cx="58" cy="42" r="10"/><circle cx="48" cy="56" r="10"/><circle cx="30" cy="58" r="10"/><circle cx="66" cy="58" r="10"/><circle cx="40" cy="72" r="10"/><circle cx="58" cy="72" r="10"/><circle cx="49" cy="86" r="9"/></g><circle cx="35" cy="39" r="3" fill="#d0a8f0"/><circle cx="55" cy="39" r="3" fill="#d0a8f0"/></svg>`,
 
 hat:`<svg viewBox="0 0 100 100"><path d="M32 62V38a18 14 0 0 1 36 0v24z" fill="#5b8cff"/><ellipse cx="50" cy="64" rx="38" ry="12" fill="#3f6fe0"/><rect x="32" y="52" width="36" height="11" fill="#ffd93d"/><circle cx="66" cy="57" r="5" fill="#ff6b6b"/></svg>`,
 
-icecream:`<svg viewBox="0 0 100 100"><path d="M32 52h36L50 92z" fill="#e0a45e"/><path d="M36 58 44 84M50 54 50 90M64 58 56 84" stroke="#c2823c" stroke-width="2.5"/><circle cx="38" cy="44" r="15" fill="#ff9ec4"/><circle cx="62" cy="44" r="15" fill="#8fe3c0"/><circle cx="50" cy="30" r="15" fill="#ffe08a"/><circle cx="50" cy="16" r="5" fill="#e5384f"/></svg>`,
 
 jam:`<svg viewBox="0 0 100 100"><rect x="34" y="14" width="32" height="10" rx="4" fill="#5b8cff"/><path d="M30 28h40v52a8 8 0 0 1-8 8H38a8 8 0 0 1-8-8z" fill="#fff" stroke="#dfe6f5" stroke-width="3"/><path d="M32 46h36v34a8 8 0 0 1-8 8H40a8 8 0 0 1-8-8z" fill="#e5384f"/><rect x="36" y="54" width="28" height="18" rx="4" fill="#fff8e7"/><path d="M42 63h16" stroke="#e5384f" stroke-width="3" stroke-linecap="round"/></svg>`,
 
 kite:`<svg viewBox="0 0 100 100"><path d="M50 8 78 40 50 62 22 40z" fill="#ff6b6b"/><path d="M50 8 78 40 50 62z" fill="#ffd93d"/><path d="M50 8v54M22 40h56" stroke="#fff" stroke-width="2.5"/><path d="M50 62q-8 12 0 20t-4 12" stroke="#5b8cff" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M44 74l8 4M42 86l8 4" stroke="#4ecb71" stroke-width="4" stroke-linecap="round"/></svg>`,
 
-leaf:`<svg viewBox="0 0 100 100"><path d="M78 18C42 18 22 40 22 66c0 8 3 14 3 14s34 4 50-14c14-16 3-48 3-48z" fill="#4ecb71"/><path d="M78 18 26 82" stroke="#2f9b53" stroke-width="3.5" stroke-linecap="round"/><path d="M62 30 56 46M70 42 60 56M52 40 46 54" stroke="#2f9b53" stroke-width="2.5" stroke-linecap="round"/></svg>`,
 
-moon:`<svg viewBox="0 0 100 100"><path d="M64 16a36 36 0 1 0 0 68 44 44 0 1 1 0-68z" fill="#ffd93d"/><circle cx="38" cy="36" r="4" fill="#f0bf1d" opacity=".55"/><circle cx="32" cy="58" r="6" fill="#f0bf1d" opacity=".45"/><path d="M82 22l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="#ffe08a"/><path d="M80 62l1.6 5 5 1.6-5 1.6-1.6 5-1.6-5-5-1.6 5-1.6z" fill="#ffe08a"/></svg>`,
 
-nest:`<svg viewBox="0 0 100 100"><ellipse cx="50" cy="58" rx="34" ry="12" fill="#9a6b3a"/><path d="M16 58a34 22 0 0 0 68 0z" fill="#b07d45"/><ellipse cx="38" cy="54" rx="10" ry="12" fill="#fffaf0"/><ellipse cx="60" cy="54" rx="10" ry="12" fill="#fffaf0"/><ellipse cx="49" cy="48" rx="10" ry="12" fill="#f5eddc"/><path d="M16 60q18 8 34 8t34-8" stroke="#7d5228" stroke-width="3" fill="none"/><path d="M22 68q14 6 28 6t28-6" stroke="#7d5228" stroke-width="3" fill="none"/></svg>`,
 
 orange:`<svg viewBox="0 0 100 100"><rect x="47" y="16" width="6" height="14" rx="3" fill="#7a5230"/><ellipse cx="66" cy="22" rx="12" ry="7" fill="#43bf63" transform="rotate(-20 66 22)"/><circle cx="50" cy="60" r="30" fill="#ff9f1a"/><path d="M50 30v60M20 60h60M29 39l42 42M71 39 29 81" stroke="#f28a00" stroke-width="2" opacity=".55"/><circle cx="38" cy="48" r="6" fill="#ffc46b" opacity=".7"/></svg>`,
 
-pig:`<svg viewBox="0 0 100 100"><path d="M24 34 20 16l20 8z" fill="#f58fb4"/><path d="M76 34 80 16 60 24z" fill="#f58fb4"/><circle cx="50" cy="56" r="29" fill="#ffb3ce"/><ellipse cx="50" cy="66" rx="16" ry="12" fill="#f58fb4"/><ellipse cx="44" cy="66" rx="3.5" ry="5" fill="#c95f8a"/><ellipse cx="56" cy="66" rx="3.5" ry="5" fill="#c95f8a"/><circle cx="38" cy="46" r="4.5" fill="#2a2f45"/><circle cx="62" cy="46" r="4.5" fill="#2a2f45"/></svg>`,
 
 queen:`<svg viewBox="0 0 100 100"><path d="M26 34 32 12l10 12 8-14 8 14 10-12 6 22z" fill="#ffd93d"/><rect x="26" y="34" width="48" height="8" rx="3" fill="#f0bf1d"/><circle cx="38" cy="24" r="3.5" fill="#ff6b6b"/><circle cx="50" cy="20" r="3.5" fill="#5b8cff"/><circle cx="62" cy="24" r="3.5" fill="#4ecb71"/><circle cx="50" cy="64" r="24" fill="#ffdcbe"/><circle cx="41" cy="60" r="3.5" fill="#2a2f45"/><circle cx="59" cy="60" r="3.5" fill="#2a2f45"/><path d="M42 72q8 7 16 0" stroke="#c95f8a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
 
 rabbit:`<svg viewBox="0 0 100 100"><ellipse cx="36" cy="28" rx="8" ry="22" fill="#f3f0ea" stroke="#ded9d0" stroke-width="2"/><ellipse cx="64" cy="28" rx="8" ry="22" fill="#f3f0ea" stroke="#ded9d0" stroke-width="2"/><ellipse cx="36" cy="28" rx="4" ry="15" fill="#ffb3ce"/><ellipse cx="64" cy="28" rx="4" ry="15" fill="#ffb3ce"/><circle cx="50" cy="64" r="25" fill="#f8f6f2" stroke="#e6e1d8" stroke-width="2"/><circle cx="40" cy="60" r="4.5" fill="#2a2f45"/><circle cx="60" cy="60" r="4.5" fill="#2a2f45"/><path d="M50 68 46 72h8z" fill="#ff7ac0"/><path d="M50 72v4M50 76q-5 4-9 2M50 76q5 4 9 2" stroke="#8d8478" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
 
-sun:`<svg viewBox="0 0 100 100"><g stroke="#ffb800" stroke-width="6" stroke-linecap="round"><path d="M50 6v14M50 80v14M6 50h14M80 50h14M19 19l10 10M71 71l10 10M81 19 71 29M29 71 19 81"/></g><circle cx="50" cy="50" r="24" fill="#ffd93d"/><circle cx="42" cy="45" r="3.5" fill="#2a2f45"/><circle cx="58" cy="45" r="3.5" fill="#2a2f45"/><path d="M40 56q10 9 20 0" stroke="#e08a00" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>`,
 
-tree:`<svg viewBox="0 0 100 100"><rect x="44" y="58" width="12" height="30" rx="4" fill="#8a5524"/><circle cx="50" cy="34" r="20" fill="#4ecb71"/><circle cx="32" cy="48" r="16" fill="#43bf63"/><circle cx="68" cy="48" r="16" fill="#43bf63"/><circle cx="50" cy="50" r="16" fill="#5ed67f"/><circle cx="38" cy="40" r="4" fill="#ff6b6b"/><circle cx="62" cy="52" r="4" fill="#ff6b6b"/></svg>`,
 
 umbrella:`<svg viewBox="0 0 100 100"><path d="M50 14c22 0 36 16 36 32H14c0-16 14-32 36-32z" fill="#ff6b6b"/><path d="M14 46c0-16 8-32 18-32s10 16 10 32zM58 46c0-16 0-32 10-32s18 16 18 32z" fill="#ffd93d"/><path d="M14 46q9 10 18 0 9 10 18 0 9 10 18 0 9 10 18 0" fill="none" stroke="#e05252" stroke-width="3"/><path d="M50 46v32a10 10 0 0 1-20 0" stroke="#7a5230" stroke-width="5" fill="none" stroke-linecap="round"/></svg>`,
 
 van:`<svg viewBox="0 0 100 100"><path d="M10 44h44l16 14h20v14H10z" fill="#5b8cff"/><path d="M14 46h20v12H14zM40 46h12v12H40z" fill="#cfe4ff"/><path d="M56 46h8l12 12H56z" fill="#cfe4ff"/><rect x="8" y="70" width="84" height="6" rx="3" fill="#3f6fe0"/><circle cx="28" cy="76" r="10" fill="#2a2f45"/><circle cx="72" cy="76" r="10" fill="#2a2f45"/><circle cx="28" cy="76" r="4" fill="#cfd6e8"/><circle cx="72" cy="76" r="4" fill="#cfd6e8"/></svg>`,
 
-whale:`<svg viewBox="0 0 100 100"><path d="M20 58c0-14 14-22 30-22s34 6 34 22-16 20-32 20S20 72 20 58z" fill="#3ec5e0"/><path d="M84 46 96 32v34z" fill="#2a9fc0"/><path d="M24 66q22 10 46 2" stroke="#a8ecf7" stroke-width="6" fill="none" stroke-linecap="round"/><circle cx="40" cy="52" r="4" fill="#2a2f45"/><path d="M52 36q-2-14 6-18M52 36q4-12 14-12" stroke="#7fd6f5" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
 
-xylophone:`<svg viewBox="0 0 100 100"><rect x="18" y="24" width="64" height="9" rx="4.5" fill="#ff6b6b"/><rect x="20" y="37" width="60" height="9" rx="4.5" fill="#ffa63d"/><rect x="22" y="50" width="56" height="9" rx="4.5" fill="#ffd93d"/><rect x="24" y="63" width="52" height="9" rx="4.5" fill="#4ecb71"/><rect x="26" y="76" width="48" height="9" rx="4.5" fill="#5b8cff"/><path d="M84 20 70 62" stroke="#8a5524" stroke-width="4" stroke-linecap="round"/><circle cx="70" cy="64" r="6" fill="#8a5524"/></svg>`,
 
 yoyo:`<svg viewBox="0 0 100 100"><path d="M50 6v34" stroke="#8d8478" stroke-width="3"/><circle cx="50" cy="62" r="28" fill="#ff7ac0"/><circle cx="50" cy="62" r="18" fill="#ffd93d"/><circle cx="50" cy="62" r="8" fill="#5b8cff"/><path d="M50 40q6 8 0 14" stroke="#8d8478" stroke-width="3" fill="none"/></svg>`,
 
@@ -457,7 +470,10 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":
 const shuffle = a => { const b = a.slice(); for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; };
 const clamp = (v,lo,hi) => Math.max(lo, Math.min(hi, v));
 /* shows the first letter of a word in colour: apple */
-const firstLetterBold = w => `<span style="color:#e5384f">${esc(w[0])}</span>${esc(w.slice(1))}`;
+const firstLetterBold = (w, letter) => {
+  const i = letter ? Math.max(0, w.toLowerCase().indexOf(letter.toLowerCase())) : 0;
+  return `${esc(w.slice(0, i))}<span style="color:#e5384f">${esc(w[i])}</span>${esc(w.slice(i + 1))}`;
+};
 
 /* settings kept in this browser only */
 const DEFAULTS = { sound:true, speak:true, from:0, to:7, nFrom:1, nTo:10, student:null, teacher:false };
@@ -565,7 +581,7 @@ function back(){
   else home();
 }
 function home(){
-  const first = (!S.student && !S.teacher) ? pickStudent : screenHome;
+  const first = S.student ? screenHome : pickStudent;
   stack = [first]; window.scrollTo(0,0); first();
 }
 
@@ -624,25 +640,10 @@ function screenHome(){
       ${me ? `<button class="chip" data-switch>сменить</button>` : ""}
     </div>
 
-    ${S.teacher ? `
-    <div class="teacherbar small">
-      <b>👩‍🏫 Teacher mode</b> <span style="opacity:.75">— the kids don't see this box</span>
-      <div class="btn-row" style="justify-content:flex-start;margin-top:8px">
-        <a class="chip" href="teacher.html#scores">📊 Scores</a>
-        <a class="chip" href="teacher.html">📅 Plan</a>
-        <a class="chip" href="index.html">🎓 Big kids' site</a>
-        <button class="chip" data-rec>🎙️ Record letter sounds</button>
-        <button class="chip" data-asstudent>👦 Switch to a student</button>
-      </div>
-    </div>` : ""}
+
 
     ${me ? `<button class="tile t1" data-go="myStars"><span class="emoji">⭐</span>
       <span>Мои звёзды: ${stars}<span class="sub">Мои игры и звёзды</span></span></button>` : ""}
-
-    <p class="section-label">СЛОВА</p>
-    <div class="tgrid">
-      ${topics.map((t, i) => `<button class="ttile" data-topic="${i}"><span class="emo">${t.e}</span>${esc(t.ru)}<span class="u">${t.unit === "Starter" ? "Starter" : "Unit " + t.unit}</span></button>`).join("")}
-    </div>
 
     <p class="section-label">БУКВЫ</p>
     <div class="stack-sm">
@@ -672,6 +673,11 @@ function screenHome(){
         <span>Цифра и слово<span class="sub">Найди пару: 3 и three</span></span></button>
     </div>
 
+    <p class="section-label">СЛОВА</p>
+    <div class="tgrid">
+      ${topics.map((t, i) => `<button class="ttile" data-topic="${i}"><span class="emo">${t.e}</span>${esc(t.ru)}<span class="u">${t.unit === "Starter" ? "Starter" : "Unit " + t.unit}</span></button>`).join("")}
+    </div>
+
     <div class="center" style="margin-top:6px">
       <button class="chip ${S.sound || S.speak ? "on" : ""}" data-toggle>${S.sound || S.speak ? "🔊 Звук включён" : "🔇 Звук выключен"}</button>
       <p class="muted small" style="margin-top:10px">Голоса: записи с Wikimedia Commons · <a href="credits.html">credits</a></p>
@@ -692,9 +698,7 @@ function screenHome(){
     go(map[b.dataset.go]);
   });
   $$("[data-topic]").forEach(b => b.onclick = () => go(() => topicScreen(+b.dataset.topic)));
-  const sw = $("[data-switch]"); if(sw) sw.onclick = () => { S.student = null; save(); if(S.teacher) go(pickStudent); else home(); };
-  const rec = $("[data-rec]"); if(rec) rec.onclick = () => go(recordLetters);
-  const as = $("[data-asstudent]"); if(as) as.onclick = () => go(pickStudent);
+  const sw = $("[data-switch]"); if(sw) sw.onclick = () => { S.student = null; save(); home(); };
   $("[data-toggle]").onclick = () => {
     const on = !(S.sound || S.speak);
     S.sound = on; S.speak = on; save(); screenHome();
@@ -716,7 +720,7 @@ function learnLetters(){
       <div class="bigletters">${L.l}${L.l.toLowerCase()}</div>
       <div class="muted small">большая и маленькая буква</div>
       <div class="art">${ART[L.art] || ""}</div>
-      <div class="wordline">${firstLetterBold(L.word)}</div>
+      <div class="wordline">${firstLetterBold(L.word, L.l)}</div>
       <div class="navrow">
         <button class="navbtn" data-prev aria-label="Previous letter">◀</button>
         <button class="navbtn say" data-say aria-label="Say it">🔊</button>
@@ -818,7 +822,7 @@ function tapLetters(){
       <button class="chip ${S.abcMode === "name" ? "on" : ""}" data-mode="name">🔤 Название: A, B, C</button>
     </div>
     ${abcGrid()}
-    ${S.teacher ? `<div class="center"><button class="chip" data-teacher>👩‍🏫 Teacher: record the sounds</button></div>` : ""}
+
   </div>`;
   wireTop();
   $$("[data-mode]").forEach(b => b.onclick = () => { S.abcMode = b.dataset.mode; save(); tapLetters(); });
@@ -827,7 +831,6 @@ function tapLetters(){
     b.classList.add("playing"); setTimeout(() => b.classList.remove("playing"), 450);
     playLetterSound(LETTERS[+b.dataset.i]);
   });
-  const tb = $("[data-teacher]"); if(tb) tb.onclick = () => go(recordLetters);
 }
 
 /* --- teacher: record one short clip per letter --- */
@@ -985,7 +988,7 @@ const GAMES = {
     what:"Какие буквы?",
     kind:"letters", 
     left:  it => ({ html:`<span class="face">${it.l}${it.l.toLowerCase()}</span>`, say:it.l }),
-    right: it => ({ html:`<span class="pic">${ART[it.art]||""}</span><span class="lab">${firstLetterBold(it.word)}</span>`, say:it.word }),
+    right: it => ({ html:`<span class="pic">${ART[it.art]||""}</span><span class="lab">${firstLetterBold(it.word, it.l)}</span>`, say:it.word }),
     cheer: it => [it.l, it.word]
   },
   numword: {
@@ -1260,15 +1263,32 @@ function rangeLabel(kind){
 function allScores(){ try{ return JSON.parse(localStorage.getItem("abcScores") || "[]"); }catch(e){ return []; } }
 function myScores(){ return S.student ? allScores().filter(r => r.student === S.student) : []; }
 function recordScore(r){
-  const row = Object.assign({ t:new Date().toISOString(), student:S.student || "Teacher" }, r);
+  if(!S.student) return;
+  const row = Object.assign({ t:new Date().toISOString(), student:S.student, id:Date.now() + "-" + Math.random().toString(36).slice(2, 7) }, r);
   const all = allScores(); all.push(row);
   try{ localStorage.setItem("abcScores", JSON.stringify(all.slice(-3000))); }catch(e){}
-  if(window.SCORES_URL && S.student){
-    try{
-      fetch(window.SCORES_URL, { method:"POST", mode:"no-cors", headers:{ "Content-Type":"text/plain" }, body:JSON.stringify(row) });
-    }catch(e){}
-  }
+  queueAdd(row); sendQueue();
 }
+
+/* results waiting to reach the teacher's Google Sheet (kept until Google says "ok") */
+function queueGet(){ try{ return JSON.parse(localStorage.getItem("abcQueue") || "[]"); }catch(e){ return []; } }
+function queueSet(q){ try{ localStorage.setItem("abcQueue", JSON.stringify(q.slice(-500))); }catch(e){} }
+function queueAdd(row){ const q = queueGet(); q.push(row); queueSet(q); }
+let sending = false;
+async function sendQueue(){
+  if(!window.SCORES_URL || sending) return;
+  sending = true;
+  try{
+    for(const row of queueGet()){
+      const res = await fetch(window.SCORES_URL, { method:"POST", headers:{ "Content-Type":"text/plain" }, body:JSON.stringify(row) });
+      const data = await res.json();
+      if(!data.ok && data.error !== "unknown student") break;
+      queueSet(queueGet().filter(x => x.id !== row.id));
+    }
+  }catch(e){ /* offline or blocked: try again next time */ }
+  sending = false;
+}
+window.addEventListener("online", sendQueue);
 
 const GAME_NAMES_RU = { listen:"Слушай и найди", memory:"Найди пару", tmatch:"Картинка и слово",
   findLetter:"Найди букву", firstLetter:"Первая буква", findNumber:"Найди цифру",
@@ -1378,7 +1398,8 @@ function startTopicQuiz(){
 function startQuiz(gameId){
   const G = GAMES[gameId];
   quiz({ id:gameId, title:G.title, topic:rangeLabel(G.kind),
-    items:poolFor(G.kind), key:it => G.kind === "letters" ? it.l : String(it.n),
+    items:poolFor(G.kind).filter(it => !(gameId === "firstLetter" && it.l === "X")),
+    key:it => G.kind === "letters" ? it.l : String(it.n),
     say:G.say, prompt:G.prompt, choice:G.choice,
     again:() => startQuiz(gameId),
     change:() => { stack.pop(); setupScreen(gameId); },
@@ -1486,14 +1507,18 @@ function memoryGame(){
    START
    ========================================================================== */
 
-/* abc.html?teacher  → this device is the teacher's (shows the teacher box)
-   abc.html?student  → this device is a child's (asks who is playing)          */
+/* abc.html?student → ask again who is playing
+   abc.html?record  → the teacher's letter-sound recorder (linked from teacher.html only) */
+let startScreen = null;
 (function(){
   const q = new URLSearchParams(location.search);
-  if(q.has("teacher")){ S.teacher = true; save(); history.replaceState(null, "", location.pathname); }
-  if(q.has("student")){ S.teacher = false; S.student = null; save(); history.replaceState(null, "", location.pathname); }
+  if(S.teacher){ S.teacher = false; save(); }          /* old teacher mode is gone */
+  if(q.has("student")){ S.student = null; save(); }
+  if(q.has("record")) startScreen = recordLetters;
+  if(q.has("student") || q.has("record")) history.replaceState(null, "", location.pathname);
 })();
-home();
+if(startScreen){ stack = [startScreen]; startScreen(); } else home();
+sendQueue();
 </script>
 </body>
 </html>

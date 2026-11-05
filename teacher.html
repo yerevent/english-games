@@ -240,12 +240,20 @@ a{color:var(--blue)}
      ===================================================================== -->
 <section id="scores">
 <div class="card">
-  <b>Kids' site:</b> <a href="abc.html">abc.html</a>
+  <b>Two links</b>
   <ul style="margin-top:6px">
-    <li><b>Link to send Ashot and Arianna</b> (opens the "who is playing?" screen):<br>
+    <li><b>Kids' site</b>, to send Ashot and Arianna. It has no teacher links at all:<br>
       <code id="kidlink"></code> <button class="copybtn" data-copy="kidlink">Copy</button></li>
-    <li><b>On your own phone or laptop</b>, open <a href="abc.html?teacher">abc.html?teacher</a> once. That device then shows a dark teacher box with links to this page and the big kids' site. The kids never see it.</li>
+    <li><b>Teacher's site</b>, this page, for you only:<br>
+      <code id="teacherlink"></code></li>
   </ul>
+  <b>Teacher tools</b>
+  <div class="lessonnav" style="margin-top:6px">
+    <a href="kids/" target="_blank">🔤 Open the kids' site</a>
+    <a href="abc.html?record" target="_blank">🎙️ Record letter sounds</a>
+    <a href="index.html" target="_blank">🎓 Big kids' site (A1–B2)</a>
+    <a href="credits.html" target="_blank">🔊 Sound credits</a>
+  </div>
 </div>
 
 <div class="card" id="remoteBox"></div>
@@ -314,8 +322,9 @@ const GAME_NAMES = { listen:"Listen & find (words)", memory:"Memory pairs", tmat
   case:"Big & small letters", pic:"Letters & pictures", numword:"Number & word", numcount:"Count & match" };
 const topicEn = id => { const t = (window.TOPICS || []).find(x => x.id === id); return t ? t.en + " (U" + t.unit + ")" : id; };
 const escH = v => String(v == null ? "" : v).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const kidUrl = new URL("abc.html?student", location.href).href;
+const kidUrl = new URL("kids/", location.href).href;
 document.getElementById("kidlink").textContent = kidUrl;
+document.getElementById("teacherlink").textContent = new URL("teacher/", location.href).href;
 document.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => {
   navigator.clipboard && navigator.clipboard.writeText(kidUrl).then(() => { b.textContent = "Copied"; });
 });
