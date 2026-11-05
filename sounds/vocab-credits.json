@@ -1,0 +1,902 @@
+[
+ {
+  "kind": "vocab",
+  "key": "red",
+  "path": "sounds/vocab/red.mp3",
+  "file": "En-us-red.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-red.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "yellow",
+  "path": "sounds/vocab/yellow.mp3",
+  "file": "En-us-yellow.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-yellow.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "pink",
+  "path": "sounds/vocab/pink.mp3",
+  "file": "En-uk-pink.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-uk-pink.ogg",
+  "lic": "Public domain",
+  "licurl": "",
+  "author": "Celestianpower"
+ },
+ {
+  "kind": "vocab",
+  "key": "green",
+  "path": "sounds/vocab/green.mp3",
+  "file": "En-us-green.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-green.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "purple",
+  "path": "sounds/vocab/purple.mp3",
+  "file": "En-us-purple.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-purple.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "orange",
+  "path": "sounds/vocab/orange.mp3",
+  "file": "En-uk-orange.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-uk-orange.ogg",
+  "lic": "CC BY 3.0 us",
+  "licurl": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
+  "author": "Association Shtooka, Judith Franck"
+ },
+ {
+  "kind": "vocab",
+  "key": "blue",
+  "path": "sounds/vocab/blue.mp3",
+  "file": "En-us-blue.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-blue.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "pen",
+  "path": "sounds/vocab/pen.mp3",
+  "file": "En-us-pen.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-pen.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "rubber",
+  "path": "sounds/vocab/rubber.mp3",
+  "file": "En-us-rubber.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-rubber.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "pencil",
+  "path": "sounds/vocab/pencil.mp3",
+  "file": "En-us-pencil.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-pencil.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "ruler",
+  "path": "sounds/vocab/ruler.mp3",
+  "file": "En-us-ruler.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-ruler.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "book",
+  "path": "sounds/vocab/book.mp3",
+  "file": "En-us-book.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-book.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "doll",
+  "path": "sounds/vocab/doll.mp3",
+  "file": "En-us-doll.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-doll.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "ball",
+  "path": "sounds/vocab/ball.mp3",
+  "file": "En-us-ball.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-ball.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "teddy",
+  "path": "sounds/vocab/teddy.mp3",
+  "file": "LL-Q1860 (eng)-Wodencafe-teddy.wav",
+  "page": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Wodencafe-teddy.wav",
+  "lic": "CC0",
+  "licurl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "author": "Speaker: Wodencafe Recorder: Wodencafe"
+ },
+ {
+  "kind": "vocab",
+  "key": "car",
+  "path": "sounds/vocab/car.mp3",
+  "file": "En-us-car.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-car.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "arms",
+  "path": "sounds/vocab/arms.mp3",
+  "file": "En-us-arms.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-arms.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "nose",
+  "path": "sounds/vocab/nose.mp3",
+  "file": "En-us-nose.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-nose.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "face",
+  "path": "sounds/vocab/face.mp3",
+  "file": "En-us-face.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-face.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "legs",
+  "path": "sounds/vocab/legs.mp3",
+  "file": "En-us-legs.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-legs.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "ears",
+  "path": "sounds/vocab/ears.mp3",
+  "file": "En-us-ears.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-ears.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "teacher",
+  "path": "sounds/vocab/teacher.mp3",
+  "file": "En-us-teacher.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-teacher.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "pupil",
+  "path": "sounds/vocab/pupil.mp3",
+  "file": "En-us-pupil.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-pupil.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Neskaya"
+ },
+ {
+  "kind": "vocab",
+  "key": "housewife",
+  "path": "sounds/vocab/housewife.mp3",
+  "file": "En-us-housewife.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-housewife.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "fireman",
+  "path": "sounds/vocab/fireman.mp3",
+  "file": "En-uk-fireman.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-uk-fireman.ogg",
+  "lic": "CC BY 3.0 us",
+  "licurl": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
+  "author": "Association Shtooka, Judith Franck"
+ },
+ {
+  "kind": "vocab",
+  "key": "pilot",
+  "path": "sounds/vocab/pilot.mp3",
+  "file": "En-us-pilot.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-pilot.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Neskaya"
+ },
+ {
+  "kind": "vocab",
+  "key": "seesaw",
+  "path": "sounds/vocab/seesaw.mp3",
+  "file": "En-us-seesaw.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-seesaw.ogg",
+  "lic": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "author": "Paul2520"
+ },
+ {
+  "kind": "vocab",
+  "key": "slide",
+  "path": "sounds/vocab/slide.mp3",
+  "file": "En-us-slide.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-slide.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "net",
+  "path": "sounds/vocab/net.mp3",
+  "file": "En-us-net.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-net.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "swing",
+  "path": "sounds/vocab/swing.mp3",
+  "file": "En-us-swing.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-swing.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "tree",
+  "path": "sounds/vocab/tree.mp3",
+  "file": "En-us-tree.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-tree.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "mum",
+  "path": "sounds/vocab/mum.mp3",
+  "file": "En-us-mum.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-mum.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "dad",
+  "path": "sounds/vocab/dad.mp3",
+  "file": "En-us-dad.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-dad.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "sister",
+  "path": "sounds/vocab/sister.mp3",
+  "file": "En-us-sister.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-sister.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "brother",
+  "path": "sounds/vocab/brother.mp3",
+  "file": "En-us-brother.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-brother.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "grandma",
+  "path": "sounds/vocab/grandma.mp3",
+  "file": "LL-Q1860 (eng)-Ajshul-grandma.wav",
+  "page": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Ajshul-grandma.wav",
+  "lic": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "author": "Speaker: Ajshul Recorder: Ajshul"
+ },
+ {
+  "kind": "vocab",
+  "key": "grandpa",
+  "path": "sounds/vocab/grandpa.mp3",
+  "file": "LL-Q1860 (eng)-Wodencafe-grandpa.wav",
+  "page": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Wodencafe-grandpa.wav",
+  "lic": "CC0",
+  "licurl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "author": "Speaker: Wodencafe Recorder: Wodencafe"
+ },
+ {
+  "kind": "vocab",
+  "key": "dress",
+  "path": "sounds/vocab/dress.mp3",
+  "file": "En-us-dress.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-dress.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "socks",
+  "path": "sounds/vocab/socks.mp3",
+  "file": "En-uk-socks.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-uk-socks.ogg",
+  "lic": "CC BY 3.0 us",
+  "licurl": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
+  "author": "Association Shtooka, Judith Franck"
+ },
+ {
+  "kind": "vocab",
+  "key": "T-shirt",
+  "path": "sounds/vocab/t-shirt.mp3",
+  "file": "LL-Q1860 (eng)-Vealhurl-t-shirt.wav",
+  "page": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Vealhurl-t-shirt.wav",
+  "lic": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "author": "Speaker: Vealhurl Recorder: Vealhurl"
+ },
+ {
+  "kind": "vocab",
+  "key": "trousers",
+  "path": "sounds/vocab/trousers.mp3",
+  "file": "En-us-trousers.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-trousers.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "shorts",
+  "path": "sounds/vocab/shorts.mp3",
+  "file": "En-us-shorts.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-shorts.ogg",
+  "lic": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "author": "Persent101"
+ },
+ {
+  "kind": "vocab",
+  "key": "kitchen",
+  "path": "sounds/vocab/kitchen.mp3",
+  "file": "En-us-kitchen.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-kitchen.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "EncycloPetey"
+ },
+ {
+  "kind": "vocab",
+  "key": "living room",
+  "path": "sounds/vocab/living-room.mp3",
+  "file": "LL-Q1860 (eng)-Vininn126-living room.wav",
+  "page": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Vininn126-living_room.wav",
+  "lic": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "author": "Speaker: Vininn126 Recorder: Vininn126"
+ },
+ {
+  "kind": "vocab",
+  "key": "dining room",
+  "path": "sounds/vocab/dining-room.mp3",
+  "file": "LL-Q1860 (eng)-عُثمان (Middle river exports)-dining room.wav",
+  "page": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-%D8%B9%D9%8F%D8%AB%D9%85%D8%A7%D9%86_(Middle_river_exports)-dining_room.wav",
+  "lic": "CC0",
+  "licurl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "author": "Speaker: عُثمان Recorder: Middle river exports"
+ },
+ {
+  "kind": "vocab",
+  "key": "bedroom",
+  "path": "sounds/vocab/bedroom.mp3",
+  "file": "En-us-bedroom.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-bedroom.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "bathroom",
+  "path": "sounds/vocab/bathroom.mp3",
+  "file": "En-us-bathroom.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-bathroom.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "garden",
+  "path": "sounds/vocab/garden.mp3",
+  "file": "En-us-garden.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-garden.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "lunch box",
+  "path": "sounds/vocab/lunch-box.mp3",
+  "file": "LL-Q1860 (eng)-Status 401-Lunch box.wav",
+  "page": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Status_401-Lunch_box.wav",
+  "lic": "CC0",
+  "licurl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "author": "Speaker: Status 401 Recorder: Status 401"
+ },
+ {
+  "kind": "vocab",
+  "key": "sandwich",
+  "path": "sounds/vocab/sandwich.mp3",
+  "file": "En-us-sandwich.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-sandwich.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Rappo"
+ },
+ {
+  "kind": "vocab",
+  "key": "drinks",
+  "path": "sounds/vocab/drinks.mp3",
+  "file": "En-au-drinks.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-au-drinks.ogg",
+  "lic": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "author": "Commander Keane"
+ },
+ {
+  "kind": "vocab",
+  "key": "apple",
+  "path": "sounds/vocab/apple.mp3",
+  "file": "En-us-apple.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-apple.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "banana",
+  "path": "sounds/vocab/banana.mp3",
+  "file": "En-us-banana.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-banana.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "biscuit",
+  "path": "sounds/vocab/biscuit.mp3",
+  "file": "En-us-biscuit.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-biscuit.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "elephant",
+  "path": "sounds/vocab/elephant.mp3",
+  "file": "En-us-elephant.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-elephant.ogg",
+  "lic": "Public domain",
+  "licurl": "",
+  "author": "Muke"
+ },
+ {
+  "kind": "vocab",
+  "key": "giraffe",
+  "path": "sounds/vocab/giraffe.mp3",
+  "file": "En-us-giraffe.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-giraffe.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "monkey",
+  "path": "sounds/vocab/monkey.mp3",
+  "file": "En-us-monkey.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-monkey.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "rice",
+  "path": "sounds/vocab/rice.mp3",
+  "file": "En-us-rice.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-rice.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "meat",
+  "path": "sounds/vocab/meat.mp3",
+  "file": "En-us-meat.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-meat.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "carrots",
+  "path": "sounds/vocab/carrots.mp3",
+  "file": "En-au-carrots.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-au-carrots.ogg",
+  "lic": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "author": "Commander Keane"
+ },
+ {
+  "kind": "vocab",
+  "key": "yogurt",
+  "path": "sounds/vocab/yogurt.mp3",
+  "file": "LL-Q1860 (eng)-Arlo Barnes-yogurt.wav",
+  "page": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Arlo_Barnes-yogurt.wav",
+  "lic": "CC0",
+  "licurl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "author": "Speaker: Arlo Barnes Recorder: Arlo Barnes"
+ },
+ {
+  "kind": "vocab",
+  "key": "fish",
+  "path": "sounds/vocab/fish.mp3",
+  "file": "En-us-fish.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-fish.ogg",
+  "lic": "Public domain",
+  "licurl": "",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "bread",
+  "path": "sounds/vocab/bread.mp3",
+  "file": "En-us-bread.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-bread.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "rug",
+  "path": "sounds/vocab/rug.mp3",
+  "file": "En-au-rug.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-au-rug.ogg",
+  "lic": "CC BY-SA 4.0",
+  "licurl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "author": "Commander Keane"
+ },
+ {
+  "kind": "vocab",
+  "key": "bed",
+  "path": "sounds/vocab/bed.mp3",
+  "file": "En-us-bed.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-bed.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "cupboard",
+  "path": "sounds/vocab/cupboard.mp3",
+  "file": "En-us-cupboard.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-cupboard.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "EncycloPetey"
+ },
+ {
+  "kind": "vocab",
+  "key": "shelf",
+  "path": "sounds/vocab/shelf.mp3",
+  "file": "LL-Q1860 (eng)-Status 401-Shelf.wav",
+  "page": "https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-Status_401-Shelf.wav",
+  "lic": "CC0",
+  "licurl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "author": "Speaker: Status 401 Recorder: Status 401"
+ },
+ {
+  "kind": "vocab",
+  "key": "pillow",
+  "path": "sounds/vocab/pillow.mp3",
+  "file": "En-us-pillow.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-pillow.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "blanket",
+  "path": "sounds/vocab/blanket.mp3",
+  "file": "En-us-blanket.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-blanket.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "run",
+  "path": "sounds/vocab/run.mp3",
+  "file": "En-us-run.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-run.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "fly",
+  "path": "sounds/vocab/fly.mp3",
+  "file": "En-us-fly.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-fly.ogg",
+  "lic": "Public domain",
+  "licurl": "",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "walk",
+  "path": "sounds/vocab/walk.mp3",
+  "file": "En-us-walk.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-walk.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "talk",
+  "path": "sounds/vocab/talk.mp3",
+  "file": "En-us-talk.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-talk.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "swim",
+  "path": "sounds/vocab/swim.mp3",
+  "file": "En-us-swim.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-swim.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "climb",
+  "path": "sounds/vocab/climb.mp3",
+  "file": "En-us-climb.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-climb.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "sandcastle",
+  "path": "sounds/vocab/sandcastle.mp3",
+  "file": "En-us-sandcastle.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-sandcastle.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "beach",
+  "path": "sounds/vocab/beach.mp3",
+  "file": "En-us-beach.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-beach.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "crab",
+  "path": "sounds/vocab/crab.mp3",
+  "file": "En-us-crab.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-crab.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "sea",
+  "path": "sounds/vocab/sea.mp3",
+  "file": "En-us-sea.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-sea.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "boat",
+  "path": "sounds/vocab/boat.mp3",
+  "file": "En-us-boat.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-boat.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "shell",
+  "path": "sounds/vocab/shell.mp3",
+  "file": "En-us-shell.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-shell.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "bird",
+  "path": "sounds/vocab/bird.mp3",
+  "file": "En-us-bird.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-bird.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "fig",
+  "path": "sounds/vocab/fig.mp3",
+  "file": "En-us-fig.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-fig.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "goat",
+  "path": "sounds/vocab/goat.mp3",
+  "file": "En-us-goat.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-goat.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "ink",
+  "path": "sounds/vocab/ink.mp3",
+  "file": "En-us-ink.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-ink.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "lion",
+  "path": "sounds/vocab/lion.mp3",
+  "file": "En-us-lion.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-lion.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "nurse",
+  "path": "sounds/vocab/nurse.mp3",
+  "file": "En-us-nurse.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-nurse.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "sofa",
+  "path": "sounds/vocab/sofa.mp3",
+  "file": "En-us-sofa.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-sofa.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "window",
+  "path": "sounds/vocab/window.mp3",
+  "file": "En-us-window.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-window.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ },
+ {
+  "kind": "vocab",
+  "key": "box",
+  "path": "sounds/vocab/box.mp3",
+  "file": "En-us-box.ogg",
+  "page": "https://commons.wikimedia.org/wiki/File:En-us-box.ogg",
+  "lic": "CC BY-SA 3.0",
+  "licurl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "author": "Dvortygirl"
+ }
+]
