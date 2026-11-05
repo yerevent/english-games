@@ -10,7 +10,7 @@
 
 window.STUDENTS = [
   { id:"Ashot",  ru:"Ашот",   e:"👦" },
-  { id:"Ariana", ru:"Ариана", e:"👧" }
+  { id:"Arianna", ru:"Арианна", e:"👧" }
 ];
 
 window.SCORES_URL = "";

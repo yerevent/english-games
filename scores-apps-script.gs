@@ -17,7 +17,7 @@
  */
 
 const SHEET_NAME = "Scores";
-const STUDENTS = ["Ashot", "Ariana"];
+const STUDENTS = ["Ashot", "Arianna"];
 const HEADERS = ["time", "student", "game", "topic", "right", "total", "stars"];
 
 function sheet_() {
