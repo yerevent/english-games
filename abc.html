@@ -180,6 +180,67 @@ select{
 .abcbtn .mark{position:absolute;top:4px;right:8px;font-size:15px;text-shadow:none}
 .abcbtn.rec{animation:recpulse .7s infinite alternate;background:#e5384f !important}
 @keyframes recpulse{from{filter:brightness(1)}to{filter:brightness(1.4)}}
+
+/* ---------- kids mode: student picker, topics, pictures ---------- */
+.who{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+.whobtn{border:0;border-radius:26px;padding:22px 10px;font-family:inherit;font-weight:800;font-size:26px;color:#26304a;
+  cursor:pointer;box-shadow:0 6px 0 rgba(42,47,69,.16);display:flex;flex-direction:column;align-items:center;gap:6px}
+.whobtn .big{font-size:76px;line-height:1}
+.whobtn .en{font-size:15px;opacity:.7}
+.whobtn:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(42,47,69,.16)}
+.hello{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.hello h1{font-size:24px}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:360px){ .tgrid{grid-template-columns:repeat(2,1fr)} }
+.ttile{border:3px solid var(--line);background:var(--card);border-radius:20px;padding:10px 4px 8px;cursor:pointer;
+  font-family:inherit;color:var(--ink);font-weight:800;font-size:15px;box-shadow:0 4px 0 rgba(42,47,69,.10);
+  display:flex;flex-direction:column;align-items:center;gap:2px}
+.ttile .emo{font-size:38px;line-height:1.1}
+.ttile .u{font-size:11.5px;color:var(--muted);font-weight:700}
+.ttile:active{transform:translateY(3px)}
+.emo{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;line-height:1}
+.blob{display:block;width:78%;aspect-ratio:1/1;margin:0 auto;border-radius:50%;box-shadow:inset 0 -6px 0 rgba(0,0,0,.12)}
+.wpic{display:grid;place-items:center;width:100%;height:100%}
+.wpic svg{width:100%;height:100%;display:block}
+.learnpic{width:190px;height:190px;margin:8px auto 0;display:grid;place-items:center}
+.learnpic .emo{font-size:150px}
+.ru{font-size:16px;color:var(--muted);font-weight:700}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.thumbs button{border:3px solid var(--line);background:var(--card);border-radius:16px;aspect-ratio:1/1;cursor:pointer;padding:6px;display:grid;place-items:center}
+.thumbs button .emo{font-size:34px}
+.thumbs button.on{border-color:#f0bf1d;background:#fff6cf}
+.teacherbar{background:#2a2f45;color:#fff;border-radius:18px;padding:12px 14px}
+.teacherbar a,.teacherbar button{color:#fff}
+.teacherbar .chip{background:#3b4260;border-color:#4b5378;color:#fff;text-decoration:none;display:inline-block}
+
+/* listen-and-find quiz */
+.qtop{display:flex;align-items:center;gap:10px;justify-content:center;margin:4px 0 12px}
+.listenbtn{border:0;border-radius:50%;width:96px;height:96px;font-size:46px;cursor:pointer;
+  background:linear-gradient(135deg,#ffe08a,#ffc93d);box-shadow:0 6px 0 rgba(42,47,69,.18)}
+.listenbtn:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(42,47,69,.18)}
+.qprompt{width:150px;height:150px;margin:0 auto 10px}
+.qprompt svg{width:100%;height:100%}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.qbtn{position:relative;border:4px solid var(--line);background:var(--card);border-radius:22px;aspect-ratio:1/1;cursor:pointer;
+  display:grid;place-items:center;padding:10px;font-family:inherit;color:var(--ink);box-shadow:0 4px 0 rgba(42,47,69,.12)}
+.qbtn .emo{font-size:clamp(56px,18vw,90px)}
+.qbtn .face{font-size:clamp(48px,15vw,72px);font-weight:800}
+.qbtn.good{border-color:#2fa557;background:#e3f9ea;animation:pop .32s ease}
+.qbtn.bad{border-color:#e05252;background:#ffecec;animation:shake .34s ease}
+.qbtn.dim{opacity:.35}
+
+/* memory cards */
+.mcard.back{background:linear-gradient(135deg,#a9d9ff,#6fb4ff);border-color:#6fb4ff}
+.mcard.back .wpic,.mcard.back .blob{visibility:hidden}
+.board.fit .mcard .blob{width:calc(var(--cs) * .66)}
+.mcard.back::after{content:"?";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-weight:800;font-size:calc(var(--cs,80px) * .45)}
+.board.fit .mcard .emo{font-size:calc(var(--cs) * .52)}
+.board.fit .mcard .wpic{width:calc(var(--cs) * .78);height:calc(var(--cs) * .78)}
+.mcard .face.wordtxt{font-size:calc(var(--cs,90px) * .2);word-break:break-word;text-align:center}
+
+/* my stars */
+.histrow{display:flex;justify-content:space-between;gap:8px;padding:8px 2px;border-bottom:2px dashed var(--line);font-size:15px}
+.histrow:last-child{border-bottom:0}
 .jump button{
   border:3px solid var(--line);background:var(--card);border-radius:14px;padding:9px 0;
   font-family:inherit;font-size:18px;font-weight:800;color:var(--ink);cursor:pointer
@@ -256,6 +317,9 @@ select{
 <div id="confetti"></div>
 <div id="toast"></div>
 
+<script src="content/kids-topics.js"></script>
+<script src="content/scores-config.js"></script>
+<script src="sounds/vocab/list.js"></script>
 <script>
 "use strict";
 
@@ -396,7 +460,7 @@ const clamp = (v,lo,hi) => Math.max(lo, Math.min(hi, v));
 const firstLetterBold = w => `<span style="color:#e5384f">${esc(w[0])}</span>${esc(w.slice(1))}`;
 
 /* settings kept in this browser only */
-const DEFAULTS = { sound:true, speak:true, from:0, to:7, nFrom:1, nTo:10 };
+const DEFAULTS = { sound:true, speak:true, from:0, to:7, nFrom:1, nTo:10, student:null, teacher:false };
 let S = Object.assign({}, DEFAULTS);
 try{ Object.assign(S, JSON.parse(localStorage.getItem("abc123") || "{}")); }catch(e){}
 function save(){ try{ localStorage.setItem("abc123", JSON.stringify(S)); }catch(e){} }
@@ -451,6 +515,7 @@ if("speechSynthesis" in window) speechSynthesis.getVoices();
    the browser voice instead. Credits: credits.html                        */
 function clipFor(t){
   if(/^[A-Z]$/.test(t)) return "sounds/names/" + t.toLowerCase() + ".mp3";
+  if((window.VOCAB_AUDIO || []).includes(t)) return "sounds/vocab/" + String(t).toLowerCase().replace(/ /g, "-") + ".mp3";
   const w = String(t).toLowerCase();
   if(LETTERS.some(L => L.word === w)) return "sounds/words/" + w.replace(/ /g, "-") + ".mp3";
   const n = NUMBER_WORDS.indexOf(w);
@@ -499,7 +564,10 @@ function back(){
   if(stack.length > 1){ stack.pop(); window.scrollTo(0,0); stack[stack.length-1](); }
   else home();
 }
-function home(){ stack = [screenHome]; window.scrollTo(0,0); screenHome(); }
+function home(){
+  const first = (!S.student && !S.teacher) ? pickStudent : screenHome;
+  stack = [first]; window.scrollTo(0,0); first();
+}
 
 function topBar(title){
   return `<div class="top">
@@ -515,7 +583,7 @@ function wireTop(){
     const on = !(S.sound || S.speak);
     S.sound = on; S.speak = on; save();
     s.textContent = on ? "🔊" : "🔇";
-    toast(on ? "Sound on" : "Sound off");
+    toast(on ? "🔊 Звук включён" : "🔇 Звук выключен");
   };
 }
 
@@ -523,57 +591,110 @@ function wireTop(){
    HOME
    ========================================================================== */
 
-function screenHome(){
+function studentInfo(){ return (window.STUDENTS || []).find(x => x.id === S.student) || null; }
+
+/* first screen on a new device: who is playing? */
+function pickStudent(){
+  const list = window.STUDENTS || [];
+  const colors = ["linear-gradient(135deg,#a9d9ff,#6fb4ff)", "linear-gradient(135deg,#ffc0d4,#ff8fb4)", "linear-gradient(135deg,#a8e6a1,#5ecf7d)"];
   app.innerHTML = `
   <div class="stack">
-    <div class="center" style="margin-top:6px">
-      <h1>🔤 ABC &amp; 123</h1>
-      <p class="muted small" style="margin-top:4px">Letters and numbers — learn them, then play!</p>
+    <div class="center" style="margin-top:20px">
+      <h1>👋 Кто играет?</h1>
+    </div>
+    <div class="who">
+      ${list.map((x, i) => `<button class="whobtn" data-id="${esc(x.id)}" style="background:${colors[i % colors.length]}">
+        <span class="big emo">${x.e}</span>${esc(x.ru)}<span class="en">${esc(x.id)}</span></button>`).join("")}
+    </div>
+  </div>`;
+  $$("[data-id]").forEach(b => b.onclick = () => {
+    S.student = b.dataset.id; save(); soundGood();
+    stack = [screenHome]; screenHome();
+  });
+}
+
+function screenHome(){
+  const me = studentInfo();
+  const stars = myScores().reduce((t, r) => t + (+r.stars || 0), 0);
+  const topics = window.TOPICS || [];
+  app.innerHTML = `
+  <div class="stack">
+    <div class="hello">
+      <h1>${me ? `<span class="emo">${me.e}</span> Привет, ${esc(me.ru)}!` : "🔤 ABC &amp; 123"}</h1>
+      ${me ? `<button class="chip" data-switch>сменить</button>` : ""}
     </div>
 
-    <p class="section-label">LETTERS</p>
+    ${S.teacher ? `
+    <div class="teacherbar small">
+      <b>👩‍🏫 Teacher mode</b> <span style="opacity:.75">— the kids don't see this box</span>
+      <div class="btn-row" style="justify-content:flex-start;margin-top:8px">
+        <a class="chip" href="teacher.html#scores">📊 Scores</a>
+        <a class="chip" href="teacher.html">📅 Plan</a>
+        <a class="chip" href="index.html">🎓 Big kids' site</a>
+        <button class="chip" data-rec>🎙️ Record letter sounds</button>
+        <button class="chip" data-asstudent>👦 Switch to a student</button>
+      </div>
+    </div>` : ""}
+
+    ${me ? `<button class="tile t1" data-go="myStars"><span class="emoji">⭐</span>
+      <span>Мои звёзды: ${stars}<span class="sub">Мои игры и звёзды</span></span></button>` : ""}
+
+    <p class="section-label">СЛОВА</p>
+    <div class="tgrid">
+      ${topics.map((t, i) => `<button class="ttile" data-topic="${i}"><span class="emo">${t.e}</span>${esc(t.ru)}<span class="u">${t.unit === "Starter" ? "Starter" : "Unit " + t.unit}</span></button>`).join("")}
+    </div>
+
+    <p class="section-label">БУКВЫ</p>
     <div class="stack-sm">
       <button class="tile t7" data-go="tapLetters"><span class="emoji">👆</span>
-        <span>Tap a letter<span class="sub">Press a letter and hear its sound</span></span></button>
+        <span>Нажми на букву<span class="sub">Слушай, как звучит буква</span></span></button>
       <button class="tile t1" data-go="learnLetters"><span class="emoji">📖</span>
-        <span>Learn the alphabet<span class="sub">Big letter, small letter, a picture and the word</span></span></button>
+        <span>Алфавит<span class="sub">Буква, картинка и слово</span></span></button>
+      <button class="tile t5" data-go="gameFindLetter"><span class="emoji">👂</span>
+        <span>Найди букву<span class="sub">Слушай и нажми на букву</span></span></button>
+      <button class="tile t3" data-go="gameFirstLetter"><span class="emoji">🍎</span>
+        <span>Первая буква<span class="sub">С какой буквы начинается слово?</span></span></button>
       <button class="tile t2" data-go="gameCase"><span class="emoji">🅰️</span>
-        <span>Big &amp; small letters<span class="sub">Match A with a</span></span></button>
-      <button class="tile t3" data-go="gamePic"><span class="emoji">🍎</span>
-        <span>Letters and pictures<span class="sub">Match A with the apple</span></span></button>
+        <span>Большие и маленькие<span class="sub">Найди пару: A и a</span></span></button>
+      <button class="tile t6" data-go="gamePic"><span class="emoji">🔤</span>
+        <span>Буквы и картинки<span class="sub">Найди пару: A и яблоко</span></span></button>
     </div>
 
-    <p class="section-label">NUMBERS</p>
+    <p class="section-label">ЦИФРЫ</p>
     <div class="stack-sm">
       <button class="tile t4" data-go="learnNumbers"><span class="emoji">🔢</span>
-        <span>Learn numbers<span class="sub">The number, the word and things to count</span></span></button>
-      <button class="tile t5" data-go="gameNumWord"><span class="emoji">3️⃣</span>
-        <span>Number &amp; word<span class="sub">Match 3 with three</span></span></button>
+        <span>Цифры<span class="sub">Цифра, слово и картинка</span></span></button>
+      <button class="tile t5" data-go="gameFindNumber"><span class="emoji">👂</span>
+        <span>Найди цифру<span class="sub">Слушай и нажми на цифру</span></span></button>
       <button class="tile t6" data-go="gameNumCount"><span class="emoji">🎈</span>
-        <span>Count and match<span class="sub">Match 3 with three balloons</span></span></button>
+        <span>Считаем<span class="sub">Найди пару: 3 и три шарика</span></span></button>
+      <button class="tile t2" data-go="gameNumWord"><span class="emoji">3️⃣</span>
+        <span>Цифра и слово<span class="sub">Найди пару: 3 и three</span></span></button>
     </div>
 
-    <div class="card center small" style="margin-top:6px">
-      <p class="muted">Choose which letters or numbers to play with before every game — start with just the ones you have learned.</p>
-      <div class="btn-row" style="margin-top:12px">
-        <button class="chip ${S.sound || S.speak ? "on" : ""}" data-toggle>${S.sound || S.speak ? "🔊 Sound is on" : "🔇 Sound is off"}</button>
-        <a class="chip" href="index.html" style="text-decoration:none;display:inline-block">🎓 Big kids' games</a>
-        <a class="chip" href="teacher.html" style="text-decoration:none;display:inline-block">👩‍🏫 Teacher's plan</a>
-      </div>
-      <p class="muted small" style="margin-top:10px">Voices: real recordings from Wikimedia Commons · <a href="credits.html">credits</a></p>
+    <div class="center" style="margin-top:6px">
+      <button class="chip ${S.sound || S.speak ? "on" : ""}" data-toggle>${S.sound || S.speak ? "🔊 Звук включён" : "🔇 Звук выключен"}</button>
+      <p class="muted small" style="margin-top:10px">Голоса: записи с Wikimedia Commons · <a href="credits.html">credits</a></p>
     </div>
   </div>`;
 
   $$("[data-go]").forEach(b => b.onclick = () => {
     const map = {
-      learnLetters, learnNumbers, tapLetters,
+      learnLetters, learnNumbers, tapLetters, myStars,
       gameCase: () => setupScreen("case"),
       gamePic: () => setupScreen("pic"),
       gameNumWord: () => setupScreen("numword"),
-      gameNumCount: () => setupScreen("numcount")
+      gameNumCount: () => setupScreen("numcount"),
+      gameFindLetter: () => setupScreen("findLetter"),
+      gameFirstLetter: () => setupScreen("firstLetter"),
+      gameFindNumber: () => setupScreen("findNumber")
     };
     go(map[b.dataset.go]);
   });
+  $$("[data-topic]").forEach(b => b.onclick = () => go(() => topicScreen(+b.dataset.topic)));
+  const sw = $("[data-switch]"); if(sw) sw.onclick = () => { S.student = null; save(); if(S.teacher) go(pickStudent); else home(); };
+  const rec = $("[data-rec]"); if(rec) rec.onclick = () => go(recordLetters);
+  const as = $("[data-asstudent]"); if(as) as.onclick = () => go(pickStudent);
   $("[data-toggle]").onclick = () => {
     const on = !(S.sound || S.speak);
     S.sound = on; S.speak = on; save(); screenHome();
@@ -589,11 +710,11 @@ let learnIdx = 0;
 
 function learnLetters(){
   const L = LETTERS[learnIdx];
-  app.innerHTML = topBar("Learn the alphabet") + `
+  app.innerHTML = topBar("Алфавит") + `
   <div class="stack">
     <div class="learn">
       <div class="bigletters">${L.l}${L.l.toLowerCase()}</div>
-      <div class="muted small">big letter &amp; small letter</div>
+      <div class="muted small">большая и маленькая буква</div>
       <div class="art">${ART[L.art] || ""}</div>
       <div class="wordline">${firstLetterBold(L.word)}</div>
       <div class="navrow">
@@ -603,7 +724,7 @@ function learnLetters(){
       </div>
     </div>
     <div class="card">
-      <p class="muted small center" style="margin-bottom:8px">Tap any letter</p>
+      <p class="muted small center" style="margin-bottom:8px">Нажми на букву</p>
       <div class="jump">
         ${LETTERS.map((x,i) => `<button data-i="${i}" class="${i===learnIdx?"on":""}">${x.l}</button>`).join("")}
       </div>
@@ -690,14 +811,14 @@ function abcGrid(marks){
 
 function tapLetters(){
   if(!S.abcMode) S.abcMode = "sound";
-  app.innerHTML = topBar("Tap a letter") + `
+  app.innerHTML = topBar("Нажми на букву") + `
   <div class="stack">
     <div class="chips">
-      <button class="chip ${S.abcMode === "sound" ? "on" : ""}" data-mode="sound">🔊 Sound: a as in apple</button>
-      <button class="chip ${S.abcMode === "name" ? "on" : ""}" data-mode="name">🔤 Name: A, B, C</button>
+      <button class="chip ${S.abcMode === "sound" ? "on" : ""}" data-mode="sound">🔊 Звук: a — apple</button>
+      <button class="chip ${S.abcMode === "name" ? "on" : ""}" data-mode="name">🔤 Название: A, B, C</button>
     </div>
     ${abcGrid()}
-    <div class="center"><button class="chip" data-teacher>👩‍🏫 Teacher: record the sounds</button></div>
+    ${S.teacher ? `<div class="center"><button class="chip" data-teacher>👩‍🏫 Teacher: record the sounds</button></div>` : ""}
   </div>`;
   wireTop();
   $$("[data-mode]").forEach(b => b.onclick = () => { S.abcMode = b.dataset.mode; save(); tapLetters(); });
@@ -706,7 +827,7 @@ function tapLetters(){
     b.classList.add("playing"); setTimeout(() => b.classList.remove("playing"), 450);
     playLetterSound(LETTERS[+b.dataset.i]);
   });
-  $("[data-teacher]").onclick = () => go(recordLetters);
+  const tb = $("[data-teacher]"); if(tb) tb.onclick = () => go(recordLetters);
 }
 
 /* --- teacher: record one short clip per letter --- */
@@ -792,7 +913,7 @@ let numIdx = 1;
 
 function learnNumbers(){
   const n = numIdx;
-  app.innerHTML = topBar("Learn numbers") + `
+  app.innerHTML = topBar("Цифры") + `
   <div class="stack">
     <div class="learn">
       <div class="bignum">${n}</div>
@@ -805,7 +926,7 @@ function learnNumbers(){
       </div>
     </div>
     <div class="card">
-      <p class="muted small center" style="margin-bottom:8px">Tap any number</p>
+      <p class="muted small center" style="margin-bottom:8px">Нажми на цифру</p>
       <div class="jump nums">
         ${Array.from({length:MAX_NUMBER}, (_,i) => i+1).map(x =>
           `<button data-n="${x}" class="${x===numIdx?"on":""}">${x}</button>`).join("")}
@@ -828,33 +949,56 @@ function sayNumber(){
    ========================================================================== */
 
 const GAMES = {
+  tmatch: {
+    title:"Картинка и слово",
+    kind:"topic", key: it => it.w,
+    left:  it => ({ html:`<span class="pic">${wordPic(it)}</span>`, say:it.w }),
+    right: it => ({ html:`<span class="face word">${esc(it.w)}</span>`, say:it.w }),
+    cheer: it => [it.w]
+  },
+  findLetter: {
+    title:"Найди букву", what:"Какие буквы?", kind:"letters", type:"quiz",
+    say: it => [it.l],
+    choice: it => `<span class="face">${it.l}${it.l.toLowerCase()}</span>`
+  },
+  firstLetter: {
+    title:"Первая буква", what:"Какие буквы?", kind:"letters", type:"quiz",
+    say: it => [it.word],
+    prompt: it => `<div class="qprompt">${ART[it.art] || ""}</div>`,
+    choice: it => `<span class="face">${it.l}${it.l.toLowerCase()}</span>`
+  },
+  findNumber: {
+    title:"Найди цифру", what:"Какие цифры?", kind:"numbers", type:"quiz",
+    say: it => [NUMBER_WORDS[it.n]],
+    choice: it => `<span class="face">${it.n}</span>`
+  },
   case: {
-    title:"Big & small letters",
-    what:"Which letters?",
+    title:"Большие и маленькие",
+    what:"Какие буквы?",
     kind:"letters", 
     left:  it => ({ html:`<span class="face">${it.l}</span>`, say:it.l }),
     right: it => ({ html:`<span class="face">${it.l.toLowerCase()}</span>`, say:it.l }),
     cheer: it => [it.l]
   },
   pic: {
-    title:"Letters and pictures",
-    what:"Which letters?",
+    title:"Буквы и картинки",
+    what:"Какие буквы?",
     kind:"letters", 
     left:  it => ({ html:`<span class="face">${it.l}${it.l.toLowerCase()}</span>`, say:it.l }),
     right: it => ({ html:`<span class="pic">${ART[it.art]||""}</span><span class="lab">${firstLetterBold(it.word)}</span>`, say:it.word }),
     cheer: it => [it.l, it.word]
   },
   numword: {
-    title:"Number & word",
-    what:"Which numbers?",
+    title:"Цифра и слово",
+    what:"Какие цифры?",
     kind:"numbers", 
     left:  it => ({ html:`<span class="face">${it.n}</span>`, say:NUMBER_WORDS[it.n] }),
     right: it => ({ html:`<span class="face word">${NUMBER_WORDS[it.n]}</span>`, say:NUMBER_WORDS[it.n] }),
     cheer: it => [NUMBER_WORDS[it.n]]
   },
   numcount: {
-    title:"Count and match",
-    what:"Which numbers?",
+    title:"Считаем",
+    what:"Какие цифры?",
     kind:"numbers", 
     left:  it => ({ html:`<span class="face">${it.n}</span>`, say:NUMBER_WORDS[it.n] }),
     right: it => ({ html:`<span class="pic">${countArt(it.n)}</span><span class="lab">${NUMBER_WORDS[it.n]}</span>`, say:NUMBER_WORDS[it.n] }),
@@ -893,20 +1037,20 @@ function setupScreen(gameId){
   <div class="stack">
     <div class="card center">
       <h2>${G.what}</h2>
-      <p class="muted small" style="margin:6px 0 14px">Only the ones you choose will be in the game.</p>
+      <p class="muted small" style="margin:6px 0 14px">В игре будут только выбранные.</p>
       <div class="chips" style="margin-bottom:14px">
         ${presets.map(([lab,a,b]) =>
           `<button class="chip ${from===a&&to===b?"on":""}" data-preset="${a},${b}">${lab}</button>`).join("")}
       </div>
       <div class="pickrow">
-        <span class="muted">from</span>
+        <span class="muted">от</span>
         <select data-from>${opts.map(o => `<option value="${o.v}" ${o.v===from?"selected":""}>${o.label}</option>`).join("")}</select>
-        <span class="muted">to</span>
+        <span class="muted">до</span>
         <select data-to>${opts.map(o => `<option value="${o.v}" ${o.v===to?"selected":""}>${o.label}</option>`).join("")}</select>
       </div>
       <div class="preview" id="prev" style="margin-top:14px"></div>
     </div>
-    <button class="btn go big" data-start>▶ Start playing</button>
+    <button class="btn go big" data-start>▶ Играть!</button>
   </div>`;
   wireTop();
 
@@ -926,7 +1070,7 @@ function setupScreen(gameId){
   });
   $("[data-from]").onchange = e => { setRange(+e.target.value, to); setupScreen(gameId); };
   $("[data-to]").onchange   = e => { setRange(from, +e.target.value); setupScreen(gameId); };
-  $("[data-start]").onclick = () => go(() => playRound(gameId));
+  $("[data-start]").onclick = () => go(() => G.type === "quiz" ? startQuiz(gameId) : playRound(gameId));
   drawPreview();
 }
 
@@ -947,13 +1091,13 @@ function makeRounds(pool){
 function playRound(gameId, game){
   const G = GAMES[gameId];
   if(!game){
-    const rounds = makeRounds(poolFor(G.kind));
+    const rounds = makeRounds(G.kind === "topic" ? curTopic.words : poolFor(G.kind));
     game = { rounds, at:0, mistakes:0, total:rounds.reduce((t, r) => t + r.length, 0) };
   }
   const round = game.rounds[game.at];
   const size = round.length;
 
-  const key = it => G.kind === "letters" ? it.l : String(it.n);
+  const key = it => G.key ? G.key(it) : G.kind === "letters" ? it.l : String(it.n);
   const leftCards  = shuffle(round).map(it => ({ id:key(it), it, side:"L", ...G.left(it) }));
   const rightCards = shuffle(round).map(it => ({ id:key(it), it, side:"R", ...G.right(it) }));
 
@@ -969,7 +1113,7 @@ function playRound(gameId, game){
     <div class="gamehead">
       <div class="dots" id="dots">${round.map(() => `<span class="dot"></span>`).join("")}</div>
       <span class="muted small" id="count">0 / ${size}</span>
-      ${game.rounds.length > 1 ? `<span class="muted small">Round ${game.at + 1} of ${game.rounds.length}</span>` : ""}
+      ${game.rounds.length > 1 ? `<span class="muted small">Раунд ${game.at + 1} из ${game.rounds.length}</span>` : ""}
       <button class="iconbtn" data-again aria-label="New cards" title="New cards">🔀</button>
     </div>
     <div class="board">
@@ -1012,9 +1156,17 @@ function playRound(gameId, game){
         if(matched === size) setTimeout(() => {
           game.mistakes += mistakes;
           if(game.at + 1 < game.rounds.length){
-            game.at++; soundWin(); speak("Next round!"); toast("⭐ Next round!");
+            game.at++; soundWin(); speak("Next round!"); toast("⭐ Следующий раунд!");
             playRound(gameId, game);
-          }else winScreen(gameId, game.mistakes, game.total);
+          }else{
+            const stars = game.mistakes === 0 ? 3 : game.mistakes <= 2 ? 2 : 1;
+            finish({ title:G.title, game:gameId, topic:G.kind === "topic" ? curTopic.id : rangeLabel(G.kind),
+              right:game.total, total:game.total, stars,
+              line:`${game.total} пар` + (game.mistakes ? ` · ошибок: ${game.mistakes}` : " · без ошибок!"),
+              again:() => playRound(gameId),
+              change: G.kind === "topic" ? null : () => { stack.pop(); setupScreen(gameId); },
+              changeLabel: G.kind === "letters" ? "✏️ Другие буквы" : "✏️ Другие цифры" });
+          }
         }, 420);
       }, 520);
     }else{
@@ -1071,35 +1223,276 @@ function fitBoard(){
    WELL DONE!
    ========================================================================== */
 
-function winScreen(gameId, mistakes, size){
-  const stars = mistakes === 0 ? 3 : mistakes <= 2 ? 2 : 1;
+function finish(o){
   const words = ["Well done!","Great job!","Super!","Brilliant!","Fantastic!","You did it!"];
   const cheer = words[Math.floor(Math.random()*words.length)];
   confetti(); soundWin(); speak(cheer);
+  recordScore({ game:o.game, topic:o.topic, right:o.right, total:o.total, stars:o.stars });
 
-  app.innerHTML = topBar(GAMES[gameId].title) + `
+  app.innerHTML = topBar(o.title) + `
   <div class="card win">
     <div style="font-size:64px;line-height:1">🎉</div>
     <div class="winword">${cheer}</div>
-    <div class="stars">${"⭐".repeat(stars)}${"☆".repeat(3-stars)}</div>
-    <p class="muted small">${size} pairs matched${mistakes ? " · " + mistakes + (mistakes===1 ? " try again" : " tries again") : " · no mistakes!"}</p>
+    <div class="stars">${"⭐".repeat(o.stars)}${"☆".repeat(3-o.stars)}</div>
+    <p class="muted small">${esc(o.line || "")}</p>
     <div class="stack-sm" style="margin-top:18px">
-      <button class="btn go big" data-again>▶ Play again</button>
-      <button class="btn ghost big" data-change>✏️ Change the letters</button>
-      <button class="btn ghost big" data-home>🏠 Home</button>
+      <button class="btn go big" data-again>▶ Ещё раз</button>
+      ${o.change ? `<button class="btn ghost big" data-change>${o.changeLabel}</button>` : ""}
+      <button class="btn ghost big" data-home>🏠 Домой</button>
     </div>
   </div>`;
   wireTop();
-  if(GAMES[gameId].kind === "numbers") $("[data-change]").innerHTML = "✏️ Change the numbers";
-  $("[data-again]").onclick  = () => playRound(gameId);
-  $("[data-change]").onclick = () => { stack.pop(); setupScreen(gameId); };
-  $("[data-home]").onclick   = home;
+  $("[data-again]").onclick = o.again;
+  if(o.change) $("[data-change]").onclick = o.change;
+  $("[data-home]").onclick = home;
+}
+
+function rangeLabel(kind){
+  if(kind === "letters"){ const a = Math.min(S.from, S.to), b = Math.max(S.from, S.to); return LETTERS[a].l + "–" + LETTERS[b].l; }
+  return Math.min(S.nFrom, S.nTo) + "–" + Math.max(S.nFrom, S.nTo);
+}
+
+/* ==========================================================================
+   SCORES — saved on this device, and sent to the teacher's Google Sheet
+   when SCORES_URL is set in content/scores-config.js
+   ========================================================================== */
+
+function allScores(){ try{ return JSON.parse(localStorage.getItem("abcScores") || "[]"); }catch(e){ return []; } }
+function myScores(){ return S.student ? allScores().filter(r => r.student === S.student) : []; }
+function recordScore(r){
+  const row = Object.assign({ t:new Date().toISOString(), student:S.student || "Teacher" }, r);
+  const all = allScores(); all.push(row);
+  try{ localStorage.setItem("abcScores", JSON.stringify(all.slice(-3000))); }catch(e){}
+  if(window.SCORES_URL && S.student){
+    try{
+      fetch(window.SCORES_URL, { method:"POST", mode:"no-cors", headers:{ "Content-Type":"text/plain" }, body:JSON.stringify(row) });
+    }catch(e){}
+  }
+}
+
+const GAME_NAMES_RU = { listen:"Слушай и найди", memory:"Найди пару", tmatch:"Картинка и слово",
+  findLetter:"Найди букву", firstLetter:"Первая буква", findNumber:"Найди цифру",
+  case:"Большие и маленькие", pic:"Буквы и картинки", numword:"Цифра и слово", numcount:"Считаем" };
+function topicName(id){ const t = (window.TOPICS || []).find(x => x.id === id); return t ? t.ru : id; }
+
+function myStars(){
+  const rows = myScores().slice().reverse();
+  const total = rows.reduce((t, r) => t + (+r.stars || 0), 0);
+  app.innerHTML = topBar("Мои звёзды") + `
+  <div class="stack">
+    <div class="card center">
+      <div style="font-size:54px;line-height:1">⭐</div>
+      <div class="winword">${total}</div>
+      <p class="muted small">Игр: ${rows.length}</p>
+    </div>
+    <div class="card">
+      ${rows.length ? rows.slice(0, 40).map(r => `<div class="histrow">
+        <span>${esc(GAME_NAMES_RU[r.game] || r.game)}<br><span class="muted small">${esc(topicName(r.topic))} · ${new Date(r.t).toLocaleDateString("ru-RU")}</span></span>
+        <span style="white-space:nowrap">${"⭐".repeat(+r.stars || 0)}</span></div>`).join("")
+        : `<p class="muted center">Пока нет игр. Давай играть! 🎮</p>`}
+    </div>
+  </div>`;
+  wireTop();
+}
+
+/* ==========================================================================
+   TOPICS — words from Family and Friends 1 (content/kids-topics.js)
+   ========================================================================== */
+
+let curTopic = null, topicIdx = 0;
+
+function wordPic(w){
+  if(w.color) return `<span class="blob" style="background:${w.color}"></span>`;
+  if(w.svg) return `<span class="wpic">${(window.TOPIC_SVG || {})[w.svg] || ""}</span>`;
+  return `<span class="wpic"><span class="emo">${w.e || "❓"}</span></span>`;
+}
+
+function topicScreen(i){
+  curTopic = window.TOPICS[i];
+  const t = curTopic;
+  app.innerHTML = topBar(t.ru) + `
+  <div class="stack">
+    <div class="card center">
+      <div class="emo" style="font-size:54px">${t.e}</div>
+      <h2 style="margin-top:4px">${esc(t.ru)}</h2>
+      <p class="muted small">${esc(t.en)} · ${t.unit === "Starter" ? "Starter" : "Unit " + t.unit} · слов: ${t.words.length}</p>
+    </div>
+    <div class="stack-sm">
+      <button class="tile t1" data-g="learn"><span class="emoji">📖</span>
+        <span>Учим слова<span class="sub">Картинка, слово и звук</span></span></button>
+      <button class="tile t5" data-g="listen"><span class="emoji">👂</span>
+        <span>Слушай и найди<span class="sub">Слушай слово и нажми на картинку</span></span></button>
+      <button class="tile t3" data-g="memory"><span class="emoji">🃏</span>
+        <span>Найди пару<span class="sub">Открой две одинаковые картинки</span></span></button>
+      <button class="tile t2" data-g="tmatch"><span class="emoji">🔤</span>
+        <span>Картинка и слово<span class="sub">Найди пару: картинка и слово</span></span></button>
+    </div>
+  </div>`;
+  wireTop();
+  $$("[data-g]").forEach(b => b.onclick = () => {
+    const g = b.dataset.g;
+    if(g === "learn"){ topicIdx = 0; go(learnTopic); setTimeout(() => say(curTopic.words[0].w), 150); }
+    if(g === "listen") go(() => startTopicQuiz());
+    if(g === "memory") go(memoryGame);
+    if(g === "tmatch") go(() => playRound("tmatch"));
+  });
+}
+
+function learnTopic(){
+  const t = curTopic, w = t.words[topicIdx];
+  app.innerHTML = topBar(t.ru) + `
+  <div class="stack">
+    <div class="learn">
+      <div class="learnpic">${wordPic(w)}</div>
+      <div class="wordline">${esc(w.w)}</div>
+      <div class="ru">${esc(w.ru)}</div>
+      <div class="navrow">
+        <button class="navbtn" data-prev aria-label="Назад">◀</button>
+        <button class="navbtn say" data-say aria-label="Слушать">🔊</button>
+        <button class="navbtn" data-next aria-label="Дальше">▶</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="thumbs">${t.words.map((x, i) => `<button data-i="${i}" class="${i === topicIdx ? "on" : ""}" aria-label="${esc(x.w)}">${wordPic(x)}</button>`).join("")}</div>
+    </div>
+  </div>`;
+  wireTop();
+  const n = t.words.length;
+  const show = i => { topicIdx = (i + n) % n; learnTopic(); say(t.words[topicIdx].w); };
+  $("[data-prev]").onclick = () => show(topicIdx - 1);
+  $("[data-next]").onclick = () => show(topicIdx + 1);
+  $("[data-say]").onclick = () => say(w.w);
+  $$("[data-i]").forEach(b => b.onclick = () => show(+b.dataset.i));
+}
+
+/* ==========================================================================
+   LISTEN AND FIND — hear a word, tap the right one of 4
+   ========================================================================== */
+
+function startTopicQuiz(){
+  quiz({ id:"listen", title:"Слушай и найди", topic:curTopic.id,
+    items:curTopic.words, key:w => w.w, say:w => [w.w], choice:w => wordPic(w),
+    again:() => startTopicQuiz() });
+}
+
+function startQuiz(gameId){
+  const G = GAMES[gameId];
+  quiz({ id:gameId, title:G.title, topic:rangeLabel(G.kind),
+    items:poolFor(G.kind), key:it => G.kind === "letters" ? it.l : String(it.n),
+    say:G.say, prompt:G.prompt, choice:G.choice,
+    again:() => startQuiz(gameId),
+    change:() => { stack.pop(); setupScreen(gameId); },
+    changeLabel: G.kind === "letters" ? "✏️ Другие буквы" : "✏️ Другие цифры" });
+}
+
+function quiz(o){
+  const order = shuffle(o.items);
+  const nChoices = Math.min(4, o.items.length);
+  let at = 0, right = 0, missed = false, busy = false;
+
+  function round(){
+    const it = order[at];
+    const others = shuffle(o.items.filter(x => o.key(x) !== o.key(it))).slice(0, nChoices - 1);
+    const choices = shuffle([it, ...others]);
+    missed = false; busy = false;
+    app.innerHTML = topBar(o.title) + `
+    <div class="stack">
+      <div class="gamehead">
+        <div class="dots">${order.map((_, i) => `<span class="dot ${i < at ? "on" : ""}"></span>`).join("")}</div>
+        <span class="muted small">${at + 1} / ${order.length}</span>
+      </div>
+      <div class="qtop"><button class="listenbtn" data-listen aria-label="Слушать">🔊</button></div>
+      ${o.prompt ? o.prompt(it) : ""}
+      <div class="qgrid">${choices.map((c, i) => `<button class="qbtn" data-i="${i}">${o.choice(c)}</button>`).join("")}</div>
+    </div>`;
+    wireTop();
+    const hear = () => say(...o.say(it));
+    $("[data-listen]").onclick = hear;
+    setTimeout(hear, 250);
+    $$(".qbtn").forEach(b => b.onclick = () => {
+      if(busy) return;
+      const c = choices[+b.dataset.i];
+      if(o.key(c) === o.key(it)){
+        busy = true; b.classList.add("good"); soundGood();
+        if(!missed) right++;
+        $$(".qbtn").forEach(x => { if(x !== b) x.classList.add("dim"); });
+        setTimeout(() => { at++; at < order.length ? round() : done(); }, 750);
+      }else{
+        missed = true; b.classList.add("bad"); soundWrong();
+        setTimeout(() => { b.classList.remove("bad"); hear(); }, 420);
+      }
+    });
+  }
+  function done(){
+    const pct = right / order.length;
+    finish({ title:o.title, game:o.id, topic:o.topic, right, total:order.length,
+      stars: pct >= 0.9 ? 3 : pct >= 0.6 ? 2 : 1,
+      line:`Правильно с первого раза: ${right} из ${order.length}`,
+      again:o.again, change:o.change, changeLabel:o.changeLabel });
+  }
+  round();
+}
+
+/* ==========================================================================
+   MEMORY — find two cards with the same picture
+   ========================================================================== */
+
+function memoryGame(){
+  const words = curTopic.words.length > 8 ? shuffle(curTopic.words).slice(0, 8) : curTopic.words;
+  const cards = shuffle(words.concat(words).map((w, i) => ({ w, i })));
+  let open = [], found = 0, flips = 0, busy = false;
+  app.innerHTML = topBar("Найди пару") + `
+  <div class="stack">
+    <div class="gamehead">
+      <div class="dots">${words.map(() => `<span class="dot"></span>`).join("")}</div>
+      <span class="muted small" id="count">0 / ${words.length}</span>
+    </div>
+    <div class="board">${cards.map((c, i) => `<button class="mcard back" data-i="${i}">${wordPic(c.w)}</button>`).join("")}</div>
+  </div>`;
+  wireTop();
+  fitBoard();
+  window.onresize = () => { if($(".board")) fitBoard(); };
+  const els = $$(".mcard");
+  els.forEach(el => el.onclick = () => {
+    const i = +el.dataset.i;
+    if(busy || !el.classList.contains("back")) return;
+    el.classList.remove("back"); say(cards[i].w.w);
+    open.push(i);
+    if(open.length < 2) return;
+    flips++;
+    const [a, b] = open; open = [];
+    if(cards[a].w.w === cards[b].w.w){
+      found++;
+      setTimeout(() => {
+        els[a].classList.add("done"); els[b].classList.add("done"); soundGood();
+        const d = $$(".dots .dot")[found - 1]; if(d) d.classList.add("on");
+        $("#count").textContent = found + " / " + words.length;
+        if(found === words.length){
+          const extra = flips - words.length;
+          setTimeout(() => finish({ title:"Найди пару", game:"memory", topic:curTopic.id,
+            right:words.length, total:words.length,
+            stars: extra <= Math.ceil(words.length / 2) ? 3 : extra <= words.length + 1 ? 2 : 1,
+            line:`Ходов: ${flips}`, again:() => memoryGame() }), 500);
+        }
+      }, 350);
+    }else{
+      busy = true;
+      setTimeout(() => { els[a].classList.add("back"); els[b].classList.add("back"); busy = false; }, 950);
+    }
+  });
 }
 
 /* ==========================================================================
    START
    ========================================================================== */
 
+/* abc.html?teacher  → this device is the teacher's (shows the teacher box)
+   abc.html?student  → this device is a child's (asks who is playing)          */
+(function(){
+  const q = new URLSearchParams(location.search);
+  if(q.has("teacher")){ S.teacher = true; save(); history.replaceState(null, "", location.pathname); }
+  if(q.has("student")){ S.teacher = false; S.student = null; save(); history.replaceState(null, "", location.pathname); }
+})();
 home();
 </script>
 </body>

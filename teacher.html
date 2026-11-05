@@ -19,6 +19,12 @@
 -->
 
 <style>
+code{background:#fff;border:2px solid var(--line);border-radius:8px;padding:2px 6px;font-size:13px;word-break:break-all}
+.copybtn,.smallbtn{border:2px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.kidcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.kidcards .card{margin:0}
+.big{font-size:28px;font-weight:800}
+input.pin{font:inherit;font-size:18px;padding:6px 10px;border:2px solid var(--line);border-radius:10px;width:120px}
 :root{
   color-scheme: light;
   --sky:#eaf4ff; --ink:#2a2f45; --muted:#5f6787; --card:#fff; --line:#dfe6f5;
@@ -87,6 +93,7 @@ a{color:var(--blue)}
   <button data-tab="plan" class="on">📅 Curriculum</button>
   <button data-tab="lessons">📝 Lessons 1–4</button>
   <button data-tab="materials">🧰 Materials</button>
+  <button data-tab="scores">📊 Scores</button>
 </nav>
 
 <!-- =====================================================================
@@ -231,6 +238,24 @@ a{color:var(--blue)}
 <!-- =====================================================================
      MATERIALS
      ===================================================================== -->
+<section id="scores">
+<div class="card">
+  <b>Kids' site:</b> <a href="abc.html">abc.html</a>
+  <ul style="margin-top:6px">
+    <li><b>Link to send Ashot and Ariana</b> (opens the "who is playing?" screen):<br>
+      <code id="kidlink"></code> <button class="copybtn" data-copy="kidlink">Copy</button></li>
+    <li><b>On your own phone or laptop</b>, open <a href="abc.html?teacher">abc.html?teacher</a> once. That device then shows a dark teacher box with links to this page and the big kids' site. The kids never see it.</li>
+  </ul>
+</div>
+
+<div class="card" id="remoteBox"></div>
+
+<h2>Results</h2>
+<div id="summary"></div>
+<div class="tablewrap"><table id="scoreTable"></table></div>
+<p class="muted small" id="scoreNote"></p>
+</section>
+
 <section id="materials">
 
 <h2>For the children (they can use these alone)</h2>
@@ -265,6 +290,8 @@ a{color:var(--blue)}
 
 </div>
 
+<script src="content/kids-topics.js"></script>
+<script src="content/scores-config.js"></script>
 <script>
 "use strict";
 const tabs = document.querySelectorAll(".tabs button");
@@ -276,10 +303,71 @@ function show(id){
 tabs.forEach(b => b.onclick = () => { show(b.dataset.tab); window.scrollTo(0, 0); });
 /* a link like teacher.html#lessons or #l3 opens the right tab */
 const h = location.hash.slice(1);
-const fromHash = h === "plan" || h === "lessons" || h === "materials" ? h : /^l[1-4]$/.test(h) ? "lessons" : null;
+const fromHash = ["plan","lessons","materials","scores"].includes(h) ? h : /^l[1-4]$/.test(h) ? "lessons" : null;
 let saved = null; try{ saved = localStorage.getItem("teacherTab"); }catch(e){}
 show(fromHash || saved || "plan");
 if(/^l[1-4]$/.test(h)) document.getElementById(h).scrollIntoView();
+
+/* ---------------------------------------------------------------- scores */
+const GAME_NAMES = { listen:"Listen & find (words)", memory:"Memory pairs", tmatch:"Picture & word",
+  findLetter:"Find the letter (listening)", firstLetter:"First letter", findNumber:"Find the number (listening)",
+  case:"Big & small letters", pic:"Letters & pictures", numword:"Number & word", numcount:"Count & match" };
+const topicEn = id => { const t = (window.TOPICS || []).find(x => x.id === id); return t ? t.en + " (U" + t.unit + ")" : id; };
+const escH = v => String(v == null ? "" : v).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const kidUrl = new URL("abc.html?student", location.href).href;
+document.getElementById("kidlink").textContent = kidUrl;
+document.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => {
+  navigator.clipboard && navigator.clipboard.writeText(kidUrl).then(() => { b.textContent = "Copied"; });
+});
+
+function localRows(){
+  try{ return JSON.parse(localStorage.getItem("abcScores") || "[]").map(r => Object.assign({ where:"this device" }, r)); }
+  catch(e){ return []; }
+}
+function getPin(){ try{ return localStorage.getItem("teacherPin") || ""; }catch(e){ return ""; } }
+
+async function loadScores(){
+  const box = document.getElementById("remoteBox");
+  let rows = localRows(), note = "";
+  if(!window.SCORES_URL){
+    box.innerHTML = `<b>Results from the kids' own phones are not connected yet.</b>
+      <p class="small" style="margin:6px 0 0">Right now each result is saved only on the device it was played on, so this page shows games played on <i>this</i> device. To see games they play at home, results need a small Google Sheet to collect them. The script and steps are in <code>scores-apps-script.gs</code> in the website's files.</p>`;
+  }else{
+    const pin = getPin();
+    box.innerHTML = `<b>Results from the kids' phones</b> are collected in your Google Sheet.
+      <div style="margin-top:8px">PIN: <input class="pin" type="password" id="pin" value="${escH(pin)}"> <button class="smallbtn" id="pinGo">Load</button> <span class="small muted" id="pinMsg"></span></div>`;
+    document.getElementById("pinGo").onclick = () => { try{ localStorage.setItem("teacherPin", document.getElementById("pin").value.trim()); }catch(e){} loadScores(); };
+    if(pin){
+      try{
+        const res = await fetch(window.SCORES_URL + "?pin=" + encodeURIComponent(pin));
+        const data = await res.json();
+        if(data.ok){ rows = rows.filter(r => r.student === "Teacher").concat(data.rows.map(r => Object.assign({ where:"online" }, r))); document.getElementById("pinMsg").textContent = "✓ loaded"; }
+        else document.getElementById("pinMsg").textContent = data.error === "wrong pin" ? "Wrong PIN" : "Could not load";
+      }catch(e){ document.getElementById("pinMsg").textContent = "Could not reach the sheet"; }
+    }
+  }
+  rows.sort((a, b) => String(b.t).localeCompare(String(a.t)));
+  const kids = (window.STUDENTS || []).map(k => k.id);
+  document.getElementById("summary").innerHTML = `<div class="kidcards">${kids.map(id => {
+    const k = (window.STUDENTS || []).find(x => x.id === id);
+    const mine = rows.filter(r => r.student === id);
+    const stars = mine.reduce((t, r) => t + (+r.stars || 0), 0);
+    const last = mine[0] ? new Date(mine[0].t).toLocaleString() : "—";
+    const weak = Object.entries(mine.reduce((m, r) => { const k2 = r.topic; (m[k2] = m[k2] || []).push(+r.stars || 0); return m; }, {}))
+      .map(([t, a]) => [t, a.reduce((x, y) => x + y, 0) / a.length]).filter(x => x[1] < 2).map(x => topicEn(x[0]));
+    return `<div class="card"><div class="big">${k ? k.e : ""} ${escH(id)}</div>
+      <div>${mine.length} games · ⭐ ${stars}</div>
+      <div class="small muted">Last played: ${escH(last)}</div>
+      ${weak.length ? `<div class="small" style="margin-top:6px">Needs practice: ${escH(weak.join(", "))}</div>` : ""}</div>`;
+  }).join("")}</div>`;
+  const t = document.getElementById("scoreTable");
+  t.innerHTML = `<tr><th>When</th><th>Who</th><th>Game</th><th>Topic / range</th><th>Right</th><th>Stars</th></tr>` +
+    rows.slice(0, 300).map(r => `<tr><td>${escH(new Date(r.t).toLocaleString())}</td><td>${escH(r.student)}</td>
+      <td>${escH(GAME_NAMES[r.game] || r.game)}</td><td>${escH(topicEn(r.topic))}</td>
+      <td>${escH(r.right)} / ${escH(r.total)}</td><td>${"⭐".repeat(+r.stars || 0)}</td></tr>`).join("");
+  document.getElementById("scoreNote").textContent = rows.length ? "" : "No games played yet.";
+}
+loadScores();
 </script>
 </body>
 </html>
