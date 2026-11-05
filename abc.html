@@ -162,6 +162,22 @@ select{
 .navbtn.say{flex:0 0 84px;background:linear-gradient(135deg,#ffe08a,#ffc93d)}
 .jump{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-top:14px}
 .jump.nums{grid-template-columns:repeat(5,1fr)}
+
+/* ---------- tap a letter (one button per letter, it plays the sound) ---------- */
+.t7{background:linear-gradient(135deg,#ffb3b3,#ff6b6b)}
+.abcgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (min-width:520px){ .abcgrid{grid-template-columns:repeat(6,1fr)} }
+.abcbtn{
+  position:relative;aspect-ratio:1/1;border:none;border-radius:20px;cursor:pointer;
+  font-family:inherit;font-size:clamp(28px,9vw,40px);font-weight:800;color:#fff;
+  text-shadow:0 2px 0 rgba(0,0,0,.2);
+  box-shadow:0 5px 0 rgba(42,47,69,.22);transition:transform .08s;
+}
+.abcbtn:active,.abcbtn.playing{transform:translateY(4px) scale(.95);box-shadow:0 1px 0 rgba(42,47,69,.22)}
+.abcbtn.playing{outline:4px solid #fff;outline-offset:-9px}
+.abcbtn .mark{position:absolute;top:4px;right:8px;font-size:15px;text-shadow:none}
+.abcbtn.rec{animation:recpulse .7s infinite alternate;background:#e5384f !important}
+@keyframes recpulse{from{filter:brightness(1)}to{filter:brightness(1.4)}}
 .jump button{
   border:3px solid var(--line);background:var(--card);border-radius:14px;padding:9px 0;
   font-family:inherit;font-size:18px;font-weight:800;color:var(--ink);cursor:pointer
@@ -472,6 +488,8 @@ function screenHome(){
 
     <p class="section-label">LETTERS</p>
     <div class="stack-sm">
+      <button class="tile t7" data-go="tapLetters"><span class="emoji">👆</span>
+        <span>Tap a letter<span class="sub">Press a letter and hear its sound</span></span></button>
       <button class="tile t1" data-go="learnLetters"><span class="emoji">📖</span>
         <span>Learn the alphabet<span class="sub">Big letter, small letter, a picture and the word</span></span></button>
       <button class="tile t2" data-go="gameCase"><span class="emoji">🅰️</span>
@@ -495,13 +513,14 @@ function screenHome(){
       <div class="btn-row" style="margin-top:12px">
         <button class="chip ${S.sound || S.speak ? "on" : ""}" data-toggle>${S.sound || S.speak ? "🔊 Sound is on" : "🔇 Sound is off"}</button>
         <a class="chip" href="index.html" style="text-decoration:none;display:inline-block">🎓 Big kids' games</a>
+        <a class="chip" href="teacher.html" style="text-decoration:none;display:inline-block">👩‍🏫 Teacher's plan</a>
       </div>
     </div>
   </div>`;
 
   $$("[data-go]").forEach(b => b.onclick = () => {
     const map = {
-      learnLetters, learnNumbers,
+      learnLetters, learnNumbers, tapLetters,
       gameCase: () => setupScreen("case"),
       gamePic: () => setupScreen("pic"),
       gameNumWord: () => setupScreen("numword"),
@@ -554,6 +573,169 @@ function sayLetter(){
   const L = LETTERS[learnIdx];
   speak(L.l + ". " + L.word);
   tone([700], 0.08);
+}
+
+/* ==========================================================================
+   TAP A LETTER — 26 buttons, a tap plays the letter's sound
+
+   WHERE THE SOUNDS COME FROM (first one found wins)
+     1. A sound the teacher recorded on THIS device (Teacher: record sounds).
+     2. A sound file in the "sounds" folder of the website, e.g. sounds/a.mp3.
+        List a letter in SITE_SOUNDS once its file is there.
+     3. Nothing recorded yet: the browser voice says the picture word
+        ("apple"), so the child still hears the sound at the start.
+   "Letter name" mode always uses the browser voice: A, B, C.
+   ========================================================================== */
+
+const SITE_SOUNDS = "";      /* e.g. "abcdefghijklmnopqrstuvwxyz" once all files are in sounds/ */
+const SITE_SOUND_EXT = "mp3";
+const ABC_COLORS = ["#ff6b6b","#ffa63d","#f2b705","#4ecb71","#3ec5e0","#5b8cff","#a878ff","#ff7ac0"];
+
+/* --- recordings kept in this browser (IndexedDB) --- */
+const recDB = {
+  open(){
+    if(this._p) return this._p;
+    this._p = new Promise((ok, no) => {
+      try{
+        const r = indexedDB.open("abc-sounds", 1);
+        r.onupgradeneeded = () => r.result.createObjectStore("rec");
+        r.onsuccess = () => ok(r.result);
+        r.onerror = () => no(r.error);
+      }catch(e){ no(e); }
+    });
+    return this._p;
+  },
+  async run(mode, fn){
+    const db = await this.open();
+    return new Promise((ok, no) => {
+      const tx = db.transaction("rec", mode), st = tx.objectStore("rec");
+      const req = fn(st);
+      tx.oncomplete = () => ok(req && req.result);
+      tx.onerror = () => no(tx.error);
+    });
+  },
+  get(k){ return this.run("readonly", st => st.get(k)).catch(() => null); },
+  put(k, v){ return this.run("readwrite", st => st.put(v, k)); },
+  async keys(){ try{ return await this.run("readonly", st => st.getAllKeys()); }catch(e){ return []; } }
+};
+
+let player = null;
+function playBlobOrUrl(src){
+  try{ if(player){ player.pause(); } }catch(e){}
+  player = new Audio(src);
+  return player.play();
+}
+
+async function playLetterSound(L){
+  const k = L.l.toLowerCase();
+  if(S.abcMode === "name"){ speak(L.l); return; }
+  const mine = await recDB.get(k);
+  if(mine){ try{ speechSynthesis.cancel(); }catch(e){} playBlobOrUrl(URL.createObjectURL(mine)); return; }
+  if(SITE_SOUNDS.includes(k)){ playBlobOrUrl("sounds/" + k + "." + SITE_SOUND_EXT).catch(() => speak(L.word)); return; }
+  speak(L.word);
+}
+
+function abcGrid(marks){
+  return `<div class="abcgrid">${LETTERS.map((L, i) =>
+    `<button class="abcbtn" data-i="${i}" style="background:${ABC_COLORS[i % ABC_COLORS.length]}"
+      aria-label="${L.l}">${L.l}${L.l.toLowerCase()}${marks && marks.has(L.l.toLowerCase()) ? '<span class="mark">✅</span>' : ""}</button>`
+  ).join("")}</div>`;
+}
+
+function tapLetters(){
+  if(!S.abcMode) S.abcMode = "sound";
+  app.innerHTML = topBar("Tap a letter") + `
+  <div class="stack">
+    <div class="chips">
+      <button class="chip ${S.abcMode === "sound" ? "on" : ""}" data-mode="sound">🔊 Sound: a as in apple</button>
+      <button class="chip ${S.abcMode === "name" ? "on" : ""}" data-mode="name">🔤 Name: A, B, C</button>
+    </div>
+    ${abcGrid()}
+    <div class="center"><button class="chip" data-teacher>👩‍🏫 Teacher: record the sounds</button></div>
+  </div>`;
+  wireTop();
+  $$("[data-mode]").forEach(b => b.onclick = () => { S.abcMode = b.dataset.mode; save(); tapLetters(); });
+  $$(".abcbtn").forEach(b => b.onclick = () => {
+    $$(".abcbtn.playing").forEach(x => x.classList.remove("playing"));
+    b.classList.add("playing"); setTimeout(() => b.classList.remove("playing"), 450);
+    playLetterSound(LETTERS[+b.dataset.i]);
+  });
+  $("[data-teacher]").onclick = () => go(recordLetters);
+}
+
+/* --- teacher: record one short clip per letter --- */
+let micStream = null, recorder = null, recTimer = null;
+
+async function recordLetters(){
+  const done = new Set(await recDB.keys());
+  app.innerHTML = topBar("Record the sounds") + `
+  <div class="stack">
+    <div class="card small">
+      <p><b>Tap a letter, say its sound, and it stops by itself after 2 seconds</b> (or tap again to stop sooner). It plays back so you can check. Not happy? Tap it again to redo.</p>
+      <p class="muted" style="margin-top:6px">Say the sound only: "a" as in apple, "mmm", "sss". Recordings stay on this device. To put them on the website for everyone, download them and send the file to be added.</p>
+      <p class="muted" style="margin-top:6px"><b id="recCount">${done.size}</b> of 26 recorded.</p>
+    </div>
+    ${abcGrid(done)}
+    <div class="btn-row">
+      <button class="btn go" data-zip ${done.size ? "" : "disabled"}>⬇ Download my recordings</button>
+    </div>
+  </div>`;
+  wireTop();
+  $$(".abcbtn").forEach(b => b.onclick = () => toggleRecord(b, LETTERS[+b.dataset.i]));
+  $("[data-zip]").onclick = downloadRecordings;
+}
+
+async function toggleRecord(btn, L){
+  if(recorder && recorder.state === "recording"){ recorder.stop(); return; }
+  try{
+    micStream = micStream || await navigator.mediaDevices.getUserMedia({ audio:true });
+  }catch(e){ toast("The microphone is blocked — allow it in the browser"); return; }
+  const chunks = [];
+  recorder = new MediaRecorder(micStream);
+  recorder.ondataavailable = e => { if(e.data && e.data.size) chunks.push(e.data); };
+  recorder.onstop = async () => {
+    clearTimeout(recTimer);
+    btn.classList.remove("rec");
+    const blob = new Blob(chunks, { type: recorder.mimeType || "audio/webm" });
+    recorder = null;
+    await recDB.put(L.l.toLowerCase(), blob);
+    playBlobOrUrl(URL.createObjectURL(blob));
+    if(!btn.querySelector(".mark")) btn.insertAdjacentHTML("beforeend", '<span class="mark">✅</span>');
+    const n = (await recDB.keys()).length;
+    const c = document.getElementById("recCount"); if(c) c.textContent = n;
+    const z = $("[data-zip]"); if(z) z.disabled = false;
+  };
+  try{ speechSynthesis.cancel(); }catch(e){}
+  recorder.start();
+  btn.classList.add("rec");
+  recTimer = setTimeout(() => { if(recorder && recorder.state === "recording") recorder.stop(); }, 2000);
+}
+
+function extFor(type){
+  if(/mp4|m4a|aac/.test(type)) return "m4a";
+  if(/ogg/.test(type)) return "ogg";
+  if(/mpeg|mp3/.test(type)) return "mp3";
+  return "webm";
+}
+
+async function downloadRecordings(){
+  const keys = await recDB.keys();
+  if(!keys.length) return;
+  toast("Packing the sounds…");
+  if(!window.JSZip){
+    await new Promise((ok, no) => {
+      const s = document.createElement("script");
+      s.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js";
+      s.onload = ok; s.onerror = no; document.head.appendChild(s);
+    }).catch(() => null);
+  }
+  if(!window.JSZip){ toast("Could not pack the files — check the internet"); return; }
+  const zip = new JSZip();
+  for(const k of keys){ const b = await recDB.get(k); if(b) zip.file(k + "." + extFor(b.type), b); }
+  const out = await zip.generateAsync({ type:"blob" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(out); a.download = "letter-sounds.zip";
+  document.body.appendChild(a); a.click(); a.remove();
 }
 
 /* ==========================================================================

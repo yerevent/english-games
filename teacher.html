@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffd93d">
+<title>Teacher's Plan — English Games</title>
+
+<!--
+  ============================================================================
+  TEACHER'S PLAN — for young beginners (age about 7, can't read yet),
+  taught one-to-one with Family and Friends 1 (2nd edition, Oxford).
+
+  Three parts (tabs): Curriculum · Lessons 1–4 · Materials.
+  Everything is plain HTML below: to change a lesson, find its heading
+  ("LESSON 1" etc.) and edit the text. Page and track numbers are from
+  the Family and Friends 1 Class Book, 2nd edition.
+  ============================================================================
+-->
+
+<style>
+:root{
+  color-scheme: light;
+  --sky:#eaf4ff; --ink:#2a2f45; --muted:#5f6787; --card:#fff; --line:#dfe6f5;
+  --sun:#ffd93d; --sunDeep:#f0bf1d; --red:#e5384f; --green:#2f9b53; --blue:#3f6fe0;
+  --shadow:0 3px 0 rgba(42,47,69,.08), 0 8px 20px rgba(42,47,69,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--sky);color:var(--ink);
+  font-family:"Segoe UI Rounded","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  font-size:16px;line-height:1.55;
+}
+.wrap{max-width:860px;margin:0 auto;padding:16px 16px 60px}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+header h1{font-size:26px;margin:0;flex:1;min-width:200px}
+header a{color:var(--blue);font-weight:700;text-decoration:none}
+.lead{color:var(--muted);margin:0 0 14px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;position:sticky;top:0;background:var(--sky);padding:8px 0;z-index:5}
+.tabs button{
+  border:3px solid var(--line);background:var(--card);border-radius:999px;padding:8px 16px;
+  font:inherit;font-weight:800;color:var(--ink);cursor:pointer
+}
+.tabs button.on{background:var(--sun);border-color:var(--sunDeep)}
+section{display:none}
+section.on{display:block}
+h2{font-size:22px;margin:22px 0 8px}
+h3{font-size:18px;margin:18px 0 6px}
+.card{background:var(--card);border:3px solid var(--line);border-radius:20px;padding:16px 18px;box-shadow:var(--shadow);margin:12px 0}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px 0}
+table{border-collapse:collapse;width:100%;min-width:640px;background:var(--card);border-radius:14px;overflow:hidden;font-size:14.5px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#fff6cf;font-size:13.5px}
+tr.pause td{background:#f3f7ff;color:var(--muted);font-style:italic}
+.snd{font-weight:800;color:var(--red);white-space:nowrap}
+ul,ol{padding-left:22px;margin:6px 0}
+li{margin:3px 0}
+.steps li{margin:8px 0}
+.min{display:inline-block;min-width:52px;font-weight:800;color:var(--green)}
+.tag{display:inline-block;background:#eef3ff;border-radius:8px;padding:1px 8px;font-size:13px;font-weight:700;color:var(--blue);margin-left:4px}
+.need{background:#fffbea;border-radius:14px;padding:10px 14px;margin:8px 0}
+.check{background:#eafaf0;border-radius:14px;padding:10px 14px;margin:8px 0}
+.lessonnav{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 4px}
+.lessonnav a{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:5px 12px;font-weight:700;color:var(--ink);text-decoration:none;font-size:14px}
+a{color:var(--blue)}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+@media print{
+  .tabs,header a{display:none}
+  section{display:block !important;page-break-before:always}
+  body{background:#fff}
+  .card{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>👩‍🏫 Teacher's plan</h1>
+  <a href="abc.html">🔤 ABC &amp; 123 →</a>
+</header>
+<p class="lead">For two 7-year-old beginners who can't read yet, taught one-to-one with <b>Family and Friends 1</b> (2nd edition). Two lessons a week, 45–60 minutes each.</p>
+
+<nav class="tabs">
+  <button data-tab="plan" class="on">📅 Curriculum</button>
+  <button data-tab="lessons">📝 Lessons 1–4</button>
+  <button data-tab="materials">🧰 Materials</button>
+</nav>
+
+<!-- =====================================================================
+     CURRICULUM
+     ===================================================================== -->
+<section id="plan" class="on">
+
+<div class="card">
+  <b>The idea in one line:</b> follow the book in order, take each unit slower than a school class would, and add 10 minutes of letter sounds to every lesson. The book teaches one letter sound for each letter of the alphabet in Units 1–6, so by Unit 6 they know all 26.
+  <ul style="margin-top:8px">
+    <li><b>Talk first, read later.</b> Most of each lesson is listening, pointing, singing and acting. Writing is tracing and copying only.</li>
+    <li><b>Sounds before names.</b> Teach "b" as the sound in <i>bird</i>, not "bee". Letter names come in Unit 7.</li>
+    <li><b>About 3 weeks per unit</b> (6 lessons). Slow down whenever a child needs it. The weeks are a guide.</li>
+    <li><b>Every lesson:</b> hello song → review → new words → book page → letter corner → game → goodbye. Details in the Lessons tab.</li>
+  </ul>
+</div>
+
+<h2>Year 1: Starter to Unit 9</h2>
+<div class="tablewrap"><table>
+<tr><th>Weeks</th><th>Book unit</th><th>Pages</th><th>Words and sentences</th><th>Letter sounds</th></tr>
+<tr><td>1–2</td><td><b>Starter: Hello!</b></td><td>4–7</td><td>Hello, goodbye. <i>What's your name? My name's…</i> <i>How old are you? I'm seven.</i> Numbers 1–10, days of the week (just listening), colours</td><td><span class="snd">a b c d</span> early, one per lesson, with the Tap a letter page</td></tr>
+<tr><td>3–5</td><td><b>1 What's this?</b></td><td>8–13</td><td>School things: pen, pencil, rubber, ruler, book. <i>What's this? It's a pen.</i></td><td><span class="snd">a b c d</span> apple, bird, cat, dog</td></tr>
+<tr><td>6–8</td><td><b>2 Playtime!</b></td><td>14–19</td><td>Toys. <i>my / your. Is this your teddy? Yes, it is. No, it isn't.</i></td><td><span class="snd">e f g h</span> egg, fig, goat, hat</td></tr>
+<tr><td>9–11</td><td><b>3 This is my nose!</b></td><td>20–25</td><td>My body. <i>arm / arms. This is… These are…</i></td><td><span class="snd">i j k l</span> ink, jam, kite, lion</td></tr>
+<tr class="pause"><td>12</td><td>Fluency Time 1 + Review 1</td><td>26–29</td><td>Introductions. Project: a puppet</td><td>review a–l</td></tr>
+<tr><td>13–15</td><td><b>4 He's a hero!</b></td><td>30–35</td><td>Jobs. <i>She's / He's a teacher. Is she a teacher? Yes, she is. No, he isn't.</i></td><td><span class="snd">m n o p</span> mum, nurse, orange, pen</td></tr>
+<tr><td>16–19</td><td><b>5 Where's the ball?</b></td><td>36–41</td><td>The park. <i>Where's the ball? in / on / under</i></td><td><span class="snd">q r s t u</span> queen, rabbit, sofa, teddy, umbrella</td></tr>
+<tr><td>20–22</td><td><b>6 Billy's teddy!</b></td><td>42–47</td><td>My family. <i>Billy's teddy</i> ('s)</td><td><span class="snd">v w x y z</span> van, window, box, yo-yo, zebra</td></tr>
+<tr class="pause"><td>23</td><td>Fluency Time 2 + Review 2</td><td>48–51</td><td>Playing outside. Project: a park poster</td><td>review a–z</td></tr>
+<tr><td>24–26</td><td><b>7 Are these his trousers?</b></td><td>52–57</td><td>Clothes. <i>This is her / his T-shirt. Are these his socks? Yes, they are.</i></td><td>Letter <b>names</b> and the alphabet in order</td></tr>
+<tr><td>27–29</td><td><b>8 Where's Grandma?</b></td><td>58–63</td><td>My house. <i>Is she in the kitchen? Where are Dad and Billy?</i></td><td><span class="snd">sh</span> shoes, sheep, fish</td></tr>
+<tr><td>30–32</td><td><b>9 Lunchtime!</b></td><td>64–69</td><td>Lunch box. <i>I've got… I haven't got…</i> a / an</td><td><span class="snd">ch</span> chair, teacher, chick</td></tr>
+<tr class="pause"><td>33–34</td><td>Fluency Time 3 + Review 3</td><td>70–73</td><td>Getting dressed. Project: a clothes cube</td><td>review</td></tr>
+</table></div>
+
+<h2>Year 2: Units 10–15</h2>
+<p class="muted small">By now they know every letter sound. These units teach reading short words (cat, bed, pig, dog, sun) by blending sounds.</p>
+<div class="tablewrap"><table>
+<tr><th>Book unit</th><th>Pages</th><th>Words and sentences</th><th>Reading</th></tr>
+<tr><td><b>10 A new friend!</b></td><td>74–79</td><td>Friends, shapes. <i>He's got… She hasn't got…</i></td><td><span class="snd">th</span> three, bath, teeth</td></tr>
+<tr><td><b>11 I like monkeys!</b></td><td>80–85</td><td>The zoo. <i>I like… I don't like…</i></td><td>Short words with <span class="snd">a</span>: cat, man, fan</td></tr>
+<tr><td><b>12 Dinnertime!</b></td><td>86–91</td><td>Food and drinks. <i>Do you like carrots? Yes, I do.</i></td><td>Short words with <span class="snd">e</span>: bed, pen, red</td></tr>
+<tr class="pause"><td>Fluency Time 4 + Review 4</td><td>92–95</td><td>At the dinner table</td><td>review</td></tr>
+<tr><td><b>13 Tidy up!</b></td><td>96–101</td><td>My bedroom, numbers 11–20. <i>There's… There are…</i></td><td>Short words with <span class="snd">i</span>: bin, fig, tin</td></tr>
+<tr><td><b>14 Action Boy can run!</b></td><td>102–107</td><td>Actions. <i>I can… I can't… Can he talk?</i></td><td>Short words with <span class="snd">o</span>: dog, fox, log</td></tr>
+<tr><td><b>15 Let's play ball!</b></td><td>108–113</td><td>The beach. <i>Let's…</i></td><td>Short words with <span class="snd">u</span>: rug, jug, sum</td></tr>
+<tr class="pause"><td>Fluency Time 5 + Review 5, Culture</td><td>114–123</td><td>Finding things, my school</td><td>review</td></tr>
+</table></div>
+
+<div class="card small">
+  <b>Every 4–5 weeks, a 5-minute check.</b> Show each letter learned so far: can they say its sound? Ask 5 questions from the units (<i>What's this? How old are you? What colour is it?</i>). Note what they know. If a child is slow on letters, stay a week longer before the next unit's letters.
+</div>
+</section>
+
+<!-- =====================================================================
+     LESSONS 1–4
+     ===================================================================== -->
+<section id="lessons">
+
+<p class="lead">Each lesson is about 50 minutes. For 45 minutes, shorten the game. For 60, add a workbook page or a craft. Track numbers are the Class Book audio (the 🔊 numbers next to each exercise in the book).</p>
+<div class="lessonnav">
+  <a href="#l1">Lesson 1</a><a href="#l2">Lesson 2</a><a href="#l3">Lesson 3</a><a href="#l4">Lesson 4</a>
+</div>
+
+<!-- LESSON 1 -->
+<div class="card" id="l1">
+  <h2 style="margin-top:0">Lesson 1 · Hello! <span class="tag">Starter, pages 4–5</span></h2>
+  <p><b>By the end they can:</b> say <i>Hello</i> and <i>Goodbye</i>, and answer <i>What's your name?</i> with <i>My name's…</i> They know the sound of <b>a</b>.</p>
+  <div class="need"><b>You need:</b> Class Book pages 4–5, audio tracks 01–04, a puppet or soft toy, an apple (or a picture of one), paper and crayons, a phone or laptop with the <a href="abc.html">Tap a letter</a> page.</div>
+  <ol class="steps">
+    <li><span class="min">5 min</span> <b>Hello.</b> Wave: "Hello! My name's Anna." The puppet says hello too. Wave until the child waves and says "Hello" back. One sentence in their language is fine to explain that the lesson is in English.</li>
+    <li><span class="min">8 min</span> <b>Meet the characters</b> (p. 4, ex. 1, track 01). Listen and point to Rosy, Tim, Billy and Miss Jones. Then play "Where's Billy?": you say a name, they point.</li>
+    <li><span class="min">5 min</span> <b>Chant</b> (ex. 2, track 02). Clap along. Second time, they wave on every "Hello".</li>
+    <li><span class="min">10 min</span> <b>Story</b> (ex. 3, track 03). Listen and point to each picture. Then act it out: the puppet asks "What's your name?" and the child answers "My name's ___." Swap: the child asks the puppet.</li>
+    <li><span class="min">7 min</span> <b>Song</b> (p. 5, ex. 3, track 04). The child sings their own name in the gap. Wave on "Goodbye".</li>
+    <li><span class="min">10 min</span> <b>Letter corner: a.</b> Open Tap a letter, press <b>Aa</b> and listen. Show the apple: "a, a, apple." The child presses Aa three times and copies the sound. Draw a big <b>a</b> in the air, on their palm with a finger, then with a crayon on paper.</li>
+    <li><span class="min">3 min</span> <b>Goodbye.</b> A sticker, then "Goodbye, ___!" with a wave.</li>
+  </ol>
+  <p><b>Homework:</b> say "Hello, my name's ___" to someone at home. Press Aa on the Tap a letter page. Workbook: the Starter page.</p>
+  <div class="check">✅ <b>Check:</b> answers "What's your name?" without help.</div>
+</div>
+
+<!-- LESSON 2 -->
+<div class="card" id="l2">
+  <h2 style="margin-top:0">Lesson 2 · Numbers and age <span class="tag">Starter, pages 5–6</span></h2>
+  <p><b>By the end they can:</b> count 1–10, ask <i>What's your name?</i> and answer <i>How old are you?</i> with <i>I'm seven.</i> They know <b>b</b>.</p>
+  <div class="need"><b>You need:</b> tracks 04–06, 10 small things to count (blocks, buttons), number cards 1–10, a dice, the puppet.</div>
+  <ol class="steps">
+    <li><span class="min">4 min</span> <b>Hello song</b> (track 04).</li>
+    <li><span class="min">5 min</span> <b>Review</b> (p. 5, ex. 2). This time the child asks the puppet "What's your name?" and the puppet answers.</li>
+    <li><span class="min">10 min</span> <b>Numbers 1–10</b> (p. 6, ex. 1, track 05). Listen, point, repeat. Count fingers, then blocks. Put number cards on the floor: "Jump to four!"</li>
+    <li><span class="min">6 min</span> <b>Listen and tick</b> (ex. 2, track 06). Do the first one together.</li>
+    <li><span class="min">7 min</span> <b>How old are you?</b> (ex. 3). Point to children in the picture and ask. Then ask the child: "I'm seven," showing seven fingers. Ask about the puppet, their brother or sister. A number alone is a fine answer.</li>
+    <li><span class="min">5 min</span> <b>Dice game.</b> Roll, count the dots out loud, move a toy that many steps.</li>
+    <li><span class="min">10 min</span> <b>Letter corner: b.</b> Review <b>a</b> on Tap a letter. New: <b>b</b> as in <i>bird</i>. Clap game: you say a word, they clap if it starts with "b" (ball, bag, banana… cat, dog, apple).</li>
+    <li><span class="min">3 min</span> <b>Goodbye.</b></li>
+  </ol>
+  <p><b>Homework:</b> count 1–10 at home (stairs, toys). On the <a href="abc.html">ABC &amp; 123</a> page: Learn numbers 1–10, and press Aa and Bb.</p>
+  <div class="check">✅ <b>Check:</b> counts to 10, says "I'm seven."</div>
+</div>
+
+<!-- LESSON 3 -->
+<div class="card" id="l3">
+  <h2 style="margin-top:0">Lesson 3 · Days and colours <span class="tag">Starter, pages 6–7</span></h2>
+  <p><b>By the end they can:</b> name the 7 colours on page 7 and say what day it is today. They know <b>c</b>.</p>
+  <div class="need"><b>You need:</b> tracks 07–08, crayons or paper in red, yellow, pink, green, purple, orange, blue, a blank sheet for a rainbow.</div>
+  <ol class="steps">
+    <li><span class="min">3 min</span> <b>Hello song.</b></li>
+    <li><span class="min">5 min</span> <b>Review.</b> Flash number cards fast. Ask "How old are you?"</li>
+    <li><span class="min">6 min</span> <b>Days chant</b> (p. 6, ex. 4, track 07). Listen and point to each day. Don't expect them to learn all seven. Today's day is enough: "Today is Monday."</li>
+    <li><span class="min">10 min</span> <b>Colours</b> (p. 7, ex. 1, track 08). Listen, point, repeat. Then "Touch something red!" around the room.</li>
+    <li><span class="min">8 min</span> <b>Song</b> (ex. 2–3). Listen and point to each colour on the rainbow. Second time, hold up the matching crayon.</li>
+    <li><span class="min">5 min</span> <b>Match</b> (ex. 4). You read the colour words; the child says the colour and draws the line with you.</li>
+    <li><span class="min">10 min</span> <b>Letter corner: c.</b> Review <b>a b</b>. New: <b>c</b> as in <i>cat</i>. Draw a big c in their favourite colour, or make it from play-dough.</li>
+    <li><span class="min">3 min</span> <b>Goodbye.</b></li>
+  </ol>
+  <p><b>Homework:</b> colour a rainbow and say the colours to someone at home. Press Aa, Bb, Cc on Tap a letter.</p>
+  <div class="check">✅ <b>Check:</b> names at least 5 colours when you point.</div>
+</div>
+
+<!-- LESSON 4 -->
+<div class="card" id="l4">
+  <h2 style="margin-top:0">Lesson 4 · What's this? <span class="tag">Unit 1, pages 8–9</span></h2>
+  <p><b>By the end they can:</b> name pen, pencil, rubber, ruler, book and answer <i>What's this?</i> with <i>It's a pen.</i> They know <b>d</b>, so all four sounds of Unit 1 are ready before its phonics page.</p>
+  <div class="need"><b>You need:</b> a real pen, pencil, rubber, ruler and book in a bag, tracks 10–12, a sheet of paper to cover pictures.</div>
+  <ol class="steps">
+    <li><span class="min">3 min</span> <b>Hello song.</b></li>
+    <li><span class="min">5 min</span> <b>Review colours.</b> Hold up a crayon: "What colour is it?" (they hear the question form they need today).</li>
+    <li><span class="min">10 min</span> <b>New words</b> (p. 8, ex. 1, track 10). Take each thing out of the bag. Then "Mystery bag": the child feels one thing inside the bag and guesses.</li>
+    <li><span class="min">4 min</span> <b>Chant</b> (ex. 2, track 11).</li>
+    <li><span class="min">8 min</span> <b>Story</b> (ex. 3, track 12). Listen and point. Act it out with the real things.</li>
+    <li><span class="min">8 min</span> <b>What's this? It's a…</b> (p. 9, ex. 2). Cover a picture and slide the paper away slowly. You ask "What's this?", they answer "It's a pencil." Then swap. Skip the writing in ex. 3 for now, or write it yourself and let them trace "It's".</li>
+    <li><span class="min">10 min</span> <b>Letter corner: d.</b> Review <b>a b c</b>. New: <b>d</b> as in <i>dog</i>. Sound bingo: you say a sound, they press the right letter on Tap a letter.</li>
+    <li><span class="min">2 min</span> <b>Goodbye.</b></li>
+  </ol>
+  <p><b>Homework:</b> find 5 school things at home and say them in English. Press Aa to Dd on Tap a letter.</p>
+  <div class="check">✅ <b>Check:</b> answers "What's this?" with "It's a ___" for 3 or more things.</div>
+  <p class="muted small"><b>Next:</b> lessons 5–6 finish Unit 1 (pages 10–13). The phonics page (p. 11) will feel easy because a, b, c, d are already known.</p>
+</div>
+</section>
+
+<!-- =====================================================================
+     MATERIALS
+     ===================================================================== -->
+<section id="materials">
+
+<h2>For the children (they can use these alone)</h2>
+<p class="muted small">All of these talk and use pictures, so no reading is needed. Sit with them the first time, then 10–15 minutes alone is plenty.</p>
+<div class="tablewrap"><table>
+<tr><th>Site or app</th><th>What it does</th><th>Cost</th><th>Start</th></tr>
+<tr><td><a href="abc.html"><b>ABC &amp; 123</b></a> (this site)</td><td>Tap a letter to hear its sound, learn the alphabet with pictures, numbers 1–20, matching games.</td><td>Free</td><td>Lesson 1</td></tr>
+<tr><td><a href="https://www.starfall.com/h/abcs/" target="_blank" rel="noopener">Starfall ABCs</a></td><td>A page per letter with its sound, words and a short animation.</td><td>ABCs part free</td><td>Lesson 1</td></tr>
+<tr><td><a href="https://www.teachyourmonster.org/teachyourmonstertoread" target="_blank" rel="noopener">Teach Your Monster to Read</a></td><td>A game where the child teaches a monster letter sounds, then short words.</td><td>Free on a computer; the phone app is paid</td><td>Week 3</td></tr>
+<tr><td><a href="https://learn.khanacademy.org/khan-academy-kids/" target="_blank" rel="noopener">Khan Academy Kids</a></td><td>Talking app: letters, sounds, words, stories read aloud. No ads.</td><td>Free</td><td>Lesson 1</td></tr>
+<tr><td><a href="https://www.youtube.com/@officialalphablocks" target="_blank" rel="noopener">Alphablocks</a></td><td>Cartoon where each letter is a character and letters join to make words.</td><td>Free (YouTube)</td><td>Week 3</td></tr>
+<tr><td><a href="https://www.youtube.com/results?search_query=jolly+phonics+songs" target="_blank" rel="noopener">Jolly Phonics songs</a></td><td>A short song and action for each letter sound.</td><td>Free (YouTube)</td><td>Lesson 1</td></tr>
+<tr><td><a href="https://www.youtube.com/@SuperSimpleSongs" target="_blank" rel="noopener">Super Simple Songs</a></td><td>Hello, colours, numbers, body and food songs that match the units.</td><td>Free (YouTube)</td><td>Lesson 1</td></tr>
+<tr><td><a href="https://learnenglishkids.britishcouncil.org/" target="_blank" rel="noopener">LearnEnglish Kids</a> (British Council)</td><td>Songs, short videos and games by topic. Some games need reading, so start with songs.</td><td>Free</td><td>Unit 3</td></tr>
+</table></div>
+
+<h2>For you</h2>
+<ul>
+  <li><b>Family and Friends 1 Class Book and Workbook</b>, with the Class Book audio. The Workbook often comes with an Online Practice code with games for each unit.</li>
+  <li><a href="https://elt.oup.com/student/familyandfriends/" target="_blank" rel="noopener">Oxford's Family and Friends student site</a>: extra games and activities by level.</li>
+  <li><a href="https://www.eslkidslab.com/" target="_blank" rel="noopener">ESL Kids Lab</a> and <a href="https://www.twinkl.com/" target="_blank" rel="noopener">Twinkl</a>: printable flashcards and letter tracing sheets.</li>
+</ul>
+
+<h2>Good to have in the room</h2>
+<ul>
+  <li>A puppet or soft toy that "only speaks English"</li>
+  <li>Real objects for each unit (school things, toys, clothes, plastic food)</li>
+  <li>Play-dough and a small whiteboard for making and writing letters</li>
+  <li>Stickers, a dice, number cards 1–10</li>
+</ul>
+</section>
+
+</div>
+
+<script>
+"use strict";
+const tabs = document.querySelectorAll(".tabs button");
+function show(id){
+  tabs.forEach(b => b.classList.toggle("on", b.dataset.tab === id));
+  document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === id));
+  try{ localStorage.setItem("teacherTab", id); }catch(e){}
+}
+tabs.forEach(b => b.onclick = () => { show(b.dataset.tab); window.scrollTo(0, 0); });
+/* a link like teacher.html#lessons or #l3 opens the right tab */
+const h = location.hash.slice(1);
+const fromHash = h === "plan" || h === "lessons" || h === "materials" ? h : /^l[1-4]$/.test(h) ? "lessons" : null;
+let saved = null; try{ saved = localStorage.getItem("teacherTab"); }catch(e){}
+show(fromHash || saved || "plan");
+if(/^l[1-4]$/.test(h)) document.getElementById(h).scrollIntoView();
+</script>
+</body>
+</html>
