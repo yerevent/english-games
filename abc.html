@@ -28,7 +28,9 @@
     keep the old picture, or ask for a new drawing to be added.
 
   HOW MANY PAIRS IN ONE ROUND
-    Look for  PAIRS_TEXT = 6  and  PAIRS_PICTURE = 5  below.
+    Every letter or number in the chosen range is played. Up to
+    MAX_PAIRS (10) fit on one board; a bigger range is split into
+    several rounds so nothing is left out.
   ============================================================================
 -->
 
@@ -185,9 +187,10 @@ select{
 .jump button.on{background:#ffd93d;border-color:#f0bf1d}
 
 /* ---------- matching game ---------- */
-.gamehead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
-.dots{display:flex;gap:6px;flex-wrap:wrap}
-.dot{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--line)}
+.gamehead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.gamehead .muted{white-space:nowrap}
+.dots{display:flex;gap:4px;flex-wrap:wrap;flex:1;min-width:0}
+.dot{width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--line)}
 .dot.on{background:#4ecb71;border-color:#2fa557}
 .board{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
 .mcard{
@@ -208,6 +211,16 @@ select{
 .mcard.bad{border-color:#e05252;background:#ffecec;animation:shake .34s ease}
 .mcard.done{opacity:.72;pointer-events:none;box-shadow:none;border-color:#bfe8cd;background:#f2fbf5}
 .mcard .tick{position:absolute;top:-10px;right:-8px;font-size:24px;opacity:0;transform:scale(.4)}
+/* board sized to the screen by fitBoard(): --cs is the card size in px */
+.board.fit{gap:8px}
+.wrap:has(.board.fit){padding-bottom:6px}
+.board.fit .mcard{min-height:0;padding:4px;border-width:3px;border-radius:calc(var(--cs) * .16);overflow:hidden;align-content:center}
+.board.fit .mcard .face{font-size:calc(var(--cs) * .40)}
+.board.fit .mcard .face.word{font-size:calc(var(--cs) * .22)}
+.board.fit .mcard .pic{width:calc(var(--cs) * .66);max-width:none;margin:0 auto}
+.board.fit .mcard .lab{font-size:calc(var(--cs) * .15)}
+.board.fit .mcard.good .pic,.board.fit .mcard.done .pic{width:calc(var(--cs) * .48)}
+.board.fit .mcard .tick{top:-2px;right:0;font-size:calc(var(--cs) * .2)}
 .mcard.good .tick,.mcard.done .tick{opacity:1;transform:scale(1);transition:.25s ease}
 @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.12)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
@@ -283,9 +296,8 @@ const NUMBER_WORDS = ["zero","one","two","three","four","five","six","seven","ei
   "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"];
 const MAX_NUMBER = 20;
 
-/* how many pairs are dealt in one round */
-const PAIRS_TEXT = 6;      /* letter/word games  */
-const PAIRS_PICTURE = 5;   /* games with drawings */
+/* the most pairs on one board; a bigger range is split into rounds */
+const MAX_PAIRS = 10;
 
 /* ==========================================================================
    THE DRAWINGS — simple pictures, drawn with code (no image files needed)
@@ -432,6 +444,39 @@ function speak(text){
 }
 if("speechSynthesis" in window) speechSynthesis.getVoices();
 
+/* ---------- real recordings (sounds/ folder, from Wikimedia Commons) ----------
+   say("A", "apple") plays sounds/names/a.mp3 then sounds/words/apple.mp3.
+   A letter means its NAME; a picture word or number word means that word.
+   Anything without a recording, or a file that fails to load, is read by
+   the browser voice instead. Credits: credits.html                        */
+function clipFor(t){
+  if(/^[A-Z]$/.test(t)) return "sounds/names/" + t.toLowerCase() + ".mp3";
+  const w = String(t).toLowerCase();
+  if(LETTERS.some(L => L.word === w)) return "sounds/words/" + w.replace(/ /g, "-") + ".mp3";
+  const n = NUMBER_WORDS.indexOf(w);
+  if(n >= 1 && n <= 20) return "sounds/numbers/" + w + ".mp3";
+  return null;
+}
+let clipPlayer = null, clipRun = 0;
+function say(...parts){
+  if(!S.speak) return;
+  const run = ++clipRun;
+  try{ speechSynthesis.cancel(); }catch(e){}
+  try{ if(clipPlayer) clipPlayer.pause(); }catch(e){}
+  const next = i => {
+    if(run !== clipRun || i >= parts.length) return;
+    const src = clipFor(parts[i]);
+    if(!src){ speak(parts.slice(i).join(". ")); return; }
+    const a = new Audio(src);
+    clipPlayer = a;
+    a.onended = () => setTimeout(() => next(i + 1), 120);
+    a.onerror = () => { if(run === clipRun) speak(parts.slice(i).join(". ")); };
+    const pr = a.play();
+    if(pr && pr.catch) pr.catch(() => { if(run === clipRun) speak(parts.slice(i).join(". ")); });
+  };
+  next(0);
+}
+
 function confetti(){
   const box = document.getElementById("confetti");
   const bits = ["⭐","🎉","🌟","🎈","✨","🏆"];
@@ -515,6 +560,7 @@ function screenHome(){
         <a class="chip" href="index.html" style="text-decoration:none;display:inline-block">🎓 Big kids' games</a>
         <a class="chip" href="teacher.html" style="text-decoration:none;display:inline-block">👩‍🏫 Teacher's plan</a>
       </div>
+      <p class="muted small" style="margin-top:10px">Voices: real recordings from Wikimedia Commons · <a href="credits.html">credits</a></p>
     </div>
   </div>`;
 
@@ -571,7 +617,7 @@ function learnLetters(){
 }
 function sayLetter(){
   const L = LETTERS[learnIdx];
-  speak(L.l + ". " + L.word);
+  say(L.l, L.word);
   tone([700], 0.08);
 }
 
@@ -580,14 +626,14 @@ function sayLetter(){
 
    WHERE THE SOUNDS COME FROM (first one found wins)
      1. A sound the teacher recorded on THIS device (Teacher: record sounds).
-     2. A sound file in the "sounds" folder of the website, e.g. sounds/a.mp3.
+     2. A letter-sound file on the website, e.g. sounds/phonics/a.mp3.
         List a letter in SITE_SOUNDS once its file is there.
-     3. Nothing recorded yet: the browser voice says the picture word
+     3. Nothing recorded yet: the recording of the picture word plays
         ("apple"), so the child still hears the sound at the start.
-   "Letter name" mode always uses the browser voice: A, B, C.
+   "Letter name" mode plays the recorded letter names: A, B, C.
    ========================================================================== */
 
-const SITE_SOUNDS = "";      /* e.g. "abcdefghijklmnopqrstuvwxyz" once all files are in sounds/ */
+const SITE_SOUNDS = "";      /* e.g. "abcdefghijklmnopqrstuvwxyz" once all files are in sounds/phonics/ */
 const SITE_SOUND_EXT = "mp3";
 const ABC_COLORS = ["#ff6b6b","#ffa63d","#f2b705","#4ecb71","#3ec5e0","#5b8cff","#a878ff","#ff7ac0"];
 
@@ -628,11 +674,11 @@ function playBlobOrUrl(src){
 
 async function playLetterSound(L){
   const k = L.l.toLowerCase();
-  if(S.abcMode === "name"){ speak(L.l); return; }
+  if(S.abcMode === "name"){ say(L.l); return; }
   const mine = await recDB.get(k);
   if(mine){ try{ speechSynthesis.cancel(); }catch(e){} playBlobOrUrl(URL.createObjectURL(mine)); return; }
-  if(SITE_SOUNDS.includes(k)){ playBlobOrUrl("sounds/" + k + "." + SITE_SOUND_EXT).catch(() => speak(L.word)); return; }
-  speak(L.word);
+  if(SITE_SOUNDS.includes(k)){ playBlobOrUrl("sounds/phonics/" + k + "." + SITE_SOUND_EXT).catch(() => say(L.word)); return; }
+  say(L.word);
 }
 
 function abcGrid(marks){
@@ -773,7 +819,7 @@ function learnNumbers(){
   $$("[data-n]").forEach(b => b.onclick = () => { numIdx = +b.dataset.n; learnNumbers(); sayNumber(); });
 }
 function sayNumber(){
-  speak(NUMBER_WORDS[numIdx]);
+  say(NUMBER_WORDS[numIdx]);
   tone([700], 0.08);
 }
 
@@ -785,34 +831,34 @@ const GAMES = {
   case: {
     title:"Big & small letters",
     what:"Which letters?",
-    kind:"letters", pairs:PAIRS_TEXT,
+    kind:"letters", 
     left:  it => ({ html:`<span class="face">${it.l}</span>`, say:it.l }),
     right: it => ({ html:`<span class="face">${it.l.toLowerCase()}</span>`, say:it.l }),
-    cheer: it => it.l + " " + it.l.toLowerCase()
+    cheer: it => [it.l]
   },
   pic: {
     title:"Letters and pictures",
     what:"Which letters?",
-    kind:"letters", pairs:PAIRS_PICTURE,
+    kind:"letters", 
     left:  it => ({ html:`<span class="face">${it.l}${it.l.toLowerCase()}</span>`, say:it.l }),
     right: it => ({ html:`<span class="pic">${ART[it.art]||""}</span><span class="lab">${firstLetterBold(it.word)}</span>`, say:it.word }),
-    cheer: it => it.l + " — " + it.word
+    cheer: it => [it.l, it.word]
   },
   numword: {
     title:"Number & word",
     what:"Which numbers?",
-    kind:"numbers", pairs:PAIRS_TEXT,
+    kind:"numbers", 
     left:  it => ({ html:`<span class="face">${it.n}</span>`, say:NUMBER_WORDS[it.n] }),
     right: it => ({ html:`<span class="face word">${NUMBER_WORDS[it.n]}</span>`, say:NUMBER_WORDS[it.n] }),
-    cheer: it => it.n + " — " + NUMBER_WORDS[it.n]
+    cheer: it => [NUMBER_WORDS[it.n]]
   },
   numcount: {
     title:"Count and match",
     what:"Which numbers?",
-    kind:"numbers", pairs:PAIRS_PICTURE,
+    kind:"numbers", 
     left:  it => ({ html:`<span class="face">${it.n}</span>`, say:NUMBER_WORDS[it.n] }),
     right: it => ({ html:`<span class="pic">${countArt(it.n)}</span><span class="lab">${NUMBER_WORDS[it.n]}</span>`, say:NUMBER_WORDS[it.n] }),
-    cheer: it => it.n + " — " + NUMBER_WORDS[it.n]
+    cheer: it => [NUMBER_WORDS[it.n]]
   }
 };
 
@@ -888,11 +934,24 @@ function setupScreen(gameId){
    THE MATCHING GAME
    ========================================================================== */
 
-function playRound(gameId){
+/* split the whole range into even rounds of at most MAX_PAIRS */
+function makeRounds(pool){
+  const all = shuffle(pool);
+  const n = Math.max(1, Math.ceil(all.length / MAX_PAIRS));
+  const per = Math.ceil(all.length / n);
+  const out = [];
+  for(let i = 0; i < all.length; i += per) out.push(all.slice(i, i + per));
+  return out;
+}
+
+function playRound(gameId, game){
   const G = GAMES[gameId];
-  const pool = poolFor(G.kind);
-  const size = Math.min(G.pairs, pool.length);
-  const round = shuffle(pool).slice(0, size);
+  if(!game){
+    const rounds = makeRounds(poolFor(G.kind));
+    game = { rounds, at:0, mistakes:0, total:rounds.reduce((t, r) => t + r.length, 0) };
+  }
+  const round = game.rounds[game.at];
+  const size = round.length;
 
   const key = it => G.kind === "letters" ? it.l : String(it.n);
   const leftCards  = shuffle(round).map(it => ({ id:key(it), it, side:"L", ...G.left(it) }));
@@ -910,14 +969,18 @@ function playRound(gameId){
     <div class="gamehead">
       <div class="dots" id="dots">${round.map(() => `<span class="dot"></span>`).join("")}</div>
       <span class="muted small" id="count">0 / ${size}</span>
+      ${game.rounds.length > 1 ? `<span class="muted small">Round ${game.at + 1} of ${game.rounds.length}</span>` : ""}
+      <button class="iconbtn" data-again aria-label="New cards" title="New cards">🔀</button>
     </div>
     <div class="board">
       ${round.map((_, i) => cardHtml(leftCards[i], i) + cardHtml(rightCards[i], i)).join("")}
     </div>
-    <div class="center"><button class="btn ghost small" data-again>🔀 New cards</button></div>
   </div>`;
   wireTop();
   $("[data-again]").onclick = () => playRound(gameId);
+
+  fitBoard();
+  window.onresize = () => { if($(".board")) fitBoard(); };
 
   const cardsEl = $$(".mcard");
   const elOf = (side, i) => cardsEl.find(e => e.dataset.side === side && +e.dataset.i === i);
@@ -936,7 +999,7 @@ function playRound(gameId){
       const item = leftCards[pickL].it;
       a.classList.remove("pick"); b.classList.remove("pick");
       a.classList.add("good"); b.classList.add("good");
-      soundGood(); speak(G.cheer(item));
+      soundGood(); say(...G.cheer(item));
       matched++;
       const dots = $$("#dots .dot");
       if(dots[matched-1]) dots[matched-1].classList.add("on");
@@ -946,7 +1009,13 @@ function playRound(gameId){
         a.classList.remove("good"); b.classList.remove("good");
         a.classList.add("done");   b.classList.add("done");
         busy = false;
-        if(matched === size) setTimeout(() => winScreen(gameId, mistakes, size), 420);
+        if(matched === size) setTimeout(() => {
+          game.mistakes += mistakes;
+          if(game.at + 1 < game.rounds.length){
+            game.at++; soundWin(); speak("Next round!"); toast("⭐ Next round!");
+            playRound(gameId, game);
+          }else winScreen(gameId, game.mistakes, game.total);
+        }, 420);
       }, 520);
     }else{
       mistakes++;
@@ -974,9 +1043,28 @@ function playRound(gameId){
     el.classList.add("pick");
     tone([520], 0.06);
     const c = (side === "L" ? leftCards : rightCards)[i];
-    if(pickL === null || pickR === null) speak(c.say);
+    if(pickL === null || pickR === null) say(c.say);
     check();
   });
+}
+
+/* size the cards so the whole board fits on the screen without scrolling */
+function fitBoard(){
+  const board = $(".board"); if(!board) return;
+  const n = board.children.length, gap = 8;
+  const W = board.clientWidth;
+  const H = Math.max(160, window.innerHeight - board.getBoundingClientRect().top - 14);
+  let best = null;
+  for(const cols of [2, 4, 6]){
+    const rows = Math.ceil(n / cols);
+    const cw = (W - gap*(cols-1)) / cols, ch = (H - gap*(rows-1)) / rows;
+    const size = Math.min(cw, ch);
+    if(!best || size > best.size) best = { cols, size, ch };
+  }
+  board.classList.add("fit");
+  board.style.gridTemplateColumns = `repeat(${best.cols}, 1fr)`;
+  board.style.gridAutoRows = Math.min(best.ch, 150) + "px";
+  board.style.setProperty("--cs", Math.min(best.size, 150) + "px");
 }
 
 /* ==========================================================================
