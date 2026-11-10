@@ -242,6 +242,69 @@ select{
 /* my stars */
 .histrow{display:flex;justify-content:space-between;gap:8px;padding:8px 2px;border-bottom:2px dashed var(--line);font-size:15px}
 .histrow:last-child{border-bottom:0}
+
+/* grids sized to the screen by fitGrid(): --cs is the button size */
+.wrap:has(.fitgrid){padding-bottom:6px}
+.fitgrid{justify-content:center}
+.abcgrid.fitgrid .abcbtn{font-size:calc(var(--cs) * .38);border-radius:calc(var(--cs) * .22)}
+.abcgrid.fitgrid .abcbtn .mark{font-size:calc(var(--cs) * .18)}
+.qgrid.fitgrid .qbtn{aspect-ratio:auto;height:var(--cs);padding:6px;border-radius:calc(var(--cs) * .14)}
+.qgrid.fitgrid .qbtn .emo{font-size:calc(var(--cs) * .56)}
+.qgrid.fitgrid .qbtn .face{font-size:calc(var(--cs) * .4)}
+.qgrid.fitgrid .qbtn .wpic{width:calc(var(--cs) * .8);height:calc(var(--cs) * .8)}
+.qgrid.fitgrid .qbtn .blob{width:calc(var(--cs) * .7)}
+.qbtn.found{border-color:#2fa557;background:#e3f9ea}
+.qbtn .lab2{position:absolute;bottom:4px;left:0;right:0;font-size:13px;font-weight:800;color:#2f9b53}
+
+/* homework */
+.hwcard{background:linear-gradient(135deg,#fff3c4,#ffe08a);border:3px solid #f0bf1d;border-radius:22px;padding:12px 12px 10px}
+.hwhead{display:flex;justify-content:space-between;align-items:center;font-size:19px;font-weight:800}
+.hwitem{display:flex;align-items:center;gap:10px;width:100%;border:0;background:#fff;border-radius:16px;padding:10px 12px;margin-top:8px;
+  font-family:inherit;font-weight:800;font-size:17px;color:var(--ink);cursor:pointer;text-align:left;box-shadow:0 3px 0 rgba(42,47,69,.10)}
+.hwitem .emo{font-size:28px}
+.hwitem .sub{display:block;font-size:13px;color:var(--muted)}
+.hwitem .st{margin-left:auto;font-size:24px}
+.hwitem.done{opacity:.65}
+.hwnote{margin:8px 2px 0;font-size:14px;font-weight:800;color:#7a5a00}
+.tile.locked,.ttile.locked{opacity:.45;filter:grayscale(.7)}
+.tile .lock{margin-left:auto;font-size:22px}
+
+/* yes / no */
+.ynpic{width:min(44vw,190px);height:min(44vw,190px);margin:0 auto}
+.ynpic .emo{font-size:min(36vw,150px)}
+.ynq{display:flex;align-items:center;justify-content:center;gap:10px;font-size:23px;font-weight:800;margin:8px 0 14px;text-align:center}
+.listenbtn.small{width:58px;height:58px;font-size:26px;flex:none}
+.ynrow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ynbtn{border:4px solid var(--line);background:#fff;border-radius:24px;padding:14px 6px;font-family:inherit;font-size:46px;cursor:pointer;
+  box-shadow:0 5px 0 rgba(42,47,69,.14);color:var(--ink)}
+.ynbtn span{display:block;font-size:20px;font-weight:800}
+.ynbtn.good{border-color:#2fa557;background:#e3f9ea;animation:pop .32s ease}
+.ynbtn.bad{border-color:#e05252;background:#ffecec;animation:shake .34s ease}
+
+/* build the word */
+.sppic{width:130px;height:130px;margin:0 auto}
+.sppic .emo{font-size:108px}
+.slots{display:flex;justify-content:center;gap:6px;margin:12px 0 16px}
+.slot{width:var(--t);height:calc(var(--t) * 1.15);border-bottom:4px solid #5b8cff;font-size:calc(var(--t) * .62);font-weight:800;display:grid;place-items:center}
+.tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.ltile{width:var(--t);height:var(--t);border-radius:14px;border:3px solid var(--line);background:#fff;font-family:inherit;font-weight:800;
+  font-size:calc(var(--t) * .55);color:var(--ink);cursor:pointer;box-shadow:0 3px 0 rgba(42,47,69,.12)}
+.ltile.used{visibility:hidden}
+.ltile.bad{border-color:#e05252;background:#ffecec;animation:shake .34s ease}
+
+/* find everything with… */
+.hunthead{display:flex;align-items:center;justify-content:center;gap:14px;margin:2px 0 12px}
+.bigl{font-size:58px;font-weight:800;line-height:1}
+
+/* join the letters */
+.joinwrap{position:relative}
+.jgrid{display:grid;gap:12px}
+.jbtn{border-radius:50%;aspect-ratio:1/1;border:4px solid var(--line);background:#fff;font-family:inherit;font-weight:800;color:var(--ink);
+  font-size:calc(var(--cs) * .42);cursor:pointer;box-shadow:0 3px 0 rgba(42,47,69,.12);position:relative;z-index:1}
+.jbtn.on{background:#ffd93d;border-color:#f0bf1d}
+.jbtn.bad{border-color:#e05252;background:#ffecec;animation:shake .34s ease}
+.joinsvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
+.joinends{display:flex;justify-content:space-between;font-size:34px;margin:0 6px 6px}
 .jump button{
   border:3px solid var(--line);background:var(--card);border-radius:14px;padding:9px 0;
   font-family:inherit;font-size:18px;font-weight:800;color:var(--ink);cursor:pointer
@@ -319,6 +382,7 @@ select{
 <div id="toast"></div>
 
 <script src="content/kids-topics.js"></script>
+<script src="content/kids-games.js"></script>
 <script src="content/scores-config.js"></script>
 <script src="sounds/vocab/list.js"></script>
 <script>
@@ -583,6 +647,7 @@ function back(){
 function home(){
   const first = S.student ? screenHome : pickStudent;
   stack = [first]; window.scrollTo(0,0); first();
+  if(S.student) loadHomework().then(changed => { if(changed && stack.length === 1 && stack[0] === screenHome) screenHome(); });
 }
 
 function topBar(title){
@@ -642,6 +707,8 @@ function screenHome(){
 
 
 
+    ${homeworkCard()}
+
     ${me ? `<button class="tile t1" data-go="myStars"><span class="emoji">⭐</span>
       <span>Мои звёзды: ${stars}<span class="sub">Мои игры и звёзды</span></span></button>` : ""}
 
@@ -655,6 +722,10 @@ function screenHome(){
         <span>Найди букву<span class="sub">Слушай и нажми на букву</span></span></button>
       <button class="tile t3" data-go="gameFirstLetter"><span class="emoji">🍎</span>
         <span>Первая буква<span class="sub">С какой буквы начинается слово?</span></span></button>
+      <button class="tile t4" data-go="gameHunt"><span class="emoji">🔍</span>
+        <span>Найди всё на букву<span class="sub">Нажми на все картинки на эту букву</span></span></button>
+      <button class="tile t7" data-go="gameJoin"><span class="emoji">🔗</span>
+        <span>Соедини буквы<span class="sub">Слушай и соединяй буквы по порядку</span></span></button>
       <button class="tile t2" data-go="gameCase"><span class="emoji">🅰️</span>
         <span>Большие и маленькие<span class="sub">Найди пару: A и a</span></span></button>
       <button class="tile t6" data-go="gamePic"><span class="emoji">🔤</span>
@@ -693,10 +764,15 @@ function screenHome(){
       gameNumCount: () => setupScreen("numcount"),
       gameFindLetter: () => setupScreen("findLetter"),
       gameFirstLetter: () => setupScreen("firstLetter"),
-      gameFindNumber: () => setupScreen("findNumber")
+      gameFindNumber: () => setupScreen("findNumber"),
+      gameHunt: () => setupScreen("hunt"),
+      gameJoin: () => setupScreen("join")
     };
+    if(b.classList.contains("locked")){ lockedToast(); return; }
     go(map[b.dataset.go]);
   });
+  wireHomework();
+  markLocks();
   $$("[data-topic]").forEach(b => b.onclick = () => go(() => topicScreen(+b.dataset.topic)));
   const sw = $("[data-switch]"); if(sw) sw.onclick = () => { S.student = null; save(); home(); };
   $("[data-toggle]").onclick = () => {
@@ -825,6 +901,7 @@ function tapLetters(){
 
   </div>`;
   wireTop();
+  onFit(() => fitGrid($(".abcgrid"), 26, { cols:[4, 5, 6, 7, 8], max:110, min:46, gap:8 }));
   $$("[data-mode]").forEach(b => b.onclick = () => { S.abcMode = b.dataset.mode; save(); tapLetters(); });
   $$(".abcbtn").forEach(b => b.onclick = () => {
     $$(".abcbtn.playing").forEach(x => x.classList.remove("playing"));
@@ -851,6 +928,7 @@ async function recordLetters(){
     </div>
   </div>`;
   wireTop();
+  onFit(() => fitGrid($(".abcgrid"), 26, { cols:[4, 5, 6, 7, 8], max:110, min:46, gap:8, below:80 }));
   $$(".abcbtn").forEach(b => b.onclick = () => toggleRecord(b, LETTERS[+b.dataset.i]));
   $("[data-zip]").onclick = downloadRecordings;
 }
@@ -952,6 +1030,8 @@ function sayNumber(){
    ========================================================================== */
 
 const GAMES = {
+  hunt: { title:"Найди всё на букву", what:"Какие буквы?", kind:"letters", type:"custom", start:() => huntGame() },
+  join: { title:"Соедини буквы",      what:"Какие буквы?", kind:"letters", type:"custom", start:() => joinGame() },
   tmatch: {
     title:"Картинка и слово",
     kind:"topic", key: it => it.w,
@@ -1073,7 +1153,7 @@ function setupScreen(gameId){
   });
   $("[data-from]").onchange = e => { setRange(+e.target.value, to); setupScreen(gameId); };
   $("[data-to]").onchange   = e => { setRange(from, +e.target.value); setupScreen(gameId); };
-  $("[data-start]").onclick = () => go(() => G.type === "quiz" ? startQuiz(gameId) : playRound(gameId));
+  $("[data-start]").onclick = () => go(() => launchRangeGame(gameId));
   drawPreview();
 }
 
@@ -1290,9 +1370,8 @@ async function sendQueue(){
 }
 window.addEventListener("online", sendQueue);
 
-const GAME_NAMES_RU = { listen:"Слушай и найди", memory:"Найди пару", tmatch:"Картинка и слово",
-  findLetter:"Найди букву", firstLetter:"Первая буква", findNumber:"Найди цифру",
-  case:"Большие и маленькие", pic:"Буквы и картинки", numword:"Цифра и слово", numcount:"Считаем" };
+const gameInfo = id => (window.KID_GAMES || []).find(g => g.id === id) || null;
+const GAME_NAMES_RU = Object.fromEntries((window.KID_GAMES || []).map(g => [g.id, g.ru]));
 function topicName(id){ const t = (window.TOPICS || []).find(x => x.id === id); return t ? t.ru : id; }
 
 function myStars(){
@@ -1338,28 +1417,60 @@ function topicScreen(i){
       <p class="muted small">${esc(t.en)} · ${t.unit === "Starter" ? "Starter" : "Unit " + t.unit} · слов: ${t.words.length}</p>
     </div>
     <div class="stack-sm">
-      <button class="tile t1" data-g="learn"><span class="emoji">📖</span>
-        <span>Учим слова<span class="sub">Картинка, слово и звук</span></span></button>
-      <button class="tile t5" data-g="listen"><span class="emoji">👂</span>
-        <span>Слушай и найди<span class="sub">Слушай слово и нажми на картинку</span></span></button>
-      <button class="tile t3" data-g="memory"><span class="emoji">🃏</span>
-        <span>Найди пару<span class="sub">Открой две одинаковые картинки</span></span></button>
-      <button class="tile t2" data-g="tmatch"><span class="emoji">🔤</span>
-        <span>Картинка и слово<span class="sub">Найди пару: картинка и слово</span></span></button>
+      ${(window.KID_GAMES || []).filter(g => g.kind === "topic" && topicHasGame(t, g.id)).map((g, i) =>
+        `<button class="tile t${(i % 7) + 1}" data-g="${g.id}"><span class="emoji">${g.e}</span>
+          <span>${esc(g.ru)}<span class="sub">${esc(TOPIC_GAME_SUB[g.id] || "")}</span></span></button>`).join("")}
     </div>
   </div>`;
   wireTop();
-  $$("[data-g]").forEach(b => b.onclick = () => {
-    const g = b.dataset.g;
-    if(g === "learn"){ topicIdx = 0; go(learnTopic); setTimeout(() => say(curTopic.words[0].w), 150); }
-    if(g === "listen") go(() => startTopicQuiz());
-    if(g === "memory") go(memoryGame);
-    if(g === "tmatch") go(() => playRound("tmatch"));
+  $$("[data-g]").forEach(b => {
+    if(isLocked(b.dataset.g, t.id)){ b.classList.add("locked"); b.insertAdjacentHTML("beforeend", '<span class="lock">🔒</span>'); }
+    b.onclick = () => {
+      if(b.classList.contains("locked")){ lockedToast(); return; }
+      go(() => launchTopicGame(b.dataset.g));
+    };
   });
 }
 
+const TOPIC_GAME_SUB = {
+  learn:"Картинка, слово и звук", listen:"Слушай слово и нажми на картинку", yesno:"Слушай: это оно или нет?",
+  odd:"Какая картинка не подходит?", memory:"Открой две одинаковые картинки", tmatch:"Найди пару: картинка и слово",
+  spell:"Собери слово из букв"
+};
+function spellWords(t){ return t.words.filter(w => /^[a-z]{2,8}$/i.test(w.w)); }
+function topicHasGame(t, id){
+  if(id === "spell") return spellWords(t).length >= 2;
+  if(id === "odd") return t.words.length >= 3;
+  return true;
+}
+
+/* open one game for the current topic (curTopic) */
+function launchTopicGame(id){
+  if(id === "learn"){ topicIdx = 0; learnSeen = new Set(); learnTopic(); say(curTopic.words[0].w); return; }
+  if(id === "listen") return startTopicQuiz();
+  if(id === "memory") return memoryGame();
+  if(id === "tmatch") return playRound("tmatch");
+  if(id === "yesno")  return yesNoGame();
+  if(id === "odd")    return oddGame();
+  if(id === "spell")  return spellGame();
+}
+/* open one letter or number game for the range already chosen */
+function launchRangeGame(id){
+  const G = GAMES[id];
+  if(G.type === "quiz") return startQuiz(id);
+  if(G.start) return G.start();
+  return playRound(id);
+}
+
+let learnSeen = new Set();
 function learnTopic(){
   const t = curTopic, w = t.words[topicIdx];
+  learnSeen.add(w.w);
+  if(learnSeen.size === t.words.length && !learnSeen.recorded){
+    learnSeen.recorded = true;
+    recordScore({ game:"learn", topic:t.id, right:t.words.length, total:t.words.length, stars:3 });
+    setTimeout(() => { soundWin(); toast("⭐ Все слова! Молодец!"); }, 600);
+  }
   app.innerHTML = topBar(t.ru) + `
   <div class="stack">
     <div class="learn">
@@ -1427,6 +1538,7 @@ function quiz(o){
       <div class="qgrid">${choices.map((c, i) => `<button class="qbtn" data-i="${i}">${o.choice(c)}</button>`).join("")}</div>
     </div>`;
     wireTop();
+    onFit(() => fitGrid($(".qgrid"), choices.length, { cols:[2, 4], max:210, min:70 }));
     const hear = () => say(...o.say(it));
     $("[data-listen]").onclick = hear;
     setTimeout(hear, 250);
@@ -1499,6 +1611,390 @@ function memoryGame(){
     }else{
       busy = true;
       setTimeout(() => { els[a].classList.add("back"); els[b].classList.add("back"); busy = false; }, 950);
+    }
+  });
+}
+
+/* ==========================================================================
+   FITTING — size a grid of buttons so the whole task fits on the screen.
+   If the buttons would get smaller than "min", they keep "min" and the
+   page scrolls instead.
+   ========================================================================== */
+
+function onFit(fn){ window.onresize = fn; fn(); }
+function fitGrid(el, n, o){
+  if(!el) return;
+  const gap = o.gap || 10, W = el.clientWidth;
+  const H = Math.max(120, window.innerHeight - el.getBoundingClientRect().top - (o.below || 14));
+  let best = null;
+  for(const c of o.cols){
+    const r = Math.ceil(n / c);
+    const size = Math.min((W - gap*(c-1)) / c, (H - gap*(r-1)) / r);
+    if(!best || size > best.size) best = { c, size };
+  }
+  let size = Math.min(best.size, o.max || 999), cols = best.c;
+  if(size < (o.min || 0)){
+    cols = Math.max(o.cols[0], Math.floor((W + gap) / ((o.min || 0) + gap)));
+    size = Math.min((W - gap*(cols-1)) / cols, o.max || 999);
+  }
+  el.classList.add("fitgrid");
+  el.style.gap = gap + "px";
+  el.style.gridTemplateColumns = `repeat(${cols}, ${Math.floor(size)}px)`;
+  el.style.setProperty("--cs", Math.floor(size) + "px");
+}
+
+/* ==========================================================================
+   HOMEWORK — set by the teacher on teacher.html, kept in the Google Sheet.
+   While some homework is not done, the other games are locked 🔒.
+   A task counts as done when this child finishes that game (same topic or
+   letters) after the task was given.
+   ========================================================================== */
+
+const ALWAYS_OPEN = new Set(["tapLetters", "learnLetters", "learnNumbers", "myStars"]);
+function hwKey(){ return "abcHW_" + S.student; }
+function hwCached(){ try{ return JSON.parse(localStorage.getItem(hwKey()) || "null") || { items:[] }; }catch(e){ return { items:[] }; } }
+async function loadHomework(){
+  if(!window.SCORES_URL || !S.student) return false;
+  try{
+    const res = await fetch(window.SCORES_URL + "?action=homework&student=" + encodeURIComponent(S.student));
+    const d = await res.json();
+    if(!d.ok || !Array.isArray(d.items)) return false;
+    const before = localStorage.getItem(hwKey());
+    const now = JSON.stringify({ items:d.items });
+    localStorage.setItem(hwKey(), now);
+    return before !== now;
+  }catch(e){ return false; }
+}
+function homework(){
+  const mine = myScores();
+  return hwCached().items.map(h => Object.assign({}, h, {
+    done: !!h.done || mine.some(r => r.game === h.game && String(r.topic) === String(h.topic) && String(r.t) >= String(h.created))
+  }));
+}
+function hwPending(){ return homework().some(h => !h.done); }
+function hwTopicLabel(h){
+  const g = gameInfo(h.game);
+  if(g && g.kind === "topic") return topicName(h.topic);
+  if(g && g.kind === "letters") return "Буквы " + h.topic;
+  return "Цифры " + h.topic;
+}
+function homeworkCard(){
+  const items = homework();
+  if(!items.length) return "";
+  const done = items.filter(h => h.done).length;
+  const allDone = done === items.length;
+  if(allDone && S.hwWasPending){ S.hwWasPending = false; save(); setTimeout(() => { confetti(); soundWin(); toast("🎉 Все игры открыты!"); }, 300); }
+  if(!allDone && !S.hwWasPending){ S.hwWasPending = true; save(); }
+  return `<div class="hwcard">
+    <div class="hwhead"><span>📚 Домашнее задание</span><span>${done} / ${items.length}</span></div>
+    ${items.map((h, i) => { const g = gameInfo(h.game) || { e:"🎮", ru:h.game };
+      return `<button class="hwitem ${h.done ? "done" : ""}" data-hw="${i}"><span class="emo">${g.e}</span>
+        <span>${esc(g.ru)}<span class="sub">${esc(hwTopicLabel(h))}</span></span><span class="st">${h.done ? "✅" : "▶️"}</span></button>`; }).join("")}
+    <p class="hwnote">${allDone ? "🎉 Всё сделано! Все игры открыты." : "🔒 Сделай задание — и откроются все игры!"}</p>
+  </div>`;
+}
+function wireHomework(){
+  const items = homework();
+  $$("[data-hw]").forEach(b => b.onclick = () => startTask(items[+b.dataset.hw]));
+}
+function isLocked(gameId, topicId){
+  if(!hwPending()) return false;
+  if(gameId === "learn") return false;
+  return !homework().some(h => !h.done && h.game === gameId && (topicId == null || String(h.topic) === String(topicId)));
+}
+function markLocks(){
+  if(!hwPending()) return;
+  $$("[data-go]").forEach(b => {
+    if(ALWAYS_OPEN.has(b.dataset.go)) return;
+    b.classList.add("locked");
+    b.insertAdjacentHTML("beforeend", '<span class="lock">🔒</span>');
+  });
+}
+function lockedToast(){ soundWrong(); toast("🔒 Сначала сделай домашнее задание"); window.scrollTo({ top:0, behavior:"smooth" }); }
+function startTask(h){
+  const g = gameInfo(h.game);
+  if(!g) return;
+  if(g.kind === "topic"){
+    const t = (window.TOPICS || []).find(x => x.id === h.topic);
+    if(!t) return;
+    curTopic = t;
+    go(() => launchTopicGame(h.game));
+    return;
+  }
+  const [a, b] = String(h.topic).split("–");
+  if(g.kind === "letters"){
+    S.from = Math.max(0, LETTERS.findIndex(L => L.l === a)); S.to = Math.max(0, LETTERS.findIndex(L => L.l === b));
+  }else{ S.nFrom = +a || 1; S.nTo = +b || 10; }
+  save();
+  go(() => launchRangeGame(h.game));
+}
+
+/* ==========================================================================
+   SMALL HELPERS FOR THE NEW GAMES
+   ========================================================================== */
+
+function dotsHead(total, at){
+  return `<div class="gamehead">
+    <div class="dots">${Array.from({ length:total }, (_, i) => `<span class="dot ${i < at ? "on" : ""}"></span>`).join("")}</div>
+    <span class="muted small">${Math.min(at + 1, total)} / ${total}</span>
+  </div>`;
+}
+function finishTopicGame(id, title, right, total, again, line){
+  const pct = right / total;
+  finish({ title, game:id, topic:curTopic.id, right, total, stars: pct >= 0.9 ? 3 : pct >= 0.6 ? 2 : 1,
+    line: line || `Правильно с первого раза: ${right} из ${total}`, again });
+}
+const PLURAL = new Set(["arms","legs","ears","socks","trousers","shorts","carrots","drinks"]);
+const NO_ARTICLE = new Set(["rice","meat","bread","yogurt","fish"]);
+function askLine(w){
+  const x = w.w;
+  if(curTopic && curTopic.id === "colours") return `Is it ${x}?`;
+  if(curTopic && curTopic.id === "actions") return `${x[0].toUpperCase() + x.slice(1)}?`;
+  if(x === "sea") return "Is it the sea?";
+  if(PLURAL.has(x)) return `Are they ${x}?`;
+  if(NO_ARTICLE.has(x)) return `Is it ${x}?`;
+  return `Is it ${/^[aeiou]/i.test(x) ? "an" : "a"} ${x}?`;
+}
+
+/* ==========================================================================
+   YES OR NO — "Is it a car?" (Family and Friends: point, ask and answer)
+   ========================================================================== */
+
+function yesNoGame(){
+  const t = curTopic, items = shuffle(t.words).slice(0, 8);
+  let at = 0, right = 0, missed = false, busy = false;
+  function round(){
+    const it = items[at];
+    const yes = t.words.length < 2 || Math.random() < 0.5;
+    const asked = yes ? it : shuffle(t.words.filter(w => w.w !== it.w))[0];
+    missed = false; busy = false;
+    app.innerHTML = topBar("Да или нет?") + `
+    <div class="stack">
+      ${dotsHead(items.length, at)}
+      <div class="ynpic">${wordPic(it)}</div>
+      <div class="ynq"><button class="listenbtn small" data-listen aria-label="Слушать">🔊</button><span>${esc(askLine(asked))}</span></div>
+      <div class="ynrow">
+        <button class="ynbtn" data-a="1">✅<span>Yes</span></button>
+        <button class="ynbtn" data-a="0">❌<span>No</span></button>
+      </div>
+    </div>`;
+    wireTop();
+    const hear = () => say(asked.w);
+    $("[data-listen]").onclick = hear;
+    setTimeout(hear, 250);
+    $$(".ynbtn").forEach(b => b.onclick = () => {
+      if(busy) return;
+      if((b.dataset.a === "1") === yes){
+        busy = true; b.classList.add("good"); soundGood();
+        if(!missed) right++;
+        setTimeout(() => say(it.w), 250);
+        setTimeout(() => { at++; at < items.length ? round() : finishTopicGame("yesno", "Да или нет?", right, items.length, () => yesNoGame()); }, 1100);
+      }else{
+        missed = true; b.classList.add("bad"); soundWrong();
+        setTimeout(() => b.classList.remove("bad"), 420);
+      }
+    });
+  }
+  round();
+}
+
+/* ==========================================================================
+   ODD ONE OUT — three from this topic, one from another
+   ========================================================================== */
+
+function oddGame(){
+  const t = curTopic;
+  const others = [];
+  (window.TOPICS || []).forEach(x => { if(x.id !== t.id) x.words.forEach(w => { if(!t.words.some(y => y.w === w.w)) others.push(w); }); });
+  const rounds = 6;
+  let at = 0, right = 0, missed = false, busy = false;
+  function round(){
+    const odd = shuffle(others)[0];
+    const choices = shuffle(shuffle(t.words).slice(0, 3).concat([odd]));
+    missed = false; busy = false;
+    app.innerHTML = topBar("Что лишнее?") + `
+    <div class="stack">
+      ${dotsHead(rounds, at)}
+      <p class="center" style="font-size:20px;font-weight:800;margin:2px 0 10px">Какая картинка лишняя? 🤔</p>
+      <div class="qgrid">${choices.map((c, i) => `<button class="qbtn" data-i="${i}">${wordPic(c)}</button>`).join("")}</div>
+    </div>`;
+    wireTop();
+    onFit(() => fitGrid($(".qgrid"), 4, { cols:[2, 4], max:210, min:70 }));
+    $$(".qbtn").forEach(b => b.onclick = () => {
+      if(busy) return;
+      const c = choices[+b.dataset.i];
+      say(c.w);
+      if(c === odd){
+        busy = true; b.classList.add("good"); soundGood();
+        if(!missed) right++;
+        $$(".qbtn").forEach(x => { if(x !== b) x.classList.add("dim"); });
+        setTimeout(() => { at++; at < rounds ? round() : finishTopicGame("odd", "Что лишнее?", right, rounds, () => oddGame()); }, 1000);
+      }else{
+        missed = true; b.classList.add("bad"); soundWrong();
+        setTimeout(() => b.classList.remove("bad"), 420);
+      }
+    });
+  }
+  round();
+}
+
+/* ==========================================================================
+   BUILD THE WORD — tap the letters in order (Family and Friends: Write)
+   ========================================================================== */
+
+function spellGame(){
+  const items = shuffle(spellWords(curTopic)).slice(0, 6);
+  let at = 0, right = 0;
+  function round(){
+    const it = items[at], word = it.w.toLowerCase();
+    let tiles = shuffle(word.split(""));
+    for(let k = 0; k < 5 && word.length > 1 && tiles.join("") === word; k++) tiles = shuffle(word.split(""));
+    let typed = 0, missed = false, busy = false;
+    const W = Math.min(app.clientWidth || 360, 560);
+    const t = Math.max(34, Math.min(58, Math.floor((W - 8*(word.length - 1)) / word.length)));
+    app.innerHTML = topBar("Собери слово") + `
+    <div class="stack" style="--t:${t}px">
+      ${dotsHead(items.length, at)}
+      <div class="sppic">${wordPic(it)}</div>
+      <div class="qtop" style="margin:6px 0 0"><button class="listenbtn small" data-listen aria-label="Слушать">🔊</button></div>
+      <div class="slots">${word.split("").map(() => `<span class="slot"></span>`).join("")}</div>
+      <div class="tiles">${tiles.map((ch, i) => `<button class="ltile" data-i="${i}">${esc(ch)}</button>`).join("")}</div>
+    </div>`;
+    wireTop();
+    const hear = () => say(it.w);
+    $("[data-listen]").onclick = hear;
+    setTimeout(hear, 250);
+    const slots = $$(".slot");
+    $$(".ltile").forEach(b => b.onclick = () => {
+      if(busy || b.classList.contains("used")) return;
+      const ch = tiles[+b.dataset.i];
+      if(ch === word[typed]){
+        b.classList.add("used"); slots[typed].textContent = ch; typed++; tone([600 + typed*40], 0.07);
+        if(typed === word.length){
+          busy = true; soundGood(); say(it.w);
+          if(!missed) right++;
+          setTimeout(() => { at++; at < items.length ? round() : finishTopicGame("spell", "Собери слово", right, items.length, () => spellGame()); }, 1200);
+        }
+      }else{
+        missed = true; b.classList.add("bad"); soundWrong();
+        setTimeout(() => b.classList.remove("bad"), 420);
+      }
+    });
+  }
+  round();
+}
+
+/* ==========================================================================
+   FIND EVERYTHING WITH… — tap every picture that starts with the letter
+   (Family and Friends: read and circle the sounds at the start of words)
+   ========================================================================== */
+
+function huntWords(){
+  const seen = new Set(), out = [];
+  LETTERS.forEach(L => { const k = L.word.toLowerCase(); if(!seen.has(k)){ seen.add(k); out.push({ w:L.word, art:L.art }); } });
+  (window.TOPICS || []).forEach(t => { if(t.id === "colours") return; t.words.forEach(w => { const k = w.w.toLowerCase(); if(!seen.has(k)){ seen.add(k); out.push(w); } }); });
+  return out;
+}
+const huntPic = w => w.art ? `<span class="wpic">${ART[w.art] || ""}</span>` : wordPic(w);
+
+function huntGame(){
+  const words = huntWords();
+  const starts = (w, L) => w.w[0].toLowerCase() === L.l.toLowerCase();
+  const letters = shuffle(poolFor("letters").filter(L => words.filter(w => starts(w, L)).length >= 2)).slice(0, 5);
+  if(!letters.length){ toast("Выбери больше букв"); back(); return; }
+  let at = 0, right = 0;
+  function round(){
+    const L = letters[at];
+    const yes = shuffle(words.filter(w => starts(w, L))).slice(0, Math.random() < 0.5 ? 2 : 3);
+    const no = shuffle(words.filter(w => !starts(w, L))).slice(0, 6 - yes.length);
+    const cards = shuffle(yes.concat(no));
+    let found = 0, missed = false, busy = false;
+    app.innerHTML = topBar("Найди всё на букву") + `
+    <div class="stack">
+      ${dotsHead(letters.length, at)}
+      <div class="hunthead"><span class="bigl">${L.l}${L.l.toLowerCase()}</span><button class="listenbtn small" data-listen aria-label="Слушать">🔊</button></div>
+      <div class="qgrid">${cards.map((c, i) => `<button class="qbtn" data-i="${i}">${huntPic(c)}</button>`).join("")}</div>
+    </div>`;
+    wireTop();
+    onFit(() => fitGrid($(".qgrid"), 6, { cols:[2, 3], max:200, min:72 }));
+    const hear = () => say(L.l, L.word);
+    $("[data-listen]").onclick = hear;
+    setTimeout(hear, 250);
+    $$(".qbtn").forEach(b => b.onclick = () => {
+      if(busy || b.classList.contains("found")) return;
+      const c = cards[+b.dataset.i];
+      say(c.w);
+      if(starts(c, L)){
+        b.classList.add("found"); b.insertAdjacentHTML("beforeend", `<span class="lab2">${esc(c.w)}</span>`); soundGood(); found++;
+        if(found === yes.length){
+          busy = true; if(!missed) right++;
+          setTimeout(() => { at++; at < letters.length ? round() :
+            finish({ title:"Найди всё на букву", game:"hunt", topic:rangeLabel("letters"), right, total:letters.length,
+              stars: right / letters.length >= 0.9 ? 3 : right / letters.length >= 0.6 ? 2 : 1,
+              line:`Без ошибок: ${right} из ${letters.length}`, again:() => huntGame(),
+              change:() => { stack.pop(); setupScreen("hunt"); }, changeLabel:"✏️ Другие буквы" }); }, 1000);
+        }
+      }else{
+        missed = true; b.classList.add("bad"); soundWrong();
+        setTimeout(() => b.classList.remove("bad"), 420);
+      }
+    });
+  }
+  round();
+}
+
+/* ==========================================================================
+   JOIN THE LETTERS — hear a letter, tap it; a line joins them in order
+   (Family and Friends: listen to the sounds and join the letters)
+   ========================================================================== */
+
+function joinGame(){
+  const pool = poolFor("letters");
+  if(pool.length < 2){ toast("Выбери больше букв"); back(); return; }
+  const steps = 6, cells = 12;
+  const seq = [];
+  while(seq.length < steps){ const L = pool[Math.floor(Math.random()*pool.length)]; if(!seq.length || seq[seq.length-1] !== L) seq.push(L); }
+  let grid = seq.slice();
+  while(grid.length < cells) grid.push(pool[Math.floor(Math.random()*pool.length)]);
+  grid = shuffle(grid);
+  let at = 0, missed = 0, busy = false;
+  const path = [];
+  app.innerHTML = topBar("Соедини буквы") + `
+  <div class="stack">
+    ${dotsHead(steps, 0)}
+    <div class="qtop" style="margin:0 0 8px"><button class="listenbtn small" data-listen aria-label="Слушать">🔊</button></div>
+    <div class="joinends"><span class="emo">🐶</span><span class="emo">🦴</span></div>
+    <div class="joinwrap"><div class="jgrid">${grid.map((L, i) => `<button class="jbtn" data-i="${i}">${L.l.toLowerCase()}</button>`).join("")}</div>
+      <svg class="joinsvg"><polyline points="" fill="none" stroke="#5b8cff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/></svg></div>
+  </div>`;
+  wireTop();
+  const draw = () => {
+    const box = $(".joinwrap").getBoundingClientRect();
+    $(".joinsvg polyline").setAttribute("points", path.map(el => {
+      const r = el.getBoundingClientRect();
+      return (r.left + r.width/2 - box.left) + "," + (r.top + r.height/2 - box.top);
+    }).join(" "));
+  };
+  onFit(() => { fitGrid($(".jgrid"), cells, { cols:[3, 4], max:110, min:56, gap:12 }); draw(); });
+  const hear = () => say(seq[at].l);
+  $("[data-listen]").onclick = hear;
+  setTimeout(hear, 300);
+  $$(".jbtn").forEach(b => b.onclick = () => {
+    if(busy || b.classList.contains("on")) return;
+    if(grid[+b.dataset.i] === seq[at]){
+      b.classList.add("on"); path.push(b); draw(); tone([620 + at*50], 0.08);
+      at++;
+      const d = $$(".dots .dot")[at - 1]; if(d) d.classList.add("on");
+      if(at === steps){
+        busy = true; soundGood();
+        setTimeout(() => finish({ title:"Соедини буквы", game:"join", topic:rangeLabel("letters"), right:steps, total:steps,
+          stars: missed === 0 ? 3 : missed <= 2 ? 2 : 1,
+          line: missed ? `Ошибок: ${missed}` : "Без ошибок!", again:() => joinGame(),
+          change:() => { stack.pop(); setupScreen("join"); }, changeLabel:"✏️ Другие буквы" }), 900);
+      }else setTimeout(hear, 450);
+    }else{
+      missed++; b.classList.add("bad"); soundWrong();
+      setTimeout(() => { b.classList.remove("bad"); hear(); }, 420);
     }
   });
 }

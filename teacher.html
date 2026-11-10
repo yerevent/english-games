@@ -19,6 +19,13 @@
 -->
 
 <style>
+.hwform label{display:block;margin:8px 0;font-weight:700}
+.hwform select{font:inherit;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:#fff;max-width:100%}
+.seg{display:inline-flex;gap:6px;flex-wrap:wrap;margin-left:6px}
+.seg button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font:inherit;font-weight:700;cursor:pointer}
+.seg button.on{background:var(--sun);border-color:var(--sunDeep)}
+.bigbtn{border:0;border-radius:14px;padding:10px 18px;font:inherit;font-weight:800;color:#fff;background:#33b45f;cursor:pointer}
+.delbtn{border:0;background:none;font-size:18px;cursor:pointer}
 code{background:#fff;border:2px solid var(--line);border-radius:8px;padding:2px 6px;font-size:13px;word-break:break-all}
 .copybtn,.smallbtn{border:2px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .kidcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
@@ -93,6 +100,7 @@ a{color:var(--blue)}
   <button data-tab="plan" class="on">📅 Curriculum</button>
   <button data-tab="lessons">📝 Lessons 1–4</button>
   <button data-tab="materials">🧰 Materials</button>
+  <button data-tab="homework">📚 Homework</button>
   <button data-tab="scores">📊 Scores</button>
 </nav>
 
@@ -238,6 +246,31 @@ a{color:var(--blue)}
 <!-- =====================================================================
      MATERIALS
      ===================================================================== -->
+<section id="homework">
+<p class="lead">Give Ashot and Arianna games to do. On their site the task appears at the top, and the other games stay locked 🔒 until all their homework is done. The words lessons (Учим слова), Tap a letter, the alphabet and numbers always stay open.</p>
+
+<div class="card" id="hwPinBox"></div>
+
+<div class="card">
+  <h3 style="margin-top:0">Give homework</h3>
+  <div class="hwform">
+    <label>Who
+      <span class="seg" id="hwWho">
+        <button data-who="both" class="on">Both</button><button data-who="Ashot">👦 Ashot</button><button data-who="Arianna">👧 Arianna</button>
+      </span></label>
+    <label>Game <select id="hwGame"></select></label>
+    <label id="hwTopicRow">Topic <select id="hwTopic"></select></label>
+    <label id="hwRangeRow">From <select id="hwFrom"></select> to <select id="hwTo"></select></label>
+    <p class="small muted" id="hwBook"></p>
+    <button class="bigbtn" id="hwAdd">➕ Add homework</button> <span class="small" id="hwMsg"></span>
+  </div>
+</div>
+
+<h2>Current homework</h2>
+<div class="tablewrap"><table id="hwTable"></table></div>
+<p class="muted small">✅ = done after you gave it. To start fresh, delete the old tasks; kids only see what is in this list.</p>
+</section>
+
 <section id="scores">
 <div class="card">
   <b>Two links</b>
@@ -299,6 +332,7 @@ a{color:var(--blue)}
 </div>
 
 <script src="content/kids-topics.js"></script>
+<script src="content/kids-games.js"></script>
 <script src="content/scores-config.js"></script>
 <script>
 "use strict";
@@ -311,15 +345,13 @@ function show(id){
 tabs.forEach(b => b.onclick = () => { show(b.dataset.tab); window.scrollTo(0, 0); });
 /* a link like teacher.html#lessons or #l3 opens the right tab */
 const h = location.hash.slice(1);
-const fromHash = ["plan","lessons","materials","scores"].includes(h) ? h : /^l[1-4]$/.test(h) ? "lessons" : null;
+const fromHash = ["plan","lessons","materials","scores","homework"].includes(h) ? h : /^l[1-4]$/.test(h) ? "lessons" : null;
 let saved = null; try{ saved = localStorage.getItem("teacherTab"); }catch(e){}
 show(fromHash || saved || "plan");
 if(/^l[1-4]$/.test(h)) document.getElementById(h).scrollIntoView();
 
 /* ---------------------------------------------------------------- scores */
-const GAME_NAMES = { listen:"Listen & find (words)", memory:"Memory pairs", tmatch:"Picture & word",
-  findLetter:"Find the letter (listening)", firstLetter:"First letter", findNumber:"Find the number (listening)",
-  case:"Big & small letters", pic:"Letters & pictures", numword:"Number & word", numcount:"Count & match" };
+const GAME_NAMES = Object.fromEntries((window.KID_GAMES || []).map(g => [g.id, g.en]));
 const topicEn = id => { const t = (window.TOPICS || []).find(x => x.id === id); return t ? t.en + " (U" + t.unit + ")" : id; };
 const escH = v => String(v == null ? "" : v).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const kidUrl = new URL("kids/", location.href).href;
@@ -377,6 +409,98 @@ async function loadScores(){
   document.getElementById("scoreNote").textContent = rows.length ? "" : "No games played yet.";
 }
 loadScores();
+
+/* ---------------------------------------------------------------- homework */
+const LETTERS_AZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+let hwWho = "both";
+const $id = x => document.getElementById(x);
+const gameById = id => (window.KID_GAMES || []).find(g => g.id === id);
+
+function hwPinBox(){
+  const pin = getPin();
+  $id("hwPinBox").innerHTML = !window.SCORES_URL ? "<b>The Google Sheet is not connected</b>, so homework cannot be sent yet." :
+    `PIN: <input class="pin" type="password" id="hwPin" value="${escH(pin)}"> <button class="smallbtn" id="hwPinGo">Save</button>
+     <span class="small muted">${pin ? "saved on this device" : "type your sheet PIN once"}</span>`;
+  const b = $id("hwPinGo");
+  if(b) b.onclick = () => { try{ localStorage.setItem("teacherPin", $id("hwPin").value.trim()); }catch(e){} hwPinBox(); loadHomeworkList(); loadScores(); };
+}
+
+function fillHwForm(){
+  const g = $id("hwGame");
+  const groups = [["topic", "Words (pick a topic)"], ["letters", "Letters"], ["numbers", "Numbers"]];
+  g.innerHTML = groups.map(([k, lab]) => `<optgroup label="${lab}">${(window.KID_GAMES || []).filter(x => x.kind === k)
+    .map(x => `<option value="${x.id}">${x.e} ${escH(x.en)} — ${escH(x.ru)}</option>`).join("")}</optgroup>`).join("");
+  $id("hwTopic").innerHTML = (window.TOPICS || []).map(t => `<option value="${t.id}">${t.unit === "Starter" ? "Starter" : "Unit " + t.unit}: ${escH(t.en)}</option>`).join("");
+  g.onchange = hwFormKind;
+  hwFormKind();
+  document.querySelectorAll("#hwWho button").forEach(b => b.onclick = () => {
+    hwWho = b.dataset.who;
+    document.querySelectorAll("#hwWho button").forEach(x => x.classList.toggle("on", x === b));
+  });
+  $id("hwAdd").onclick = addHomework;
+}
+function hwFormKind(){
+  const game = gameById($id("hwGame").value);
+  $id("hwTopicRow").style.display = game.kind === "topic" ? "" : "none";
+  $id("hwRangeRow").style.display = game.kind === "topic" ? "none" : "";
+  const opts = game.kind === "letters" ? LETTERS_AZ : Array.from({ length:20 }, (_, i) => String(i + 1));
+  const def = game.kind === "letters" ? ["A", "D"] : ["1", "10"];
+  $id("hwFrom").innerHTML = opts.map(o => `<option ${o === def[0] ? "selected" : ""}>${o}</option>`).join("");
+  $id("hwTo").innerHTML = opts.map(o => `<option ${o === def[1] ? "selected" : ""}>${o}</option>`).join("");
+  $id("hwBook").textContent = "Like the book's exercise: " + game.book;
+}
+
+async function hwPost(body){
+  const res = await fetch(window.SCORES_URL, { method:"POST", headers:{ "Content-Type":"text/plain" }, body:JSON.stringify(Object.assign({ pin:getPin() }, body)) });
+  return res.json();
+}
+async function addHomework(){
+  const game = gameById($id("hwGame").value);
+  let topic;
+  if(game.kind === "topic") topic = $id("hwTopic").value;
+  else{
+    const opts = game.kind === "letters" ? LETTERS_AZ : Array.from({ length:20 }, (_, i) => String(i + 1));
+    let a = opts.indexOf($id("hwFrom").value), b = opts.indexOf($id("hwTo").value);
+    if(a > b) [a, b] = [b, a];
+    topic = opts[a] + "–" + opts[b];
+  }
+  $id("hwMsg").textContent = "Saving…";
+  try{
+    const d = await hwPost({ action:"addHomework", who:hwWho, game:game.id, topic });
+    if(d.ok){ $id("hwMsg").textContent = "✓ Added"; drawHwList(d.items); }
+    else $id("hwMsg").textContent = d.error === "wrong pin" ? "Wrong PIN" :
+      d.error === "unknown student" ? "The Google script needs updating first (see the steps I sent)" : "Could not save";
+  }catch(e){ $id("hwMsg").textContent = "Could not reach the sheet"; }
+}
+async function deleteHomework(id){
+  try{ const d = await hwPost({ action:"deleteHomework", id }); if(d.ok) drawHwList(d.items); }catch(e){}
+}
+function hwTopicText(h){
+  const g = gameById(h.game);
+  if(g && g.kind === "topic") return topicEn(h.topic);
+  return (g && g.kind === "letters" ? "Letters " : "Numbers ") + h.topic;
+}
+function drawHwList(items){
+  const t = $id("hwTable");
+  if(!items.length){ t.innerHTML = `<tr><td class="muted">No homework at the moment.</td></tr>`; return; }
+  const kids = (window.STUDENTS || []).map(k => k.id);
+  t.innerHTML = `<tr><th>Given</th><th>For</th><th>Game</th><th>Topic</th>${kids.map(k => `<th>${escH(k)}</th>`).join("")}<th></th></tr>` +
+    items.slice().reverse().map(h => `<tr><td>${escH(new Date(h.created).toLocaleDateString())}</td><td>${escH(h.who === "both" ? "Both" : h.who)}</td>
+      <td>${escH((gameById(h.game) || {}).en || h.game)}</td><td>${escH(hwTopicText(h))}</td>
+      ${kids.map(k => `<td>${h.who === "both" || h.who === k ? (h.doneBy && h.doneBy[k] ? "✅" : "⏳") : "—"}</td>`).join("")}
+      <td><button class="delbtn" data-del="${escH(h.id)}" title="Delete">🗑️</button></td></tr>`).join("");
+  t.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { if(confirm("Delete this homework?")) deleteHomework(b.dataset.del); });
+}
+async function loadHomeworkList(){
+  if(!window.SCORES_URL || !getPin()){ drawHwList([]); return; }
+  try{
+    const res = await fetch(window.SCORES_URL + "?action=homeworkAll&pin=" + encodeURIComponent(getPin()));
+    const d = await res.json();
+    if(d.ok) drawHwList(d.items);
+    else $id("hwTable").innerHTML = `<tr><td>${d.error === "wrong pin" ? "Wrong PIN" : "The Google script needs updating first (see the steps I sent)."}</td></tr>`;
+  }catch(e){ $id("hwTable").innerHTML = `<tr><td>Could not reach the sheet.</td></tr>`; }
+}
+hwPinBox(); fillHwForm(); loadHomeworkList();
 </script>
 </body>
 </html>
