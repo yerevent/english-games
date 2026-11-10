@@ -13,4 +13,4 @@ window.STUDENTS = [
   { id:"Arianna", ru:"Арианна", e:"👧" }
 ];
 
-window.SCORES_URL = "https://script.google.com/macros/s/AKfycbyJwd51s3UxPpFgCF4754CntAJxQCf-Mtj2Ady4Hqz8Dm32_PLLONDlCHGSmoK_s6WuCQ/exec";
+window.SCORES_URL = "https://script.google.com/macros/s/AKfycbzKmP5rJO_WSsWmzO9MJgFeWJQ7sN6s1JUCcwDcWxSgjJRKxcgNVk5qZ6uxo5OvzXW1Eg/exec";
