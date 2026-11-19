@@ -24,7 +24,9 @@
 
 const SHEET_NAME = "Scores";
 const HW_SHEET = "Homework";
-const STUDENTS = ["Ashot", "Arianna"];
+const STUDENTS = ["Ashot", "Arianna"];        // younger kids: scores + homework
+const BIG_STUDENTS = ["Alex"];                // older kids (index.html): scores only
+const ALL_STUDENTS = STUDENTS.concat(BIG_STUDENTS);
 const HEADERS = ["time", "student", "game", "topic", "right", "total", "stars"];
 const HW_HEADERS = ["id", "created", "who", "game", "topic"];
 
@@ -52,7 +54,7 @@ function doPost(e) {
   try {
     const d = JSON.parse(e.postData.contents);
     if (d.action) return out_(homeworkPost_(d));
-    if (STUDENTS.indexOf(d.student) < 0) return out_({ ok: false, error: "unknown student" });
+    if (ALL_STUDENTS.indexOf(d.student) < 0) return out_({ ok: false, error: "unknown student" });
     const num = v => Math.max(0, Math.min(999, Number(v) || 0));
     sheet_().appendRow([new Date(), d.student, cut_(d.game, 40), cut_(d.topic, 40), num(d.right), num(d.total), Math.max(0, Math.min(3, Number(d.stars) || 0))]);
     return out_({ ok: true });

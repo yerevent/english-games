@@ -309,6 +309,7 @@ table.study tr:last-child td{border-bottom:0}
 <script src="content/a1-grammar-1.js"></script>
 <script src="content/a1-grammar-2.js"></script>
 <script src="content/a1-modules.js"></script>
+<script src="content/scores-config.js"></script>
 
 <script>
 "use strict";
@@ -515,6 +516,79 @@ function recordBest(key, pct){
   if(!P.best[key] || pct > P.best[key]) P.best[key] = pct;
   saveProgress();
 }
+/* ==========================================================================
+   WHO IS PLAYING
+   A student opens a personal link, e.g.  index.html?student=Alex
+   The name is then remembered on that device, so the link is needed only once.
+   Students are listed in content/scores-config.js (BIG_STUDENTS).
+   ========================================================================== */
+
+const STUDENT_STORE = "egStudent";
+let STUDENT = "";
+
+const bigStudents = () => window.BIG_STUDENTS || [];
+const studentInfo = () => bigStudents().find(x => x.id === STUDENT) || null;
+
+function loadStudent(){
+  const asked = (new URLSearchParams(location.search).get("student") || "").trim();
+  if(asked){
+    const m = bigStudents().find(x => x.id.toLowerCase() === asked.toLowerCase());
+    if(m){
+      STUDENT = m.id;
+      try{ localStorage.setItem(STUDENT_STORE, m.id); }catch(e){}
+    }
+  }
+  if(!STUDENT){
+    try{ STUDENT = localStorage.getItem(STUDENT_STORE) || ""; }catch(e){}
+    if(STUDENT && !bigStudents().some(x => x.id === STUDENT)) STUDENT = "";
+  }
+  /* the greeting and the share message both use P.name */
+  if(STUDENT && P.name !== STUDENT){ P.name = STUDENT; saveProgress(); }
+}
+
+function signOut(){
+  try{ localStorage.removeItem(STUDENT_STORE); }catch(e){}
+  STUDENT = ""; P.name = ""; saveProgress();
+  history.replaceState(null, "", location.pathname);
+  goHome(); toast("Signed out");
+}
+
+/* ---- results on their way to the teacher's Google Sheet ------------------
+   A result stays in the queue until Google confirms it was saved, so nothing
+   is lost when the phone is offline — or before the Apps Script knows the name. */
+
+const Q_STORE = "egQueue";
+const qGet = () => { try{ return JSON.parse(localStorage.getItem(Q_STORE) || "[]"); }catch(e){ return []; } };
+const qSet = q => { try{ localStorage.setItem(Q_STORE, JSON.stringify(q.slice(-500))); }catch(e){} };
+let sendingQ = false;
+
+async function sendQueue(){
+  if(!window.SCORES_URL || sendingQ) return;
+  sendingQ = true;
+  try{
+    for(const row of qGet()){
+      const res = await fetch(window.SCORES_URL, {
+        method:"POST", headers:{ "Content-Type":"text/plain" }, body:JSON.stringify(row) });
+      const data = await res.json();
+      if(!data.ok) break;                       // keep it queued and try again later
+      qSet(qGet().filter(x => x.id !== row.id));
+    }
+  }catch(e){ /* offline or blocked — try again next time */ }
+  sendingQ = false;
+}
+window.addEventListener("online", sendQueue);
+
+function sendResult(game, topic, right, total, stars){
+  if(!STUDENT || !window.SCORES_URL) return false;
+  const row = { t:new Date().toISOString(), student:STUDENT,
+                game:String(game).slice(0,40), topic:String(topic).slice(0,40),
+                right, total, stars,
+                id: Date.now() + "-" + Math.random().toString(36).slice(2,7) };
+  const q = qGet(); q.push(row); qSet(q);
+  sendQueue();
+  return true;
+}
+
 function bestLabel(key){ return P.best[key] ? " · best " + P.best[key] + "%" : ""; }
 function moduleDone(m){
   const keys = m.grammar.map(id => "g|" + id + "|mcq");
@@ -644,7 +718,9 @@ function screenHome(){
   <div class="stack">
     <div>
       <h1>${P.name ? hello + ", " + esc(P.name) : SITE_NAME}</h1>
-      <p class="muted small" style="margin-top:4px">Practise a few minutes every day.</p>
+      <p class="muted small" style="margin-top:4px">${STUDENT
+        ? `Signed in as <b>${esc(STUDENT)}</b> — your results go to your teacher.`
+        : "Practise a few minutes every day."}</p>
     </div>
 
     ${P.rounds ? `<div class="strip">
@@ -692,7 +768,9 @@ function screenHome(){
       <h2 style="font-size:15px">For the teacher</h2>
       <p class="muted small" style="margin:6px 0 12px">Open any exercise, then copy its link to send as homework.</p>
       <div class="btn-row">
-        <button class="btn ghost small" data-setname>${P.name ? "Change name" : "Set name"}</button>
+        ${STUDENT
+          ? `<button class="btn ghost small" data-signout>Sign out ${esc(STUDENT)}</button>`
+          : `<button class="btn ghost small" data-setname>${P.name ? "Change name" : "Set name"}</button>`}
         <button class="btn ghost small" data-reset>Reset progress</button>
       </div>
       <p class="tiny muted" style="margin-top:12px">A1 content: built in · Other levels: ${
@@ -706,7 +784,10 @@ function screenHome(){
   $("[data-verbs]").onclick = () => go(screenVerbsMenu);
   app.querySelectorAll("[data-level]").forEach(b =>
     b.onclick = () => go(() => screenLegacyLevel(b.dataset.level)));
-  $("[data-setname]").onclick = askName;
+  const setNameBtn = $("[data-setname]");
+  if(setNameBtn) setNameBtn.onclick = askName;
+  const signOutBtn = $("[data-signout]");
+  if(signOutBtn) signOutBtn.onclick = signOut;
   $("[data-reset]").onclick = () => {
     if(confirm("Clear your scores, streak and saved writing on this device?")){
       P = { name:P.name, best:{}, streakDays:0, lastPlayed:"", rounds:0, drafts:{}, ticks:{} };
@@ -1735,6 +1816,16 @@ function finishRound(){
   }
   if(G.key) recordBest(G.key, pct);
 
+  /* send it to the teacher's sheet */
+  const stars = pct >= 90 ? 3 : pct >= 70 ? 2 : pct >= 50 ? 1 : 0;
+  const rightN = (G.kind === "match" || G.kind === "memory") ? G.words.length : G.right;
+  const totalN = (G.kind === "match" || G.kind === "memory")
+    ? Math.max(G.tries || 0, G.words.length) : G.items.length;
+  const gameName = (GAMES[G.kind] && GAMES[G.kind].name) || G.kind;
+  const topicName = G.topic ? G.topic.title : G.set ? G.set.title
+    : String(G.label || "").split(" \u00b7 ")[0];
+  const sent = sendResult(gameName, topicName, rightN, totalN, stars);
+
   const praise = pct >= 90 ? "Excellent!" : pct >= 70 ? "Well done!" :
                  pct >= 50 ? "Good effort — keep going." : "Keep practising, you'll get there.";
 
@@ -1757,8 +1848,10 @@ function finishRound(){
       </div>`).join("")}</div>` : ""}
 
     <div class="card">
-      <h2 style="font-size:15px">Send your result to your teacher</h2>
-      <p class="muted small" style="margin:6px 0 12px">Nothing is sent automatically — you choose.</p>
+      <h2 style="font-size:15px">${sent ? "Sent to your teacher" : "Send your result to your teacher"}</h2>
+      <p class="muted small" style="margin:6px 0 12px">${sent
+        ? `\u2713 Saved as <b>${esc(STUDENT)}</b>. You can also send it yourself:`
+        : "Nothing is sent automatically — you choose."}</p>
       <div class="btn-row">
         <button class="btn primary" data-share>Share</button>
         <button class="btn" data-tg>Telegram</button>
@@ -1844,6 +1937,8 @@ function openFromURL(){
 
 (async function init(){
   loadProgress();
+  loadStudent();
+  sendQueue();
   await loadData();
   nav = [screenHome];
   if(!openFromURL()) screenHome();

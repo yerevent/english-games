@@ -102,6 +102,7 @@ a{color:var(--blue)}
   <button data-tab="materials">🧰 Materials</button>
   <button data-tab="homework">📚 Homework</button>
   <button data-tab="scores">📊 Scores</button>
+  <button data-tab="bigkids">🎓 Big kids</button>
 </nav>
 
 <!-- =====================================================================
@@ -273,10 +274,13 @@ a{color:var(--blue)}
 
 <section id="scores">
 <div class="card">
-  <b>Two links</b>
+  <b>Your links</b>
   <ul style="margin-top:6px">
     <li><b>Kids' site</b>, to send Ashot and Arianna. It has no teacher links at all:<br>
       <code id="kidlink"></code> <button class="copybtn" data-copy="kidlink">Copy</button></li>
+    <li><b>Big kids' site</b> (A1–B2), the general link with no name on it:<br>
+      <code id="biglink"></code> <button class="copybtn" data-copy="biglink">Copy</button></li>
+    <li id="personalLinks"></li>
     <li><b>Teacher's site</b>, this page, for you only:<br>
       <code id="teacherlink"></code></li>
   </ul>
@@ -295,6 +299,17 @@ a{color:var(--blue)}
 <div id="summary"></div>
 <div class="tablewrap"><table id="scoreTable"></table></div>
 <p class="muted small" id="scoreNote"></p>
+</section>
+
+<section id="bigkids">
+<p class="lead">Older students, on the big kids' site. Each one opens their own link, and every game they finish is saved here with their name. This is kept separate from Ashot and Arianna's results.</p>
+
+<div class="card" id="bigLinkBox"></div>
+
+<h2>Results</h2>
+<div id="bigSummary"></div>
+<div class="tablewrap"><table id="bigTable"></table></div>
+<p class="muted small" id="bigNote"></p>
 </section>
 
 <section id="materials">
@@ -345,7 +360,7 @@ function show(id){
 tabs.forEach(b => b.onclick = () => { show(b.dataset.tab); window.scrollTo(0, 0); });
 /* a link like teacher.html#lessons or #l3 opens the right tab */
 const h = location.hash.slice(1);
-const fromHash = ["plan","lessons","materials","scores","homework"].includes(h) ? h : /^l[1-4]$/.test(h) ? "lessons" : null;
+const fromHash = ["plan","lessons","materials","scores","homework","bigkids"].includes(h) ? h : /^l[1-4]$/.test(h) ? "lessons" : null;
 let saved = null; try{ saved = localStorage.getItem("teacherTab"); }catch(e){}
 show(fromHash || saved || "plan");
 if(/^l[1-4]$/.test(h)) document.getElementById(h).scrollIntoView();
@@ -355,11 +370,40 @@ const GAME_NAMES = Object.fromEntries((window.KID_GAMES || []).map(g => [g.id, g
 const topicEn = id => { const t = (window.TOPICS || []).find(x => x.id === id); return t ? t.en + " (U" + t.unit + ")" : id; };
 const escH = v => String(v == null ? "" : v).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const kidUrl = new URL("kids/", location.href).href;
+const bigUrl = new URL("index.html", location.href).href;
+const studentUrl = id => bigUrl + "?student=" + encodeURIComponent(id);
 document.getElementById("kidlink").textContent = kidUrl;
+document.getElementById("biglink").textContent = bigUrl;
 document.getElementById("teacherlink").textContent = new URL("teacher/", location.href).href;
-document.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => {
-  navigator.clipboard && navigator.clipboard.writeText(kidUrl).then(() => { b.textContent = "Copied"; });
-});
+
+/* one personal link per older student */
+const BIG = window.BIG_STUDENTS || [];
+function personalLinksHtml(){
+  if(!BIG.length) return "";
+  return BIG.map(st => `<b>${escH(st.e || "")} ${escH(st.id)}'s own link</b>, opens the site already signed in as ${escH(st.id)}:<br>
+    <code id="link-${escH(st.id)}">${escH(studentUrl(st.id))}</code>
+    <button class="copybtn" data-copy="link-${escH(st.id)}">Copy</button>`).join("<br><br>");
+}
+document.getElementById("personalLinks").innerHTML = personalLinksHtml();
+document.getElementById("bigLinkBox").innerHTML =
+  `<b>Links to send</b><p style="margin:6px 0 0">${personalLinksHtml() ||
+   "No older students yet — add one to BIG_STUDENTS in content/scores-config.js."}</p>`;
+
+/* each button copies its own <code>, not whatever was first on the page */
+function wireCopy(){
+  document.querySelectorAll("[data-copy]").forEach(b => {
+    b.onclick = () => {
+      const el = document.getElementById(b.dataset.copy);
+      const text = el ? el.textContent.trim() : "";
+      if(!text || !navigator.clipboard) return;
+      navigator.clipboard.writeText(text).then(() => {
+        b.textContent = "Copied";
+        setTimeout(() => { b.textContent = "Copy"; }, 1500);
+      });
+    };
+  });
+}
+wireCopy();
 
 function localRows(){
   try{ return JSON.parse(localStorage.getItem("abcScores") || "[]").map(r => Object.assign({ where:"this device" }, r)); }
@@ -388,6 +432,10 @@ async function loadScores(){
     }
   }
   rows.sort((a, b) => String(b.t).localeCompare(String(a.t)));
+  const bigIds = BIG.map(x => x.id);
+  const bigRows = rows.filter(r => bigIds.indexOf(r.student) >= 0);
+  rows = rows.filter(r => bigIds.indexOf(r.student) < 0);   // this table: younger kids only
+  renderBig(bigRows);
   const kids = (window.STUDENTS || []).map(k => k.id);
   document.getElementById("summary").innerHTML = `<div class="kidcards">${kids.map(id => {
     const k = (window.STUDENTS || []).find(x => x.id === id);
@@ -408,6 +456,51 @@ async function loadScores(){
       <td>${escH(r.right)} / ${escH(r.total)}</td><td>${"⭐".repeat(+r.stars || 0)}</td></tr>`).join("");
   document.getElementById("scoreNote").textContent = rows.length ? "" : "No games played yet.";
 }
+/* ------------------------------------------------------ big kids' results */
+function renderBig(rows){
+  const sum = document.getElementById("bigSummary");
+  const table = document.getElementById("bigTable");
+  const note = document.getElementById("bigNote");
+  if(!sum) return;
+
+  sum.innerHTML = `<div class="kidcards">${BIG.map(st => {
+    const mine = rows.filter(r => r.student === st.id);
+    const right = mine.reduce((t, r) => t + (+r.right || 0), 0);
+    const total = mine.reduce((t, r) => t + (+r.total || 0), 0);
+    const pct = total ? Math.round(right / total * 100) : 0;
+    const last = mine[0] ? new Date(mine[0].t).toLocaleString() : "\u2014";
+
+    /* topics where he gets less than 60% right */
+    const byTopic = {};
+    mine.forEach(r => {
+      const k = r.topic || "\u2014";
+      byTopic[k] = byTopic[k] || { r:0, t:0 };
+      byTopic[k].r += +r.right || 0;
+      byTopic[k].t += +r.total || 0;
+    });
+    const weak = Object.entries(byTopic)
+      .filter(([, v]) => v.t >= 5 && v.r / v.t < 0.6)
+      .map(([k]) => k);
+
+    return `<div class="card"><div class="big">${escH(st.e || "")} ${escH(st.id)}</div>
+      <div>${mine.length} game${mine.length === 1 ? "" : "s"}${total ? " \u00b7 " + pct + "% right" : ""}</div>
+      <div class="small muted">Last played: ${escH(last)}</div>
+      ${weak.length ? `<div class="small" style="margin-top:6px">Needs practice: ${escH(weak.join(", "))}</div>` : ""}</div>`;
+  }).join("")}</div>`;
+
+  table.innerHTML = `<tr><th>When</th><th>Who</th><th>Game</th><th>Topic</th><th>Right</th><th>Score</th></tr>` +
+    rows.slice(0, 300).map(r => {
+      const pct = +r.total ? Math.round(+r.right / +r.total * 100) : 0;
+      return `<tr><td>${escH(new Date(r.t).toLocaleString())}</td><td>${escH(r.student)}</td>
+        <td>${escH(r.game)}</td><td>${escH(r.topic)}</td>
+        <td>${escH(r.right)} / ${escH(r.total)}</td><td>${pct}%</td></tr>`;
+    }).join("");
+
+  note.textContent = rows.length ? "" :
+    (window.SCORES_URL ? "No games played yet. Results appear here once the PIN is loaded on the Scores tab."
+                       : "The Google Sheet is not connected, so results cannot arrive yet.");
+}
+
 loadScores();
 
 /* ---------------------------------------------------------------- homework */
