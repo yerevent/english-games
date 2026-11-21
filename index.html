@@ -309,6 +309,9 @@ table.study tr:last-child td{border-bottom:0}
 <script src="content/a1-grammar-1.js"></script>
 <script src="content/a1-grammar-2.js"></script>
 <script src="content/a1-modules.js"></script>
+<script src="content/g5-vocab.js"></script>
+<script src="content/g5-grammar.js"></script>
+<script src="content/g5-modules.js"></script>
 <script src="content/scores-config.js"></script>
 
 <script>
@@ -333,9 +336,14 @@ const LEVELS = [
   { code:"C1", name:"Advanced" }
 ];
 
-const GRAMMAR = (window.A1_GRAMMAR_1 || []).concat(window.A1_GRAMMAR_2 || []);
-const VOCAB   = window.A1_VOCAB || [];
+const GRAMMAR = (window.A1_GRAMMAR_1 || []).concat(window.A1_GRAMMAR_2 || [], window.G5_GRAMMAR || []);
+const VOCAB   = (window.A1_VOCAB || []).concat(window.G5_VOCAB || []);
 const MODULES = window.A1_MODULES || [];
+const G5      = window.G5_MODULES || [];          // Alex's school textbook
+const G5_NAME = "English 5";
+const g5Unit  = n => G5.find(u => u.n === +n);
+const a1Grammar = () => GRAMMAR.filter(g => g.course !== "g5");
+const a1Vocab   = () => VOCAB.filter(v => !String(v.id).startsWith("g5-"));
 
 /* Which practice games exist, and where they get their questions from. */
 const GAMES = {
@@ -527,6 +535,8 @@ const STUDENT_STORE = "egStudent";
 let STUDENT = "";
 
 const bigStudents = () => window.BIG_STUDENTS || [];
+/* a student can be tied to one course — then that is all they see */
+const studentCourse = () => { const s = studentInfo(); return (s && s.course) || ""; };
 const studentInfo = () => bigStudents().find(x => x.id === STUDENT) || null;
 
 function loadStudent(){
@@ -710,6 +720,7 @@ function goHome(){ nav = [screenHome]; window.scrollTo(0,0); screenHome(); }
 
 function screenHome(){
   setKids(false);
+  const onlyG5 = studentCourse() === "g5";
   const hour = new Date().getHours();
   const hello = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   const modsDone = MODULES.filter(m => moduleDone(m).done > 0).length;
@@ -729,35 +740,51 @@ function screenHome(){
       <div class="stat"><b>${modsDone}</b><span>modules started</span></div>
     </div>` : ""}
 
+    ${G5.length ? `
+    <h2 style="margin-top:6px">${esc(G5_NAME)} — school book</h2>
+    <button class="row" data-g5>
+      <span class="emoji">📗</span>
+      <span class="grow"><span class="row-title">${G5.length} topics</span><br>
+      <span class="muted small">Your school textbook: ${G5.map(u => esc(u.title)).join(" · ")}</span></span>
+      <span class="chev">›</span>
+    </button>` : ""}
+
+    ${onlyG5 ? "" : `
     <h2 style="margin-top:6px">A1 — Beginner course</h2>
     <button class="row" data-course>
       <span class="emoji">🎓</span>
       <span class="grow"><span class="row-title">10 modules</span><br>
-      <span class="muted small">${GRAMMAR.length} grammar topics · ${VOCAB.length} word sets · speaking &amp; writing</span></span>
+      <span class="muted small">${a1Grammar().length} grammar topics · ${a1Vocab().length} word sets · speaking &amp; writing</span></span>
       <span class="chev">›</span>
-    </button>
+    </button>`}
 
+    ${onlyG5 ? "" : `
     <h2 style="margin-top:6px">Libraries</h2>
     <div class="stack-sm">
       <button class="row" data-glib><span class="emoji">📚</span>
         <span class="grow"><span class="row-title">Grammar Library</span><br>
-        <span class="muted small">${GRAMMAR.length} topics, each with rules and practice</span></span><span class="chev">›</span></button>
+        <span class="muted small">${a1Grammar().length} topics, each with rules and practice</span></span><span class="chev">›</span></button>
       <button class="row" data-vlib><span class="emoji">🗂️</span>
         <span class="grow"><span class="row-title">Vocabulary Library</span><br>
-        <span class="muted small">${VOCAB.length} themed word sets</span></span><span class="chev">›</span></button>
+        <span class="muted small">${a1Vocab().length} themed word sets</span></span><span class="chev">›</span></button>
       <button class="row" data-verbs><span class="emoji">🔁</span>
         <span class="grow"><span class="row-title">Irregular verbs</span><br>
         <span class="muted small">${DATA.irregular.length} verbs · drill or study list</span></span><span class="chev">›</span></button>
-    </div>
+    </div>`}
+    ${onlyG5 ? `<h2 style="margin-top:6px">Quick practice</h2>
+    <div class="stack-sm"><button class="row" data-verbs><span class="emoji">🔁</span>
+      <span class="grow"><span class="row-title">Irregular verbs</span><br>
+      <span class="muted small">${DATA.irregular.length} verbs · drill or study list</span></span><span class="chev">›</span></button></div>` : ""}
 
+    ${onlyG5 ? "" : `
     <h2 style="margin-top:6px">For young learners</h2>
     <div class="stack-sm">
       <a class="row" href="abc.html" style="text-decoration:none"><span class="emoji">🔤</span>
         <span class="grow"><span class="row-title">ABC &amp; 123</span><br>
         <span class="muted small">The alphabet and numbers — learn them, then play matching games</span></span><span class="chev">›</span></a>
-    </div>
+    </div>`}
 
-    ${legacyLevels().length ? `<h2 style="margin-top:6px">Other levels</h2>
+    ${(!onlyG5 && legacyLevels().length) ? `<h2 style="margin-top:6px">Other levels</h2>
     <div class="stack-sm">${legacyLevels().map(l => `
       <button class="row" data-level="${l.code}"><span class="badge">${l.code}</span>
         <span class="grow"><span class="row-title">${l.name}</span><br>
@@ -778,10 +805,13 @@ function screenHome(){
     </div>
   </div>`;
 
-  $("[data-course]").onclick = () => go(screenCourse);
-  $("[data-glib]").onclick = () => go(screenGrammarLibrary);
-  $("[data-vlib]").onclick = () => go(screenVocabLibrary);
-  $("[data-verbs]").onclick = () => go(screenVerbsMenu);
+  const courseBtn = $("[data-course]");
+  if(courseBtn) courseBtn.onclick = () => go(screenCourse);
+  const g5Btn = $("[data-g5]");
+  if(g5Btn) g5Btn.onclick = () => go(screenG5Course);
+  const gl = $("[data-glib]"); if(gl) gl.onclick = () => go(screenGrammarLibrary);
+  const vl = $("[data-vlib]"); if(vl) vl.onclick = () => go(screenVocabLibrary);
+  const vb = $("[data-verbs]"); if(vb) vb.onclick = () => go(screenVerbsMenu);
   app.querySelectorAll("[data-level]").forEach(b =>
     b.onclick = () => go(() => screenLegacyLevel(b.dataset.level)));
   const setNameBtn = $("[data-setname]");
@@ -899,13 +929,90 @@ function screenModule(n){
    8. GRAMMAR LIBRARY
    ========================================================================== */
 
+
+/* ==========================================================================
+   ENGLISH 5 — the school textbook course
+   ========================================================================== */
+
+function screenG5Course(){
+  setKids(false);
+  app.innerHTML = topBar(G5_NAME) + `
+  <div class="stack">
+    <h1>📗 ${esc(G5_NAME)}</h1>
+    <p class="muted small">Your school textbook, topic by topic. Each one has the grammar
+      and the new words from the book.</p>
+    <div class="stack-sm" style="margin-top:6px">
+      ${G5.map(u => {
+        const done = u.grammar.filter(id => P.best["g|" + id + "|mcq"]).length;
+        return `<button class="row" data-u="${u.n}">
+          <span class="emoji">${u.emoji}</span>
+          <span class="grow"><span class="row-title">${u.n}. ${esc(u.title)}</span><br>
+          <span class="muted small">${esc(u.ru)} · ${esc(u.pages)}</span></span>
+          ${done ? `<span class="done-tick">${done}/${u.grammar.length}</span>` : `<span class="chev">›</span>`}
+        </button>`;
+      }).join("")}
+    </div>
+  </div>`;
+  wireBack();
+  app.querySelectorAll("[data-u]").forEach(b => b.onclick = () => go(() => screenG5Unit(+b.dataset.u)));
+}
+
+function screenG5Unit(n){
+  const u = g5Unit(n);
+  if(!u){ goHome(); return; }
+  setKids(false);
+
+  app.innerHTML = topBar(G5_NAME + " · " + u.title) + `
+  <div class="stack">
+    <h1>${u.emoji} ${esc(u.title)}</h1>
+    <p class="muted small">${esc(u.ru)} · ${esc(u.pages)}</p>
+    <div class="card"><p style="font-weight:600">${esc(u.goal)}</p>
+      <p class="ru small" style="margin-top:4px">${esc(u.goalRu)}</p></div>
+
+    <h2 style="margin-top:6px">Grammar</h2>
+    <div class="stack-sm">
+      ${u.grammar.map(id => {
+        const g = grammarById(id);
+        if(!g) return "";
+        return `<button class="row" data-g="${g.id}">
+          <span class="emoji">✏️</span>
+          <span class="grow"><span class="row-title">${esc(g.title)}</span><br>
+          <span class="muted small">${esc(g.summary)}${bestLabel("g|" + g.id + "|mcq")}</span></span>
+          <span class="chev">›</span></button>`;
+      }).join("")}
+    </div>
+
+    <h2 style="margin-top:6px">New words</h2>
+    <div class="stack-sm">
+      ${u.vocab.map(id => {
+        const v = vocabById(id);
+        if(!v) return "";
+        return `<button class="row" data-v="${v.id}">
+          <span class="emoji">${v.emoji}</span>
+          <span class="grow"><span class="row-title">${esc(v.title)}</span><br>
+          <span class="muted small">${plural(v.words.length,"word","words")} · ${esc(v.ru)}${bestLabel("v|" + v.id + "|match")}</span></span>
+          <span class="chev">›</span></button>`;
+      }).join("")}
+    </div>
+
+    <div class="card" style="margin-top:8px">
+      <button class="btn wide" data-copylink>🔗 Copy homework link</button>
+    </div>
+  </div>`;
+
+  wireBack();
+  app.querySelectorAll("[data-g]").forEach(b => b.onclick = () => go(() => screenGrammar(b.dataset.g)));
+  app.querySelectorAll("[data-v]").forEach(b => b.onclick = () => go(() => screenVocabSet(b.dataset.v)));
+  $("[data-copylink]").onclick = () => copyText(buildLink({ u:u.n }), "Homework link copied");
+}
+
 function screenGrammarLibrary(){
   setKids(false);
   app.innerHTML = topBar("Grammar Library") + `
   <div class="stack">
     <h1>📚 Grammar Library</h1>
     <p class="muted small">Every topic has an explanation and its own practice games.</p>
-    <div class="stack-sm">${GRAMMAR.map(g => `
+    <div class="stack-sm">${a1Grammar().map(g => `
       <button class="row" data-g="${g.id}"><span class="badge">${g.n}</span>
         <span class="grow"><span class="row-title">${esc(g.title)}</span><br>
         <span class="muted small">Module ${g.module}${bestLabel("g|"+g.id+"|mcq")}</span></span>
@@ -926,7 +1033,7 @@ function screenGrammar(id){
   app.innerHTML = topBar(g.title) + `
   <div class="stack">
     <h1>${esc(g.title)}</h1>
-    <p class="muted small">A1 · Module ${g.module}${g.ru ? " · " + esc(g.ru.title) : ""}</p>
+    <p class="muted small">${g.course === "g5" ? esc(G5_NAME) + " · Unit " + g.unit : "A1 · Module " + g.module}${g.ru ? " · " + esc(g.ru.title) : ""}</p>
     ${g.ru ? `<div class="seg">
       <button data-lang="en" aria-selected="${!grammarRu}">English</button>
       <button data-lang="ru" aria-selected="${grammarRu}">Русский</button></div>` : ""}
@@ -974,7 +1081,7 @@ function screenVocabLibrary(){
   <div class="stack">
     <h1>🗂️ Vocabulary Library</h1>
     <p class="muted small">Themed word sets with meanings and example sentences.</p>
-    <div class="stack-sm">${VOCAB.map(v => `
+    <div class="stack-sm">${a1Vocab().map(v => `
       <button class="row" data-v="${v.id}"><span class="emoji">${v.emoji}</span>
         <span class="grow"><span class="row-title">${esc(v.title)}</span><br>
         <span class="muted small">${plural(v.words.length,"word","words")} · Module ${v.module}</span></span>
@@ -991,20 +1098,22 @@ function screenVocabSet(id){
   const canScramble = v.words.filter(w => /^[a-zA-Z]{4,}$/.test(w.en)).length >= 3;
   const hasPics = v.words.some(w => w.pic);
   const ruMode = isRuSet(v);
+  const bothMode = v.show === "both";
 
   app.innerHTML = topBar(v.title) + `
   <div class="stack">
     <h1>${v.emoji} ${esc(v.title)}</h1>
-    <p class="muted small">${plural(v.words.length,"word","words")} · A1 · Module ${v.module}${
+    <p class="muted small">${plural(v.words.length,"word","words")} · ${v.unit ? esc(G5_NAME) + " · Unit " + v.unit : "A1 · Module " + v.module}${
       v.ru ? ` · <span class="ru">${esc(v.ru)}</span>` : ""}</p>
 
     <div class="card" style="overflow-x:auto">
       <table class="study"><thead><tr>${hasPics ? "<th></th>" : ""}
-        <th>Word</th><th>${ruMode ? "Перевод" : "Meaning"}</th></tr></thead><tbody>
+        <th>Word</th><th>${bothMode ? "Meaning · Перевод" : ruMode ? "Перевод" : "Meaning"}</th></tr></thead><tbody>
       ${v.words.map(w => `<tr>
         ${hasPics ? `<td class="pic-cell">${esc(w.pic || "")}</td>` : ""}
         <td><b>${esc(w.en)}</b><br><span class="tiny muted" style="font-style:italic">${esc(w.ex)}</span></td>
-        <td class="${ruMode ? "ru" : "muted"}">${esc(defOf(w, v))}</td></tr>`).join("")}
+        <td class="${(ruMode && !bothMode) ? "ru" : "muted"}">${esc(bothMode ? w.meaning : defOf(w, v))}${
+          bothMode && w.ru ? `<br><span class="ru">${esc(w.ru)}</span>` : ""}</td></tr>`).join("")}
       </tbody></table>
     </div>
 
@@ -1596,7 +1705,9 @@ function startCards(v){
         <div class="score">${i + 1}/${words.length}</div></div>
       <div class="flashcard" id="fc">
         ${flipped
-          ? `<div><div class="fc-mean ${isRuSet(v) ? "ru-big" : ""}">${esc(defOf(w, v))}</div>
+          ? `<div><div class="fc-mean ${(isRuSet(v) && v.show !== "both") ? "ru-big" : ""}">${
+               esc(v.show === "both" ? w.meaning : defOf(w, v))}</div>
+             ${v.show === "both" && w.ru ? `<div class="fc-mean ru" style="font-size:17px;margin-top:8px">${esc(w.ru)}</div>` : ""}
              <div class="fc-ex">"${esc(w.ex)}"</div>
              <div class="fc-hint">${isRuSet(v) ? "Нажми, чтобы увидеть слово" : "Tap to see the word again"}</div></div>`
           : `<div>${w.pic ? `<div class="fc-pic">${esc(w.pic)}</div>` : ""}
@@ -1926,6 +2037,9 @@ function openFromURL(){
     return true;
   }
   if(m && moduleByN(m)){ nav.push(() => screenModule(+m)); screenModule(+m); return true; }
+  const u = p.get("u");
+  if(u && g5Unit(u)){ nav.push(() => screenG5Unit(+u)); screenG5Unit(+u); return true; }
+  if((p.get("course") || "").toLowerCase() === "g5"){ nav.push(screenG5Course); screenG5Course(); return true; }
   if(game === "verbs"){ nav.push(() => startVerbs(level || "all")); startVerbs(level || "all"); return true; }
 
   // older link format, still supported

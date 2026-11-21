@@ -17,8 +17,10 @@ window.STUDENTS = [
 /* Older students on the big kids' site (index.html). They get a personal
    link like  index.html?student=Alex  and their results go to the same
    Google Sheet, but the teacher page lists them in their own section. */
+/* course:"g5" means this student sees ONLY the school textbook course.
+   Leave course out and the student sees the whole site. */
 window.BIG_STUDENTS = [
-  { id:"Alex", e:"🧑‍🎓" }
+  { id:"Alex", e:"🧑‍🎓", course:"g5" }
 ];
 
 window.SCORES_URL = "https://script.google.com/macros/s/AKfycbzKmP5rJO_WSsWmzO9MJgFeWJQ7sN6s1JUCcwDcWxSgjJRKxcgNVk5qZ6uxo5OvzXW1Eg/exec";
