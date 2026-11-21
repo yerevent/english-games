@@ -281,6 +281,43 @@ table.study tr:last-child td{border-bottom:0}
 .review .a{font-size:14px;color:var(--good);font-weight:650}
 .review .yours{font-size:13.5px;color:var(--bad)}
 
+/* ---------- lesson sheets (plain text, for showing in class) ---------- */
+.sheet{line-height:1.65}
+.sheet .sheet-h2{
+  font-size:15px;font-weight:750;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--accent);margin:26px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--accent-soft)
+}
+.sheet .sheet-h2:first-child{margin-top:0}
+.sheet .sheet-h3{font-size:18px;font-weight:700;margin:20px 0 6px}
+.sheet .sheet-h4{font-size:15px;font-weight:700;color:var(--muted);margin:14px 0 4px}
+.sheet .sheet-p{margin:8px 0}
+.sheet .sheet-ex{
+  margin:22px 0 8px;padding:10px 14px;background:var(--accent-soft);
+  border-radius:12px;font-size:16px;font-weight:600
+}
+.sheet .sheet-note{
+  margin:10px 0;padding:10px 14px;background:var(--warn-soft);
+  border-left:3px solid var(--warn);border-radius:0 10px 10px 0;font-size:14.5px
+}
+.sheet .sheet-items{margin:4px 0 4px 0;padding-left:26px}
+.sheet .sheet-items li{margin:7px 0;font-size:16px}
+.sheet .teacher{background:var(--good-soft);border-radius:8px;padding:6px 10px}
+.sheet .sheet-table{width:100%;border-collapse:collapse;font-size:15px;margin:10px 0}
+.sheet .sheet-table th{
+  text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--line)
+}
+.sheet .sheet-table td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.keynote{
+  background:var(--good-soft);border:1px solid var(--good);border-radius:12px;
+  padding:10px 14px;font-size:13.5px
+}
+@media print{
+  .top,.btn,.row,.keynote{display:none !important}
+  body{background:#fff;color:#000}
+  .card{border:0;box-shadow:none;padding:0}
+}
+
 .toast{
   position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(80px);
   background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:99px;
@@ -312,6 +349,8 @@ table.study tr:last-child td{border-bottom:0}
 <script src="content/g5-vocab.js"></script>
 <script src="content/g5-grammar.js"></script>
 <script src="content/g5-modules.js"></script>
+<script src="content/g5-sheets.js"></script>
+<script src="content/g5-sheets-mixed.js"></script>
 <script src="content/scores-config.js"></script>
 
 <script>
@@ -342,6 +381,9 @@ const MODULES = window.A1_MODULES || [];
 const G5      = window.G5_MODULES || [];          // Alex's school textbook
 const G5_NAME = "English 5";
 const g5Unit  = n => G5.find(u => u.n === +n);
+/* lesson sheets: Anna's own Word documents, as plain text to read in class */
+const SHEETS  = (window.G5_SHEETS_DOCS || []).concat(window.G5_SHEETS_MIXED || []);
+const sheetById = id => SHEETS.find(x => x.id === id);
 const a1Grammar = () => GRAMMAR.filter(g => g.course !== "g5");
 const a1Vocab   = () => VOCAB.filter(v => !String(v.id).startsWith("g5-"));
 
@@ -741,6 +783,15 @@ function screenHome(){
     </div>` : ""}
 
     ${G5.length ? `
+    ${SHEETS.length ? `
+    <h2 style="margin-top:6px">Lesson sheets</h2>
+    <button class="row" data-sheets>
+      <span class="emoji">📄</span>
+      <span class="grow"><span class="row-title">${SHEETS.length} sheets</span><br>
+      <span class="muted small">The exercises from our lessons, as plain text</span></span>
+      <span class="chev">›</span>
+    </button>` : ""}
+
     <h2 style="margin-top:6px">${esc(G5_NAME)} — school book</h2>
     <button class="row" data-g5>
       <span class="emoji">📗</span>
@@ -809,6 +860,8 @@ function screenHome(){
   if(courseBtn) courseBtn.onclick = () => go(screenCourse);
   const g5Btn = $("[data-g5]");
   if(g5Btn) g5Btn.onclick = () => go(screenG5Course);
+  const shBtn = $("[data-sheets]");
+  if(shBtn) shBtn.onclick = () => go(screenSheetList);
   const gl = $("[data-glib]"); if(gl) gl.onclick = () => go(screenGrammarLibrary);
   const vl = $("[data-vlib]"); if(vl) vl.onclick = () => go(screenVocabLibrary);
   const vb = $("[data-verbs]"); if(vb) vb.onclick = () => go(screenVerbsMenu);
@@ -941,6 +994,11 @@ function screenG5Course(){
     <h1>📗 ${esc(G5_NAME)}</h1>
     <p class="muted small">Your school textbook, topic by topic. Each one has the grammar
       and the new words from the book.</p>
+    ${SHEETS.length ? `<button class="row" data-sheets>
+      <span class="emoji">📄</span>
+      <span class="grow"><span class="row-title">Lesson sheets</span><br>
+      <span class="muted small">The exercises from our lessons, as plain text</span></span>
+      <span class="chev">›</span></button>` : ""}
     <div class="stack-sm" style="margin-top:6px">
       ${G5.map(u => {
         const done = u.grammar.filter(id => P.best["g|" + id + "|mcq"]).length;
@@ -954,6 +1012,8 @@ function screenG5Course(){
     </div>
   </div>`;
   wireBack();
+  const shRow = $("[data-sheets]");
+  if(shRow) shRow.onclick = () => go(screenSheetList);
   app.querySelectorAll("[data-u]").forEach(b => b.onclick = () => go(() => screenG5Unit(+b.dataset.u)));
 }
 
@@ -1004,6 +1064,86 @@ function screenG5Unit(n){
   app.querySelectorAll("[data-g]").forEach(b => b.onclick = () => go(() => screenGrammar(b.dataset.g)));
   app.querySelectorAll("[data-v]").forEach(b => b.onclick = () => go(() => screenVocabSet(b.dataset.v)));
   $("[data-copylink]").onclick = () => copyText(buildLink({ u:u.n }), "Homework link copied");
+}
+
+
+/* ==========================================================================
+   LESSON SHEETS — Anna's own worksheets, shown as plain text.
+   No games and no buttons: this is what he copies into his notebook.
+   The answer key and teacher notes (k:1) are hidden whenever a student
+   is signed in on the device.
+   ========================================================================== */
+
+function renderBlocks(blocks, showTeacher){
+  const out = [];
+  let items = [];
+  const flush = () => {
+    if(items.length){ out.push(`<ol class="sheet-items">${items.join("")}</ol>`); items = []; }
+  };
+  blocks.forEach(b => {
+    if(b.k && !showTeacher) return;
+    if(b.t === "li"){ items.push(`<li>${esc(b.x)}</li>`); return; }
+    flush();
+    const teach = b.k ? " teacher" : "";
+    if(b.t === "h2")        out.push(`<div class="sheet-h2">${esc(b.x)}</div>`);
+    else if(b.t === "h3")   out.push(`<div class="sheet-h3">${esc(b.x)}</div>`);
+    else if(b.t === "h4")   out.push(`<div class="sheet-h4">${esc(b.x)}</div>`);
+    else if(b.t === "ex")   out.push(`<div class="sheet-ex">Exercise ${b.n}. ${esc(b.x)}</div>`);
+    else if(b.t === "note") out.push(`<p class="sheet-note">${esc(b.x)}</p>`);
+    else if(b.t === "p")    out.push(`<p class="sheet-p${teach}">${esc(b.x)}</p>`);
+    else if(b.t === "table") out.push(
+      `<div style="overflow-x:auto"><table class="sheet-table"><thead><tr>${
+        b.head.map(h => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${
+        b.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")
+      }</tbody></table></div>`);
+  });
+  flush();
+  return out.join("");
+}
+
+function screenSheetList(){
+  setKids(false);
+  app.innerHTML = topBar("Lesson sheets") + `
+  <div class="stack">
+    <h1>📄 Lesson sheets</h1>
+    <p class="muted small">The exercises from our lessons, as plain text — read them here
+      and write the answers in your notebook.</p>
+    <div class="stack-sm" style="margin-top:6px">
+      ${SHEETS.map(sh => {
+        const ex = sh.blocks.filter(b => b.t === "ex" && !b.k).length;
+        return `<button class="row" data-sheet="${esc(sh.id)}">
+          <span class="emoji">📄</span>
+          <span class="grow"><span class="row-title">${esc(sh.title)}</span><br>
+          <span class="muted small">${esc(sh.ru || "")} · ${plural(ex, "exercise", "exercises")}</span></span>
+          <span class="chev">›</span></button>`;
+      }).join("")}
+    </div>
+  </div>`;
+  wireBack();
+  app.querySelectorAll("[data-sheet]").forEach(b =>
+    b.onclick = () => go(() => screenSheet(b.dataset.sheet)));
+}
+
+function screenSheet(id){
+  const sh = sheetById(id);
+  if(!sh){ goHome(); return; }
+  setKids(false);
+  const showTeacher = !STUDENT;          // the teacher's own device has nobody signed in
+  const hasKey = sh.blocks.some(b => b.k);
+
+  app.innerHTML = topBar(sh.title) + `
+  <div class="stack">
+    <h1>${esc(sh.title)}</h1>
+    <p class="muted small">${esc(sh.ru || "")}${sh.note ? " · " + esc(sh.note) : ""}</p>
+    ${(showTeacher && hasKey) ? `<p class="keynote">The answer key and your notes are below.
+      They are hidden automatically when a student is signed in on the device.</p>` : ""}
+    <div class="card sheet">${renderBlocks(sh.blocks, showTeacher)}</div>
+    <div class="card">
+      <button class="btn wide" data-copylink>🔗 Copy the link to this sheet</button>
+    </div>
+  </div>`;
+  wireBack();
+  $("[data-copylink]").onclick = () => copyText(buildLink({ sheet:sh.id }), "Link copied");
 }
 
 function screenGrammarLibrary(){
@@ -2037,6 +2177,9 @@ function openFromURL(){
     return true;
   }
   if(m && moduleByN(m)){ nav.push(() => screenModule(+m)); screenModule(+m); return true; }
+  const sheet = p.get("sheet");
+  if(sheet && sheetById(sheet)){ nav.push(() => screenSheet(sheet)); screenSheet(sheet); return true; }
+  if((p.get("page") || "") === "sheets"){ nav.push(screenSheetList); screenSheetList(); return true; }
   const u = p.get("u");
   if(u && g5Unit(u)){ nav.push(() => screenG5Unit(+u)); screenG5Unit(+u); return true; }
   if((p.get("course") || "").toLowerCase() === "g5"){ nav.push(screenG5Course); screenG5Course(); return true; }

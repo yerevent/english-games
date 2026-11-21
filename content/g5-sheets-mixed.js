@@ -1,0 +1,176 @@
+/* ============================================================================
+   MIXED PRESENT SIMPLE / PRESENT CONTINUOUS — written for Alex.
+
+   These are ORIGINAL exercises, written for this site. They are pitched at the
+   level of Grammar Friends 3–4 (the right band for Grade 5), but nothing is
+   copied from it — Grammar Friends is a paid Oxford University Press series,
+   not free material.
+
+   Blocks:  h2 big heading · h3 section · h4 small heading · p text
+            note highlighted line · table {head, rows} · ex an exercise
+            li an item inside the exercise it follows
+            k:1 teacher only — hidden when a student is signed in
+   ============================================================================ */
+
+window.G5_SHEETS_MIXED = [
+
+{id:"mixed-present", title:"Present Simple or Present Continuous?",
+ ru:"Present Simple или Present Continuous?",
+ note:"Original exercises, Grammar Friends 3–4 level",
+ blocks:[
+
+{t:"h2", x:"REMINDER"},
+{t:"table", head:["Present Simple", "Present Continuous"],
+ rows:[
+  ["every day, usually, always, never, on Mondays", "now, right now, at the moment, today, this week"],
+  ["a habit or a routine", "happening at this moment"],
+  ["a fact that is always true", "a situation that is temporary"],
+  ["I play football every Saturday.", "I am playing football now."],
+  ["She reads books.", "She is reading a book right now."]]},
+{t:"note", x:"Some verbs are almost never continuous: like, love, want, know, need, understand. We say I want a sandwich, not I am wanting a sandwich."},
+
+{t:"h2", x:"PART 1. EXERCISES"},
+
+{t:"ex", n:1, x:"Choose the correct form."},
+{t:"li", x:"Look! The baby (sleeps / is sleeping)."},
+{t:"li", x:"My father (drives / is driving) to work every day."},
+{t:"li", x:"We (study / are studying) English at the moment."},
+{t:"li", x:"She usually (has / is having) breakfast at seven."},
+{t:"li", x:"Listen! Someone (plays / is playing) the piano."},
+{t:"li", x:"Cats (like / are liking) milk."},
+{t:"li", x:"I (do / am doing) my homework right now."},
+{t:"li", x:"They (play / are playing) football every Saturday."},
+{t:"li", x:"It (snows / is snowing) a lot here in winter."},
+{t:"li", x:"Be quiet! The children (sleep / are sleeping)."},
+{t:"li", x:"My mother (works / is working) in a hospital."},
+{t:"li", x:"Where (do you go / are you going) now?"},
+{t:"li", x:"He (takes / is taking) a shower every morning."},
+{t:"li", x:"Today we (learn / are learning) about animals."},
+{t:"li", x:"I (don't like / am not liking) this film. It's boring."},
+
+{t:"ex", n:2, x:"Put the verb into the correct tense."},
+{t:"li", x:"She __________ (read) a book every evening."},
+{t:"li", x:"Be quiet — she __________ (read) a book now."},
+{t:"li", x:"We always __________ (go) to school by bus."},
+{t:"li", x:"Look! The bus __________ (come)."},
+{t:"li", x:"My brother __________ (not / like) fish."},
+{t:"li", x:"I __________ (not / watch) TV at the moment."},
+{t:"li", x:"__________ you __________ (play) tennis every weekend?"},
+{t:"li", x:"__________ you __________ (play) tennis now?"},
+{t:"li", x:"The sun __________ (rise) in the east."},
+{t:"li", x:"It __________ (rain) outside right now."},
+{t:"li", x:"My sister usually __________ (do) her homework after dinner."},
+{t:"li", x:"Today she __________ (do) it in the morning."},
+{t:"li", x:"They __________ (live) in Gyumri."},
+{t:"li", x:"This week they __________ (stay) with their grandmother."},
+{t:"li", x:"I __________ (want) a glass of water."},
+
+{t:"ex", n:3, x:"Which tense do these words go with? Write PS (Present Simple) or PC (Present Continuous)."},
+{t:"li", x:"every day"},
+{t:"li", x:"now"},
+{t:"li", x:"at the moment"},
+{t:"li", x:"usually"},
+{t:"li", x:"Look!"},
+{t:"li", x:"on Mondays"},
+{t:"li", x:"right now"},
+{t:"li", x:"always"},
+{t:"li", x:"this week"},
+{t:"li", x:"never"},
+{t:"li", x:"Listen!"},
+{t:"li", x:"sometimes"},
+
+{t:"ex", n:4, x:"Find and correct one mistake in each sentence."},
+{t:"li", x:"She is go to school every day."},
+{t:"li", x:"I am liking chocolate."},
+{t:"li", x:"Look! The cat climb the tree."},
+{t:"li", x:"He don't playing football now."},
+{t:"li", x:"We are study English every day."},
+{t:"li", x:"My mother cook dinner at the moment."},
+{t:"li", x:"Do you reading a book now?"},
+{t:"li", x:"They is watching TV."},
+{t:"li", x:"She doesn't likes cats."},
+{t:"li", x:"I am wanting a sandwich."},
+{t:"li", x:"What you are doing?"},
+{t:"li", x:"He is swiming in the pool."},
+{t:"li", x:"The children plays in the garden now."},
+{t:"li", x:"Does she working today?"},
+{t:"li", x:"We aren't go to school on Sunday."},
+
+{t:"ex", n:5, x:"Make questions. Watch the tense!"},
+{t:"li", x:"He plays football."},
+{t:"li", x:"He is playing football."},
+{t:"li", x:"They live in Yerevan."},
+{t:"li", x:"They are living in Yerevan this year."},
+{t:"li", x:"She watches TV in the evening."},
+{t:"li", x:"She is watching TV now."},
+{t:"li", x:"You like pizza."},
+{t:"li", x:"You are eating pizza."},
+{t:"li", x:"It rains in April."},
+{t:"li", x:"It is raining."},
+{t:"li", x:"Your brother studies English."},
+{t:"li", x:"Your brother is studying English now."},
+
+{t:"ex", n:6, x:"Make the sentences negative."},
+{t:"li", x:"He works on Sunday."},
+{t:"li", x:"He is working now."},
+{t:"li", x:"They play computer games."},
+{t:"li", x:"They are playing computer games."},
+{t:"li", x:"I like fish."},
+{t:"li", x:"I am eating fish."},
+{t:"li", x:"She goes to the gym."},
+{t:"li", x:"She is going to the gym."},
+{t:"li", x:"It rains in summer."},
+{t:"li", x:"It is raining."},
+{t:"li", x:"We watch films at the weekend."},
+{t:"li", x:"We are watching a film."},
+
+{t:"ex", n:7, x:"Complete the text with the correct tense."},
+{t:"h4", x:"Sunday at home"},
+{t:"p", x:"It is Sunday morning. My family usually (1) __________ (get) up late on Sundays, but today we (2) __________ (be) all awake early."},
+{t:"p", x:"My mother (3) __________ (make) pancakes in the kitchen — I can smell them! She (4) __________ (make) pancakes every Sunday."},
+{t:"p", x:"My father (5) __________ (read) the newspaper in the living room. He (6) __________ (read) it every morning with his coffee."},
+{t:"p", x:"My little sister (7) __________ (not / help) in the kitchen. She (8) __________ (watch) cartoons. She (9) __________ (love) cartoons."},
+{t:"p", x:"And me? I (10) __________ (sit) at the table and (11) __________ (write) this. I (12) __________ (not / write) on Sundays usually, but today I (13) __________ (do) my English homework."},
+
+{t:"ex", n:8, x:"Translate into English."},
+{t:"li", x:"Я каждый день хожу в школу."},
+{t:"li", x:"Сейчас я иду в школу."},
+{t:"li", x:"Она любит кошек."},
+{t:"li", x:"Послушай! Она поёт."},
+{t:"li", x:"Мы не смотрим телевизор по утрам."},
+{t:"li", x:"Мы сейчас не смотрим телевизор."},
+{t:"li", x:"Ты играешь в футбол по субботам?"},
+{t:"li", x:"Ты сейчас играешь в футбол?"},
+{t:"li", x:"Мой брат обычно делает уроки вечером."},
+{t:"li", x:"Посмотри! Идёт дождь."},
+{t:"li", x:"Он не пьёт кофе."},
+{t:"li", x:"Что ты сейчас делаешь?"},
+
+{t:"ex", n:9, x:"Write about yourself. Full sentences, please."},
+{t:"li", x:"Something you do every day."},
+{t:"li", x:"Something you are doing right now."},
+{t:"li", x:"Something you never do."},
+{t:"li", x:"Something your mother is doing at the moment."},
+{t:"li", x:"Something your family does every weekend."},
+{t:"li", x:"Something you are learning this week."},
+{t:"li", x:"Something you don't like."},
+{t:"li", x:"Something you are wearing today."},
+
+{t:"h2", x:"ANSWER KEY", k:1},
+{t:"p", k:1, x:"Exercise 1: 1 is sleeping; 2 drives; 3 are studying; 4 has; 5 is playing; 6 like; 7 am doing; 8 play; 9 snows; 10 are sleeping; 11 works; 12 are you going; 13 takes; 14 are learning; 15 don't like."},
+{t:"p", k:1, x:"Exercise 2: 1 reads; 2 is reading; 3 go; 4 is coming; 5 doesn't like; 6 am not watching; 7 Do / play; 8 Are / playing; 9 rises; 10 is raining; 11 does; 12 is doing; 13 live; 14 are staying; 15 want."},
+{t:"p", k:1, x:"Exercise 3: 1 PS; 2 PC; 3 PC; 4 PS; 5 PC; 6 PS; 7 PC; 8 PS; 9 PC; 10 PS; 11 PC; 12 PS."},
+{t:"p", k:1, x:"Exercise 4: 1 She goes to school every day. 2 I like chocolate. 3 Look! The cat is climbing the tree. 4 He isn't playing football now. 5 We study English every day. 6 My mother is cooking dinner at the moment. 7 Are you reading a book now? 8 They are watching TV. 9 She doesn't like cats. 10 I want a sandwich. 11 What are you doing? 12 He is swimming in the pool. 13 The children are playing in the garden now. 14 Is she working today? 15 We don't go to school on Sunday."},
+{t:"p", k:1, x:"Exercise 5: 1 Does he play football? 2 Is he playing football? 3 Do they live in Yerevan? 4 Are they living in Yerevan this year? 5 Does she watch TV in the evening? 6 Is she watching TV now? 7 Do you like pizza? 8 Are you eating pizza? 9 Does it rain in April? 10 Is it raining? 11 Does your brother study English? 12 Is your brother studying English now?"},
+{t:"p", k:1, x:"Exercise 6: 1 He doesn't work on Sunday. 2 He isn't working now. 3 They don't play computer games. 4 They aren't playing computer games. 5 I don't like fish. 6 I am not eating fish. 7 She doesn't go to the gym. 8 She isn't going to the gym. 9 It doesn't rain in summer. 10 It isn't raining. 11 We don't watch films at the weekend. 12 We aren't watching a film."},
+{t:"p", k:1, x:"Exercise 7: 1 gets; 2 are; 3 is making; 4 makes; 5 is reading; 6 reads; 7 isn't helping; 8 is watching; 9 loves; 10 am sitting; 11 am writing; 12 don't write; 13 am doing."},
+{t:"p", k:1, x:"Exercise 8: 1 I go to school every day. 2 I am going to school now. 3 She likes cats. 4 Listen! She is singing. 5 We don't watch TV in the morning. 6 We aren't watching TV now. 7 Do you play football on Saturdays? 8 Are you playing football now? 9 My brother usually does his homework in the evening. 10 Look! It is raining. 11 He doesn't drink coffee. 12 What are you doing now?"},
+{t:"p", k:1, x:"Exercise 9: answers will vary. Accept any correct sentence where the tense matches the meaning."},
+
+{t:"h2", x:"TEACHER NOTES", k:1},
+{t:"p", k:1, x:"Exercises 5 and 6 are built in pairs on purpose — the same sentence in both tenses, one after the other. That is where the choice between do/does and am/is/are becomes visible. If he gets the pairs right, he has understood the contrast."},
+{t:"p", k:1, x:"Exercise 3 is quick and worth doing first: if the time words aren't automatic, the rest will be guesswork."},
+{t:"p", k:1, x:"Watch for 'I am wanting' and 'I am liking' in exercises 1, 2 and 4. State verbs are the one rule that isn't about form."}
+]}
+
+];
