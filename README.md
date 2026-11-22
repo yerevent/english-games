@@ -3,7 +3,7 @@
 Interactive English practice for my students — an A1 course with grammar, vocabulary,
 speaking and writing. Works on a phone, no login, nothing to install.
 
-**Live site:** https://yerevent.github.io/english-games/
+**Live site:** https://apricot-stone.github.io/english-games/
 
 ## The A1 course
 
@@ -29,7 +29,7 @@ discussion questions.
 ## ABC & 123 — for young learners
 
 A separate, bigger and brighter page for children who are still learning the
-alphabet and numbers: **https://yerevent.github.io/english-games/abc.html**
+alphabet and numbers: **https://apricot-stone.github.io/english-games/abc.html**
 
 | Screen | What the child does |
 |--------|--------------------|
@@ -80,10 +80,10 @@ phone's own voice; the 🔊 button in the corner turns all sound off.
 Open any topic and tap **Copy homework link**, or build one by hand:
 
 ```
-https://yerevent.github.io/english-games/?g=present-simple
-https://yerevent.github.io/english-games/?g=present-simple&game=build
-https://yerevent.github.io/english-games/?v=family&game=memory
-https://yerevent.github.io/english-games/?m=4
+https://apricot-stone.github.io/english-games/?g=present-simple
+https://apricot-stone.github.io/english-games/?g=present-simple&game=build
+https://apricot-stone.github.io/english-games/?v=family&game=memory
+https://apricot-stone.github.io/english-games/?m=4
 ```
 
 `g=` a grammar topic · `v=` a vocabulary set · `m=` a module number ·
