@@ -26,6 +26,18 @@
 .seg button.on{background:var(--sun);border-color:var(--sunDeep)}
 .bigbtn{border:0;border-radius:14px;padding:10px 18px;font:inherit;font-weight:800;color:#fff;background:#33b45f;cursor:pointer}
 .delbtn{border:0;background:none;font-size:18px;cursor:pointer}
+/* homework: pick a game by its picture */
+.gpgroup{margin:10px 0 4px;font-weight:800;color:var(--muted);font-size:14px;letter-spacing:.03em}
+.gpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.gpick button{display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:6px;border:3px solid var(--line);border-radius:14px;background:#fff;font:inherit;cursor:pointer;text-align:left;color:var(--ink)}
+.gpick button.on{border-color:var(--sunDeep);background:#fff8d6;box-shadow:0 0 0 3px var(--sun)}
+.gpick img{width:100%;aspect-ratio:390/470;object-fit:cover;object-position:top;border-radius:9px;background:var(--sky);display:block}
+.gpick b{font-size:13.5px;line-height:1.2}
+.gpick .ru{font-size:12.5px;color:var(--muted);line-height:1.2}
+.hwchosen{display:flex;gap:12px;align-items:center;margin:10px 0}
+.hwchosen img{width:90px;border-radius:10px;border:2px solid var(--line)}
+.hwthumb{width:46px;border-radius:6px;border:1px solid var(--line);vertical-align:middle;margin-right:8px}
+.hwthumb-big{position:fixed;z-index:50;width:260px;border-radius:14px;box-shadow:var(--shadow);border:3px solid var(--line);pointer-events:none}
 code{background:#fff;border:2px solid var(--line);border-radius:8px;padding:2px 6px;font-size:13px;word-break:break-all}
 .copybtn,.smallbtn{border:2px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .kidcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
@@ -259,7 +271,10 @@ a{color:var(--blue)}
       <span class="seg" id="hwWho">
         <button data-who="both" class="on">Both</button><button data-who="Ashot">👦 Ashot</button><button data-who="Arianna">👧 Arianna</button>
       </span></label>
-    <label>Game <select id="hwGame"></select></label>
+    <label>Game <span class="small muted" style="font-weight:400">— tap a picture</span></label>
+    <select id="hwGame" hidden></select>
+    <div id="hwPick"></div>
+    <div class="hwchosen" id="hwChosen"></div>
     <label id="hwTopicRow">Topic <select id="hwTopic"></select></label>
     <label id="hwRangeRow">From <select id="hwFrom"></select> to <select id="hwTo"></select></label>
     <p class="small muted" id="hwBook"></p>
@@ -431,6 +446,8 @@ async function loadScores(){
       }catch(e){ document.getElementById("pinMsg").textContent = "Could not reach the sheet"; }
     }
   }
+  const AL = window.STUDENT_ALIASES || {};
+  rows = rows.map(r => AL[r.student] ? Object.assign({}, r, { student:AL[r.student] }) : r);
   rows.sort((a, b) => String(b.t).localeCompare(String(a.t)));
   const bigIds = BIG.map(x => x.id);
   const bigRows = rows.filter(r => bigIds.indexOf(r.student) >= 0);
@@ -508,6 +525,7 @@ const LETTERS_AZ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 let hwWho = "both";
 const $id = x => document.getElementById(x);
 const gameById = id => (window.KID_GAMES || []).find(g => g.id === id);
+const gameShot = id => "images/games/" + encodeURIComponent(id) + ".jpg";   // screenshots of each game
 
 function hwPinBox(){
   const pin = getPin();
@@ -525,6 +543,11 @@ function fillHwForm(){
     .map(x => `<option value="${x.id}">${x.e} ${escH(x.en)} — ${escH(x.ru)}</option>`).join("")}</optgroup>`).join("");
   $id("hwTopic").innerHTML = (window.TOPICS || []).map(t => `<option value="${t.id}">${t.unit === "Starter" ? "Starter" : "Unit " + t.unit}: ${escH(t.en)}</option>`).join("");
   g.onchange = hwFormKind;
+  /* the same games as pictures: a screenshot of each one */
+  $id("hwPick").innerHTML = groups.map(([k, lab]) => `<div class="gpgroup">${lab.toUpperCase()}</div><div class="gpick">${
+    (window.KID_GAMES || []).filter(x => x.kind === k).map(x => `<button type="button" data-pick="${x.id}">
+      <img src="${gameShot(x.id)}" alt="" loading="lazy"><b>${x.e} ${escH(x.en)}</b><span class="ru">${escH(x.ru)}</span></button>`).join("")}</div>`).join("");
+  document.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => { g.value = b.dataset.pick; hwFormKind(); });
   hwFormKind();
   document.querySelectorAll("#hwWho button").forEach(b => b.onclick = () => {
     hwWho = b.dataset.who;
@@ -541,6 +564,9 @@ function hwFormKind(){
   $id("hwFrom").innerHTML = opts.map(o => `<option ${o === def[0] ? "selected" : ""}>${o}</option>`).join("");
   $id("hwTo").innerHTML = opts.map(o => `<option ${o === def[1] ? "selected" : ""}>${o}</option>`).join("");
   $id("hwBook").textContent = "Like the book's exercise: " + game.book;
+  document.querySelectorAll("[data-pick]").forEach(b => b.classList.toggle("on", b.dataset.pick === game.id));
+  $id("hwChosen").innerHTML = `<img src="${gameShot(game.id)}" alt=""><div><div class="small muted">Chosen game</div>
+    <b>${game.e} ${escH(game.en)}</b><div class="small">${escH(game.ru)}</div></div>`;
 }
 
 async function hwPost(body){
@@ -579,11 +605,20 @@ function drawHwList(items){
   const kids = (window.STUDENTS || []).map(k => k.id);
   t.innerHTML = `<tr><th>Given</th><th>For</th><th>Game</th><th>Topic</th>${kids.map(k => `<th>${escH(k)}</th>`).join("")}<th></th></tr>` +
     items.slice().reverse().map(h => `<tr><td>${escH(new Date(h.created).toLocaleDateString())}</td><td>${escH(h.who === "both" ? "Both" : h.who)}</td>
-      <td>${escH((gameById(h.game) || {}).en || h.game)}</td><td>${escH(hwTopicText(h))}</td>
+      <td><div style="display:flex;align-items:center"><img class="hwthumb" src="${gameShot(h.game)}" alt="" onerror="this.remove()"><div>${escH((gameById(h.game) || {}).en || h.game)}<div class="small muted">${escH((gameById(h.game) || {}).ru || "")}</div></div></div></td><td>${escH(hwTopicText(h))}</td>
       ${kids.map(k => `<td>${h.who === "both" || h.who === k ? (h.doneBy && h.doneBy[k] ? "✅" : "⏳") : "—"}</td>`).join("")}
       <td><button class="delbtn" data-del="${escH(h.id)}" title="Delete">🗑️</button></td></tr>`).join("");
+  /* hover (or tap) a small picture to see it bigger */
+  t.querySelectorAll(".hwthumb").forEach(img => {
+    const show = e => { hideBig(); const big = document.createElement("img"); big.className = "hwthumb-big"; big.src = img.src;
+      const r = img.getBoundingClientRect(); big.style.left = Math.min(r.right + 10, innerWidth - 270) + "px";
+      big.style.top = Math.max(10, Math.min(r.top - 60, innerHeight - 330)) + "px"; document.body.appendChild(big); };
+    img.onmouseenter = show; img.onmouseleave = hideBig; img.onclick = e => { e.stopPropagation(); show(); };
+  });
   t.querySelectorAll("[data-del]").forEach(b => b.onclick = () => { if(confirm("Delete this homework?")) deleteHomework(b.dataset.del); });
 }
+function hideBig(){ document.querySelectorAll(".hwthumb-big").forEach(x => x.remove()); }
+document.addEventListener("click", hideBig); window.addEventListener("scroll", hideBig, { passive:true });
 async function loadHomeworkList(){
   if(!window.SCORES_URL || !getPin()){ drawHwList([]); return; }
   try{

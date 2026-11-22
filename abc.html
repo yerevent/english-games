@@ -2011,7 +2011,7 @@ let startScreen = null;
   if(S.teacher){ S.teacher = false; save(); }          /* old teacher mode is gone */
   /* names that were spelled differently before: fix them on this device,
      including saved results and results still waiting to be sent */
-  const RENAMED = { "Ariana":"Arianna" };
+  const RENAMED = window.STUDENT_ALIASES || {};
   const fix = rows => rows.map(r => RENAMED[r.student] ? Object.assign({}, r, { student:RENAMED[r.student] }) : r);
   if(RENAMED[S.student]){ S.student = RENAMED[S.student]; save(); }
   try{

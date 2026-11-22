@@ -118,6 +118,8 @@ CSV and paste the links into `SHEET_CSV` near the top of `index.html`.
 - `index.html` — the app: layout, styles and all game engines
 - `abc.html` — the ABC & 123 page for young learners (its own file, nothing shared)
 - `content/` — all the teaching content
+- `images/games/` — a screenshot of each kids' game, shown on the teacher page's Homework tab
+  (named after the game's `id` in `content/kids-games.js`)
 
 To change a word in ABC & 123, open `abc.html` in Notepad and find `THE ALPHABET`
 near the top of the script — each letter is one line. The drawings live just below it

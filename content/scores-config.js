@@ -14,6 +14,10 @@ window.STUDENTS = [
   { id:"Arianna", ru:"Арианна", e:"👧" }
 ];
 
+/* Other spellings of a name → the real one. Results and homework saved under
+   the other spelling count as hers, and the site always shows the real name. */
+window.STUDENT_ALIASES = { "Ariana":"Arianna" };
+
 /* Older students on the big kids' site (index.html). They get a personal
    link like  index.html?student=Alex  and their results go to the same
    Google Sheet, but the teacher page lists them in their own section. */

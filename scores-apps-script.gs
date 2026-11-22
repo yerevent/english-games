@@ -27,6 +27,8 @@ const HW_SHEET = "Homework";
 const STUDENTS = ["Ashot", "Arianna"];        // younger kids: scores + homework
 const BIG_STUDENTS = ["Alex"];                // older kids (index.html): scores only
 const ALL_STUDENTS = STUDENTS.concat(BIG_STUDENTS);
+const ALIASES = { "Ariana": "Arianna" };     // other spellings → the real name
+const name_ = v => ALIASES[v] || v;
 const HEADERS = ["time", "student", "game", "topic", "right", "total", "stars"];
 const HW_HEADERS = ["id", "created", "who", "game", "topic"];
 
@@ -54,6 +56,7 @@ function doPost(e) {
   try {
     const d = JSON.parse(e.postData.contents);
     if (d.action) return out_(homeworkPost_(d));
+    d.student = name_(d.student);
     if (ALL_STUDENTS.indexOf(d.student) < 0) return out_({ ok: false, error: "unknown student" });
     const num = v => Math.max(0, Math.min(999, Number(v) || 0));
     sheet_().appendRow([new Date(), d.student, cut_(d.game, 40), cut_(d.topic, 40), num(d.right), num(d.total), Math.max(0, Math.min(3, Number(d.stars) || 0))]);
@@ -67,7 +70,7 @@ function homeworkPost_(d) {
   if (!pinOk_(d.pin)) return { ok: false, error: "wrong pin" };
   const sh = hwSheet_();
   if (d.action === "addHomework") {
-    const who = d.who === "both" ? "both" : (STUDENTS.indexOf(d.who) >= 0 ? d.who : null);
+    const who = d.who === "both" ? "both" : (STUDENTS.indexOf(name_(d.who)) >= 0 ? name_(d.who) : null);
     if (!who) return { ok: false, error: "unknown student" };
     sh.appendRow([Utilities.getUuid(), new Date(), who, cut_(d.game, 40), cut_(d.topic, 40)]);
     return { ok: true, items: homeworkAll_() };
@@ -85,10 +88,10 @@ function homeworkAll_() {
   const hw = hwSheet_().getDataRange().getValues().slice(1);
   const scores = sheet_().getDataRange().getValues().slice(1);
   return hw.map(r => {
-    const item = { id: String(r[0]), created: iso_(r[1]), who: r[2], game: String(r[3]), topic: String(r[4]), doneBy: {} };
+    const item = { id: String(r[0]), created: iso_(r[1]), who: r[2] === "both" ? "both" : name_(r[2]), game: String(r[3]), topic: String(r[4]), doneBy: {} };
     const kids = item.who === "both" ? STUDENTS : [item.who];
     kids.forEach(k => {
-      item.doneBy[k] = scores.some(s => s[1] === k && String(s[2]) === item.game && String(s[3]) === item.topic && iso_(s[0]) >= item.created);
+      item.doneBy[k] = scores.some(s => name_(s[1]) === k && String(s[2]) === item.game && String(s[3]) === item.topic && iso_(s[0]) >= item.created);
     });
     return item;
   });
@@ -98,6 +101,7 @@ function doGet(e) {
   const p = e.parameter || {};
   /* the kids' page asks: what homework do I have? (no PIN: it only lists tasks) */
   if (p.action === "homework") {
+    p.student = name_(p.student);
     if (STUDENTS.indexOf(p.student) < 0) return out_({ ok: false, error: "unknown student" });
     const items = homeworkAll_()
       .filter(h => h.who === p.student || h.who === "both")
@@ -110,7 +114,7 @@ function doGet(e) {
   /* the teacher page: scores */
   const values = sheet_().getDataRange().getValues();
   const rows = values.slice(1).slice(-1000).map(r => ({
-    t: iso_(r[0]), student: r[1], game: r[2], topic: r[3], right: r[4], total: r[5], stars: r[6]
+    t: iso_(r[0]), student: name_(r[1]), game: r[2], topic: r[3], right: r[4], total: r[5], stars: r[6]
   }));
   return out_({ ok: true, rows: rows });
 }
