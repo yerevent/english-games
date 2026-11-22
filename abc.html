@@ -2009,6 +2009,17 @@ let startScreen = null;
 (function(){
   const q = new URLSearchParams(location.search);
   if(S.teacher){ S.teacher = false; save(); }          /* old teacher mode is gone */
+  /* names that were spelled differently before: fix them on this device,
+     including saved results and results still waiting to be sent */
+  const RENAMED = { "Ariana":"Arianna" };
+  const fix = rows => rows.map(r => RENAMED[r.student] ? Object.assign({}, r, { student:RENAMED[r.student] }) : r);
+  if(RENAMED[S.student]){ S.student = RENAMED[S.student]; save(); }
+  try{
+    const sc = allScores(); if(sc.some(r => RENAMED[r.student])) localStorage.setItem("abcScores", JSON.stringify(fix(sc)));
+    const qu = queueGet();  if(qu.some(r => RENAMED[r.student])) queueSet(fix(qu));
+  }catch(e){}
+  /* a saved name that is no longer on the list → ask again who is playing */
+  if(S.student && !studentInfo()){ S.student = null; save(); }
   if(q.has("student")){ S.student = null; save(); }
   if(q.has("record")) startScreen = recordLetters;
   if(q.has("student") || q.has("record")) history.replaceState(null, "", location.pathname);
